@@ -27,7 +27,7 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.45;min-height:100vh;transition:background .3s}
 button,a,input{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-.wrap{max-width:920px;margin:0 auto;padding:0 20px 72px}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 130px}
 h1,h2,h3{margin:0;letter-spacing:-.02em}
 [hidden]{display:none!important}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
@@ -45,7 +45,7 @@ h1,h2,h3{margin:0;letter-spacing:-.02em}
 .role .big{position:absolute;right:-6px;top:-18px;font-size:9rem;font-weight:800;line-height:1;opacity:.22}
 .role b{font-size:1.6rem;font-weight:800;position:relative}
 .role span{font-size:.95rem;opacity:.9;position:relative}
-@media (min-width:700px){.roles{grid-template-columns:repeat(4,1fr)}.role{min-height:260px}}
+@media (min-width:700px){.roles{grid-template-columns:repeat(5,1fr)}.role{min-height:260px}}
 
 /* Hero */
 .hero{background:var(--accent);color:#fff;margin:0 -20px;padding:18px 20px 26px;border-radius:0 0 34px 34px;box-shadow:0 20px 40px -24px var(--accent);position:relative;overflow:hidden}
@@ -105,7 +105,7 @@ ol{padding-left:1.3em;margin:0 0 14px}
 li{margin-bottom:8px}
 .btn{border:0;background:var(--accent);color:#fff;padding:13px 22px;border-radius:16px;font-weight:700;cursor:pointer;margin-right:8px;margin-bottom:8px}
 .note{font-size:.9rem;color:var(--muted);margin:8px 0 0}
-.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:999px;font-weight:600}
+.toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:999px;font-weight:600}
 
 html{-webkit-text-size-adjust:100%}
 button,a{touch-action:manipulation}
@@ -137,6 +137,14 @@ body::before{content:"";position:fixed;left:0;right:0;top:0;height:env(safe-area
 .grp{width:100%;min-height:48px;padding:0 4px;margin:12px 0 0;background:none;border:0;cursor:pointer;text-align:left;color:var(--ink)}
 .grp .cv{display:inline-block;transition:transform .2s;color:var(--muted);font-size:1.3rem;width:16px}
 .grp[aria-expanded="true"] .cv{transform:rotate(90deg)}
+*,*::before,*::after{border-radius:0!important}
+.role:last-child:nth-child(odd){grid-column:1/-1}
+@media (min-width:700px){.role:last-child:nth-child(odd){grid-column:auto}}
+.hero::after{display:none}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:25;display:flex;justify-content:center;gap:6px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--surface) 90%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-top:1px solid var(--line)}
+.dock a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;flex:1 1 0;max-width:110px;min-width:0;min-height:58px;padding:4px 6px;text-decoration:none;font-size:.74rem;font-weight:700;color:var(--ink);transition:background .15s}
+.dock a:active,.dock a:hover{background:color-mix(in srgb,var(--c) 14%,transparent)}
+.dock .di{font-size:1.7rem;line-height:1}
 </style>
 </head>
 <body>
@@ -145,7 +153,6 @@ body::before{content:"";position:fixed;left:0;right:0;top:0;height:env(safe-area
   <!-- Step 1: who are you -->
   <section id="pick" class="pick" hidden>
     <h1>Who’s here?</h1>
-    <p>Choose your name and we’ll show the projects that are yours.</p>
     <div class="roles" id="roles"></div>
   </section>
 
@@ -193,6 +200,7 @@ body::before{content:"";position:fixed;left:0;right:0;top:0;height:env(safe-area
     </div>
   </section>
 </div>
+<nav class="dock" id="dock" aria-label="Quick links" hidden></nav>
 <div class="toast" id="toast" hidden></div>
 
 <script>
@@ -201,16 +209,17 @@ body::before{content:"";position:fixed;left:0;right:0;top:0;height:env(safe-area
 // Users = All, Admin, Gran, Faith or Harmony. Admin always sees everything.
 const ROLES = {
   admin:   { name:"Admin",   color:"#2F3E9E", blurb:"Everything, everywhere",  greeting:"Hello, Admin" },
-  gran:    { name:"Gran",    color:"#A6406B", blurb:"Your family projects",    greeting:"Hello, Gran" },
   faith:   { name:"Faith",   color:"#18788A", blurb:"Your projects",           greeting:"Hi, Faith" },
-  harmony: { name:"Harmony", color:"#5E8A2F", blurb:"Your projects",           greeting:"Hi, Harmony" }
+  gran:    { name:"Gran",    color:"#A6406B", blurb:"Your family projects",    greeting:"Hello, Gran" },
+  harmony: { name:"Harmony", color:"#5E8A2F", blurb:"Your projects",           greeting:"Hi, Harmony" },
+  jack:    { name:"Jack Jr.", color:"#C2410C", blurb:"Everything that’s live", greeting:"Hi, Jack Jr." }
 };
 
 const RAW = `
 Gran|Religious|Live|Still Waters|https://jackrose2029.github.io/stillwaters/
 All|Games|Live|Play Something!|https://jackrose2028.github.io/play
 Admin|Music|Live|Theory Decks|https://jackrose2028.github.io/theorydecks
-All|Other|Live|Recipes|https://jackrose2028.github.io/recipes
+Admin|Other|Live|Recipes|https://jackrose2028.github.io/recipes
 Admin|Music|Live Test|Music Training Center|https://jackrose2028.github.io/musictrainingcenter
 Admin|Music|Live Test|Music Training Center|https://jackrose2028.github.io/chordprogressionpro
 Admin|Music|Live Test|Music Training Center|https://jackrose2028.github.io/chordprogressionpractice
@@ -219,6 +228,7 @@ Admin|Music|Live|Manic Rules|https://jackrose2028.github.io/guitar
 Admin|Music|Live Test|Fretboard|https://jackrose2028.github.io/fretboard
 Admin|Music|Live Test|Guitar Drill|https://jackrose2028.github.io/guitardrill
 Admin|Other|Live Test|Reference|https://jackrose2030.github.io/pocketreferene/
+Admin|Self Help|Live Test|Calm|https://jackrosejr2027.github.io/calm/
 Admin|Music|Live Test|Guitar Various|https://jackrose2028.github.io/guitarmisc
 Admin|Music|Live Test|Manic Rules - Single HTML|https://jackrose2028.github.io/guitartest
 All|Games|Live|Nobody's Purrfect|https://jackrosejr2027.github.io/nobodyspurrfect
@@ -282,7 +292,7 @@ function buildPicker(){
   Object.entries(ROLES).forEach(([key,r])=>{
     const b = document.createElement("button");
     b.className="role"; b.style.setProperty("--c", r.color);
-    b.innerHTML = `<b>${r.name}</b><span>${r.blurb}</span><div class="big" aria-hidden="true">${r.name[0]}</div>`;
+    b.innerHTML = `<b>${r.name}</b><div class="big" aria-hidden="true">${r.name[0]}</div>`;
     b.onclick = () => choose(key);
     $("roles").appendChild(b);
   });
@@ -298,9 +308,9 @@ function card(p,feat){
   const slug = p.status.toLowerCase().replace(/\s+/g,"-");
   a.innerHTML = `<div class="ic" aria-hidden="true"></div><span class="st st-${slug}"></span><div class="tx"><h3></h3><p></p></div>`;
   a.querySelector(".ic").textContent=icon;
-  const stEl=a.querySelector(".st"); if(role==="admin") stEl.textContent=p.status; else stEl.remove();
+  const stEl=a.querySelector(".st"); if(role==="admin"||role==="jack") stEl.textContent=p.status; else stEl.remove();
   a.querySelector("h3").textContent=p.name;
-  a.querySelector("p").textContent = role==="admin" ? p.desc : p.cat;
+  a.querySelector("p").textContent = role==="admin"||role==="jack" ? p.desc : p.cat;
   return a;
 }
 
@@ -314,7 +324,7 @@ function render(){
   $("vList").setAttribute("aria-pressed", String(view==="list"));
   $("vGrid").setAttribute("aria-pressed", String(view==="grid"));
   const term = $("q").value.trim().toLowerCase();
-  const mine = PROJECTS.filter(p => role==="admin" || p.for.includes(role));
+  const mine = PROJECTS.filter(p => role==="admin" || (role==="jack" && (p.status==="Live"||p.status==="Live Test")) || p.for.includes(role));
   const cats = [...new Set(mine.map(p=>p.cat))].sort();
   const chips=$("chips"); chips.innerHTML="";
   if(cats.length>1){
@@ -334,7 +344,7 @@ function render(){
   const favs = shown.filter(p=>pr.includes(p.name)), rest = shown.filter(p=>!pr.includes(p.name));
   if(favs.length){ const f=document.createElement("div"); f.className="favs"; favs.forEach(p=>f.appendChild(card(p,true))); list.appendChild(f); }
   const block = items => { const d=document.createElement("div"); d.className = view==="grid" ? "grid" : "rows"; items.forEach(p=>d.appendChild(card(p))); return d; };
-  if(role==="admin"){
+  if(role==="admin"||role==="jack"){
     const filtering = !!(term||cat);
     STATUS_ORDER.forEach(st=>{
       const items = rest.filter(p=>p.status===st); if(!items.length) return;
@@ -348,6 +358,23 @@ function render(){
   } else if(rest.length){ list.appendChild(block(rest)); }
 }
 
+const DOCK = [
+  { label:"LocalTube", icon:"📺", url:"https://jackrose2028.github.io/watch",  c:"#D6336C" },
+  { label:"Play",      icon:"🎮", url:"https://jackrose2028.github.io/play",   c:"#E8590C" },
+  { label:"Guitar",    icon:"🎸", url:"https://jackrose2028.github.io/guitar", c:"#7048E8" },
+  { label:"Bible",     icon:"✝️📖", url:"https://jackrose2029.github.io/stillwaters/", c:"#3A6EA5" }
+];
+function buildDock(){
+  const dock=$("dock"); dock.innerHTML="";
+  const canSee = p => role==="admin" || (role==="jack" && (p.status==="Live"||p.status==="Live Test")) || p.for.includes(role);
+  DOCK.filter(d=>!role || PROJECTS.some(p=>p.url===d.url && canSee(p))).forEach(d=>{
+    const a=document.createElement("a"); a.href=d.url; a.target="_blank"; a.rel="noopener"; a.style.setProperty("--c",d.c);
+    a.innerHTML='<span class="di" aria-hidden="true"></span><span></span>';
+    a.firstChild.textContent=d.icon; a.lastChild.textContent=d.label; dock.appendChild(a);
+  });
+  dock.hidden = !dock.children.length;
+}
+
 function choose(key){
   role = key; store("hub-role", key);
   const r = ROLES[key];
@@ -355,18 +382,18 @@ function choose(key){
   document.querySelector('meta[name="theme-color"]').content = r.color;
   $("dot").textContent = r.name[0]; $("whoName").textContent = r.name;
   $("hello").textContent = r.greeting;
-  $("sub").textContent = key==="admin"
+  $("sub").textContent = (key==="admin"||key==="jack")
     ? "Every project, grouped by status."
     : "Here are the projects set up for you.";
   $("q").value=""; cat="";
-  $("pick").hidden=true; $("home").hidden=false;
+  $("pick").hidden=true; $("home").hidden=false; buildDock();
   render(); window.scrollTo(0,0);
 }
 
 function showPicker(){
   store("hub-role", null); role=null;
   document.documentElement.style.removeProperty("--accent");
-  $("home").hidden=true; $("pick").hidden=false;
+  $("home").hidden=true; $("pick").hidden=false; buildDock();
 }
 
 /* Install help */
@@ -410,7 +437,7 @@ $("q").addEventListener("input", render);
 $("vList").onclick=()=>setView("list"); $("vGrid").onclick=()=>setView("grid");
 buildPicker();
 const saved = store("hub-role");
-if(saved && ROLES[saved]) choose(saved); else $("pick").hidden=false;
+if(saved && ROLES[saved]) choose(saved); else { $("pick").hidden=false; buildDock(); }
 </script>
 </body>
 </html>
