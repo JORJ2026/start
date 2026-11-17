@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Project Hub</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Hub">
+<meta name="theme-color" content="#E6EDEF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16222A; --muted:#5C6E78; --line:rgba(22,34,42,.10); --surface:#fff;
+  --accent:#2F3E9E; --bg:color-mix(in srgb,var(--accent) 7%,#F3F6F7);
+  --shadow:0 1px 2px rgba(22,34,42,.06),0 8px 24px -12px rgba(22,34,42,.18);
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--ink:#EAF1F4;--muted:#9FB2BC;--line:rgba(255,255,255,.10);--surface:#1B262D;--bg:color-mix(in srgb,var(--accent) 14%,#10171B);--shadow:0 8px 24px -12px rgba(0,0,0,.6);color-scheme:dark}
+}
+:root[data-theme="dark"]{--ink:#EAF1F4;--muted:#9FB2BC;--line:rgba(255,255,255,.10);--surface:#1B262D;--bg:color-mix(in srgb,var(--accent) 14%,#10171B);--shadow:0 8px 24px -12px rgba(0,0,0,.6);color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.45;min-height:100vh;transition:background .3s}
+button,a,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px 72px}
+h1,h2,h3{margin:0;letter-spacing:-.02em}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* Picker */
+.pick{padding-top:9vh}
+.pick h1{font-size:clamp(3rem,13vw,6rem);font-weight:800;line-height:.92;margin-bottom:14px}
+.pick p{color:var(--muted);font-size:1.15rem;max-width:34ch;margin:0 0 36px}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.role{position:relative;text-align:left;border:0;cursor:pointer;border-radius:28px;padding:22px;min-height:170px;background:var(--c);color:#fff;
+  display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;box-shadow:0 14px 30px -14px var(--c);
+  transition:transform .18s cubic-bezier(.3,1.4,.5,1)}
+.role:hover{transform:translateY(-4px) rotate(-.6deg)}
+.role:active{transform:scale(.96)}
+.role .big{position:absolute;right:-6px;top:-18px;font-size:9rem;font-weight:800;line-height:1;opacity:.22}
+.role b{font-size:1.6rem;font-weight:800;position:relative}
+.role span{font-size:.95rem;opacity:.9;position:relative}
+@media (min-width:700px){.roles{grid-template-columns:repeat(4,1fr)}.role{min-height:260px}}
+
+/* Hero */
+.hero{background:var(--accent);color:#fff;margin:0 -20px;padding:18px 20px 26px;border-radius:0 0 34px 34px;box-shadow:0 20px 40px -24px var(--accent);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.10);pointer-events:none}
+@media (min-width:960px){.hero{margin:20px 0 0;border-radius:34px}}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:26px;position:relative;z-index:1}
+.who{display:flex;align-items:center;gap:10px;font-weight:600}
+.dot{width:40px;height:40px;border-radius:14px;background:#fff;color:var(--accent);display:grid;place-items:center;font-weight:800;font-size:1.15rem}
+.ghost{border:0;background:rgba(255,255,255,.18);color:#fff;border-radius:999px;padding:9px 16px;cursor:pointer;font-weight:600;transition:background .15s}
+.ghost:hover{background:rgba(255,255,255,.3)}
+.hello{font-size:clamp(2.4rem,9vw,4.2rem);font-weight:800;line-height:1;margin-bottom:8px;position:relative;z-index:1}
+.sub{margin:0 0 22px;opacity:.9;max-width:44ch;position:relative;z-index:1}
+.search{width:100%;padding:15px 18px;border-radius:18px;border:0;background:rgba(255,255,255,.96);color:#16222A;font-size:1rem;position:relative;z-index:1;box-shadow:0 8px 20px -10px rgba(0,0,0,.35)}
+.search::placeholder{color:#6B7B85}
+
+/* Chips */
+.chips{display:flex;gap:8px;overflow-x:auto;padding:20px 20px 6px;margin:0 -20px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 16px;cursor:pointer;font-weight:600;font-size:.92rem;transition:all .15s}
+.chip[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+
+/* Tiles */
+.list{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
+@media (min-width:640px){.list{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:900px){.list{grid-template-columns:repeat(4,1fr)}}
+.grp{grid-column:1/-1;display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:800;margin:20px 0 0}
+.grp:first-child{margin-top:4px}
+.grp span{font-size:.8rem;font-weight:600;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:1px 10px;color:var(--muted)}
+.tile{position:relative;display:flex;flex-direction:column;gap:14px;text-decoration:none;background:var(--surface);border-radius:24px;padding:16px;min-height:168px;box-shadow:var(--shadow);border:1px solid var(--line);
+  transition:transform .18s cubic-bezier(.3,1.4,.5,1),box-shadow .18s}
+.tile:hover{transform:translateY(-4px);box-shadow:0 18px 30px -16px var(--c)}
+.tile:active{transform:scale(.97)}
+.ic{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;font-size:1.9rem;background:color-mix(in srgb,var(--c) 16%,var(--surface))}
+.tx{margin-top:auto;min-width:0}
+.tile h3{font-size:1.12rem;font-weight:700;line-height:1.15;margin-bottom:3px;overflow-wrap:anywhere}
+.tile p{margin:0;color:var(--muted);font-size:.8rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.st{position:absolute;top:16px;right:14px;font-size:.72rem;font-weight:700;padding:3px 9px 3px 8px;border-radius:999px;display:flex;align-items:center;gap:5px;background:color-mix(in srgb,var(--sc) 14%,transparent);color:var(--sc)}
+.st::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sc)}
+.st-live{--sc:#1F9D55}.st-live-test{--sc:#C98A06}.st-testing,.st-work-testing{--sc:#6B7C86}
+.tile.feat{grid-column:span 2;flex-direction:row;align-items:center;min-height:112px;padding:18px;background:var(--c);color:#fff;border-color:transparent}
+.tile.feat:hover{box-shadow:0 18px 30px -14px var(--c)}
+.tile.feat .ic{width:72px;height:72px;font-size:2.4rem;background:rgba(255,255,255,.22);flex:none}
+.tile.feat .tx{margin:0}
+.tile.feat h3{font-size:1.5rem}
+.tile.feat p{color:rgba(255,255,255,.85);font-size:.9rem}
+.tile.feat .st{display:none}
+.empty{grid-column:1/-1;padding:32px;border:2px dashed var(--line);border-radius:24px;color:var(--muted);text-align:center}
+
+/* Install */
+.install{background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:28px;padding:24px;margin-top:48px}
+.install h2{font-size:1.6rem;font-weight:800;margin-bottom:6px}
+.install > p{margin:0 0 16px;color:var(--muted)}
+.tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.tab{border:1.5px solid var(--line);background:transparent;border-radius:999px;padding:8px 18px;cursor:pointer;font-weight:600}
+.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+ol{padding-left:1.3em;margin:0 0 14px}
+li{margin-bottom:8px}
+.btn{border:0;background:var(--accent);color:#fff;padding:13px 22px;border-radius:16px;font-weight:700;cursor:pointer;margin-right:8px;margin-bottom:8px}
+.note{font-size:.9rem;color:var(--muted);margin:8px 0 0}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:999px;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Step 1: who are you -->
+  <section id="pick" class="pick" hidden>
+    <h1>Who’s here?</h1>
+    <p>Choose your name and we’ll show the projects that are yours.</p>
+    <div class="roles" id="roles"></div>
+  </section>
+
+  <!-- Step 2: home -->
+  <section id="home" hidden>
+    <div class="hero"><div class="top">
+      <div class="who"><div class="dot" id="dot"></div><span id="whoName"></span></div>
+      <button class="ghost" id="switch">Switch person</button>
+    </div>
+    <div class="hello" id="hello"></div>
+    <p class="sub" id="sub"></p>
+    <input class="search" id="q" type="search" placeholder="Search projects" aria-label="Search projects">
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="list" id="list"></div>
+
+    <div class="install" id="install">
+      <h2>Put this on your home screen</h2>
+      <p>Opens like an app, with your name already picked.</p>
+      <div class="tabs" role="tablist">
+        <button class="tab" role="tab" id="tabIos" aria-selected="false">iPhone</button>
+        <button class="tab" role="tab" id="tabAnd" aria-selected="false">Android</button>
+      </div>
+      <div id="panIos" hidden>
+        <ol>
+          <li>Open this page in <b>Safari</b> (not inside another app).</li>
+          <li>Tap the <b>Share</b> button (square with an arrow) at the bottom.</li>
+          <li>Scroll down and tap <b>Add to Home Screen</b>.</li>
+          <li>Tap <b>Add</b>. The icon appears on your home screen.</li>
+        </ol>
+        <p class="note">Apple doesn’t allow a button to do this for you, so these steps are the only way on iPhone.</p>
+      </div>
+      <div id="panAnd" hidden>
+        <button class="btn" id="installBtn" hidden>Install app</button>
+        <ol>
+          <li>Open this page in <b>Chrome</b>.</li>
+          <li>Tap the <b>⋮</b> menu in the top right.</li>
+          <li>Tap <b>Install app</b> or <b>Add to Home screen</b>.</li>
+          <li>Tap <b>Install</b> to confirm.</li>
+        </ol>
+        <p class="note" id="andNote">If the Install button above doesn’t appear, use the menu steps.</p>
+      </div>
+      <button class="btn" id="copy" style="margin-top:14px">Copy this page’s link</button>
+      <p class="note">Send the link to yourself, then open it in Safari or Chrome to add it.</p>
+    </div>
+  </section>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ============ EDIT THIS SECTION ============ */
+// Format per line: Users | Category | Status | Title | URL
+// Users = All, Admin, Gran, Faith or Harmony. Admin always sees everything.
+const ROLES = {
+  admin:   { name:"Admin",   color:"#2F3E9E", blurb:"Everything, everywhere",  greeting:"Hello, Admin" },
+  gran:    { name:"Gran",    color:"#A6406B", blurb:"Your family projects",    greeting:"Hello, Gran" },
+  faith:   { name:"Faith",   color:"#18788A", blurb:"Your projects",           greeting:"Hi, Faith" },
+  harmony: { name:"Harmony", color:"#5E8A2F", blurb:"Your projects",           greeting:"Hi, Harmony" }
+};
+
+const RAW = `
+All|Games|Live|Play Something!|https://jackrose2028.github.io/play
+Admin|Music|Live|Theory Decks|https://jackrose2028.github.io/theorydecks
+All|Other|Live|Recipes|https://jackrose2028.github.io/recipes
+Admin|Music|Live Test|Music Training Center|https://jackrose2028.github.io/musictrainingcenter
+Admin|Music|Live Test|Music Training Center|https://jackrose2028.github.io/chordprogressionpro
+Admin|Music|Live Test|Music Training Center|https://jackrose2028.github.io/chordprogressionpractice
+All|Video|Live|LocalTube|https://jackrose2028.github.io/watch
+Admin|Music|Live|Manic Rules|https://jackrose2028.github.io/guitar
+Admin|Music|Live Test|Fretboard|https://jackrose2028.github.io/fretboard
+Admin|Music|Live Test|Guitar Various|https://jackrose2028.github.io/guitarmisc
+Admin|Music|Live Test|Manic Rules - Single HTML|https://jackrose2028.github.io/guitartest
+All|Games|Live|Nobody's Purrfect|https://jackrosejr2027.github.io/nobodyspurrfect
+Admin|Self Help|Live|personalreset|https://jackrose2029.github.io/personalreset
+Admin|Self Help|Live|quietnotebook|https://jackrose2029.github.io/quietnotebook
+Admin|Self Help|Live|quietpages|https://jackrose2029.github.io/quietpages
+Gran|Study|Live|Gran's Study Time|https://jackrose2029.github.io/granstudy
+Admin|Games|Testing|solitaire|https://dnowlpdgu.github.io/solitaire
+Admin|Other|Work Testing|qms|https://dnowlpdgu.github.io/qms
+Admin|Other|Work Testing|review|https://dnowlpdgu.github.io/review
+Admin|Other|Work Testing|audit|https://dnowlpdgu.github.io/audit
+Admin|Other|Work Testing|qms|https://rossjeck89.github.io/qms
+Admin|Music|Testing|testing|https://jackrose2031.github.io/testing
+Admin|Music|Testing|manicrules|https://jackrose2031.github.io/manicrules
+Admin|Music|Testing|m2|https://jackrose2030.github.io/m2
+Admin|Music|Testing|ManicRules|https://jackrose2030.github.io/ManicRules
+Admin|Music|Testing|test3|https://jackrose2030.github.io/test3
+Admin|Music|Testing|app042426|https://jackrose2030.github.io/app042426
+Admin|Music|Testing|t3|https://jackrose2030.github.io/t3
+Admin|Music|Testing|manicrulesscalestest1|https://jackrose2030.github.io/manicrulesscalestest1
+Admin|Games|Testing|games|https://jackrose2027.github.io/games
+Admin|Video|Testing|localtube|https://jackrose2027.github.io/localtube
+Admin|Games|Testing|games|https://jackrosejr2027.github.io/games
+Admin|Video|Testing|localtube|https://jackrosejr2027.github.io/localtube
+Admin|Music|Testing|ManicRulesGuitar|https://jackrosejr2027.github.io/ManicRulesGuitar
+Admin|Music|Testing|ManicRules|https://jackrosejr2027.github.io/ManicRules
+Admin|Other|Testing|prj|https://jackrosejr2027.github.io/prj
+Admin|Games|Testing|Play|https://jackrose2029.github.io/Play
+Admin|Other|Testing|home|https://jackrose2029.github.io/home
+Admin|Games|Testing|retrobeta|https://jackrose2029.github.io/retrobeta
+Admin|Games|Testing|rpg|https://jackrose2029.github.io/rpg
+Admin|Music|Testing|Practice|https://jackrose2029.github.io/Practice
+Admin|Music|Testing|ManicRulesV1-0-0|https://jackrose2029.github.io/ManicRulesV1-0-0
+Admin|Music|Testing|ManicRules|https://jackrose2029.github.io/ManicRules
+Admin|Music|Testing|MANICRULES|https://jackrose2028.github.io/MANICRULES0.01
+Admin|Games|Testing|play|https://jackrosejr2027.github.io/play
+Admin|Games|Testing|gamesog|https://jackrosejr2027.github.io/gamesog
+Admin|Self Help|Testing|meditationgame|https://jackrosejr2027.github.io/meditationgame
+Admin|Music|Testing|music|https://jackrosejr2027.github.io/music
+`;
+const ALL = ["admin","gran","faith","harmony"];
+const STATUS_ORDER = ["Live","Live Test","Testing","Work Testing"];
+// Titles listed here show first, in this order, for that person. Everything else follows.
+const PRIORITY = { gran:["Play Something!","LocalTube","Gran\u2019s Study Time"] };
+const PROJECTS = RAW.trim().split("\n").map(l=>{
+  const [u,c,st,t,url] = l.split("|").map(x=>x.trim());
+  return { name:t.replace("'", "\u2019"), url, cat:c, status:st, tags:[c,st], desc:url.replace("https://",""),
+          for: u==="All" ? ALL : [u.toLowerCase()] };
+});
+/* ============ END EDIT ============ */
+
+const $ = id => document.getElementById(id);
+let role = null, deferredPrompt = null;
+
+function store(k,v){ try{ if(v===undefined) return localStorage.getItem(k); v===null?localStorage.removeItem(k):localStorage.setItem(k,v);}catch(e){return null;} }
+function toast(t){ const el=$("toast"); el.textContent=t; el.hidden=false; setTimeout(()=>el.hidden=true,2200); }
+const repoUrl = p => p.url || `https://github.com/${GITHUB_USER}/${p.repo}`;
+
+function buildPicker(){
+  $("roles").innerHTML = "";
+  Object.entries(ROLES).forEach(([key,r])=>{
+    const b = document.createElement("button");
+    b.className="role"; b.style.setProperty("--c", r.color);
+    b.innerHTML = `<b>${r.name}</b><span>${r.blurb}</span><div class="big" aria-hidden="true">${r.name[0]}</div>`;
+    b.onclick = () => choose(key);
+    $("roles").appendChild(b);
+  });
+}
+
+const ICONS={Games:"\u{1F3AE}",Music:"\u{1F3B5}",Video:"\u{1F4FA}",Other:"\u2728",Study:"\u{1F4DA}","Self Help":"\u{1F33F}"};
+const CATC={Games:"#E8590C",Music:"#7048E8",Video:"#D6336C",Other:"#1C7ED6",Study:"#2F9E44","Self Help":"#0CA678"};
+function card(p,feat){
+  const a=document.createElement("a");
+  a.className="tile"+(feat?" feat":""); a.href=repoUrl(p); a.target="_blank"; a.rel="noopener";
+  a.style.setProperty("--c", CATC[p.cat]||"#1C7ED6");
+  const icon = /recipe/i.test(p.name) ? "\u{1F372}" : (ICONS[p.cat]||"\u2728");
+  const slug = p.status.toLowerCase().replace(/\s+/g,"-");
+  a.innerHTML = `<div class="ic" aria-hidden="true"></div><span class="st st-${slug}"></span><div class="tx"><h3></h3><p></p></div>`;
+  a.querySelector(".ic").textContent=icon;
+  a.querySelector(".st").textContent=p.status;
+  a.querySelector("h3").textContent=p.name;
+  a.querySelector("p").textContent = role==="admin" ? p.desc : p.cat;
+  return a;
+}
+
+let cat = "";
+function render(){
+  const term = $("q").value.trim().toLowerCase();
+  const mine = PROJECTS.filter(p => role==="admin" || p.for.includes(role));
+  const cats = [...new Set(mine.map(p=>p.cat))].sort();
+  const chips=$("chips"); chips.innerHTML="";
+  if(cats.length>1){
+    ["", ...cats].forEach(c=>{
+      const b=document.createElement("button"); b.className="chip"; b.textContent=c||"All";
+      b.setAttribute("aria-selected", String(cat===c));
+      b.onclick=()=>{cat=c;render();}; chips.appendChild(b);
+    });
+  }
+  const shown = mine
+    .filter(p => (!cat||p.cat===cat) && (!term || (p.name+" "+p.desc+" "+p.tags.join(" ")).toLowerCase().includes(term)))
+    .sort((x,y)=>{
+      const pr = PRIORITY[role] || [];
+      const rank = p => { const i = pr.indexOf(p.name); return i<0 ? pr.length : i; };
+      return rank(x)-rank(y) || STATUS_ORDER.indexOf(x.status)-STATUS_ORDER.indexOf(y.status);
+    });
+  const list=$("list"); list.innerHTML="";
+  if(!shown.length){ list.innerHTML = `<div class="empty">${term||cat?"No projects match.":"No projects have been shared with you yet. Ask Admin to add some."}</div>`; }
+  const counts={}; shown.forEach(p=>counts[p.status]=(counts[p.status]||0)+1);
+  let last="";
+  shown.forEach(p=>{
+    if(role==="admin" && p.status!==last){ const h=document.createElement("h2"); h.className="grp"; h.innerHTML=p.status+" <span>"+counts[p.status]+"</span>"; list.appendChild(h); last=p.status; }
+    list.appendChild(card(p,(PRIORITY[role]||[]).includes(p.name)));
+  });
+}
+
+function choose(key){
+  role = key; store("hub-role", key);
+  const r = ROLES[key];
+  document.documentElement.style.setProperty("--accent", r.color);
+  document.querySelector('meta[name="theme-color"]').content = r.color;
+  $("dot").textContent = r.name[0]; $("whoName").textContent = r.name;
+  $("hello").textContent = r.greeting;
+  $("sub").textContent = key==="admin"
+    ? "Every project, grouped by status."
+    : "Here are the projects set up for you.";
+  $("q").value=""; cat="";
+  $("pick").hidden=true; $("home").hidden=false;
+  render(); window.scrollTo(0,0);
+}
+
+function showPicker(){
+  store("hub-role", null); role=null;
+  document.documentElement.style.removeProperty("--accent");
+  $("home").hidden=true; $("pick").hidden=false;
+}
+
+/* Install help */
+const ua = navigator.userAgent;
+const isIos = /iPhone|iPad|iPod/.test(ua) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
+const isStandalone = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+function setTab(which){
+  $("panIos").hidden = which!=="ios"; $("panAnd").hidden = which!=="and";
+  $("tabIos").setAttribute("aria-selected", which==="ios"); $("tabAnd").setAttribute("aria-selected", which==="and");
+}
+$("tabIos").onclick=()=>setTab("ios"); $("tabAnd").onclick=()=>setTab("and");
+setTab(isIos ? "ios" : "and");
+if(isStandalone) $("install").hidden = true;
+
+window.addEventListener("beforeinstallprompt", e=>{ e.preventDefault(); deferredPrompt=e; $("installBtn").hidden=false; setTab("and"); });
+$("installBtn").onclick = async()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt=null; $("installBtn").hidden=true; };
+$("copy").onclick = async()=>{
+  try{ await navigator.clipboard.writeText(location.href.split("#")[0]); toast("Link copied"); }
+  catch(e){ window.prompt("Copy this link:", location.href.split("#")[0]); }
+};
+
+/* App icon + manifest (generated, so everything stays in one file) */
+(function(){
+  try{
+    const c=document.createElement("canvas"); c.width=c.height=512;
+    const g=c.getContext("2d");
+    g.fillStyle="#2F3E9E"; g.fillRect(0,0,512,512);
+    g.fillStyle="#fff"; g.font="800 300px system-ui,sans-serif"; g.textAlign="center"; g.textBaseline="middle"; g.fillText("H",256,276);
+    const png=c.toDataURL("image/png");
+    const l=document.createElement("link"); l.rel="apple-touch-icon"; l.href=png; document.head.appendChild(l);
+    const i=document.createElement("link"); i.rel="icon"; i.href=png; document.head.appendChild(i);
+    const manifest={name:"Project Hub",short_name:"Hub",start_url:location.href.split("#")[0],display:"standalone",background_color:"#E6EDEF",theme_color:"#2F3E9E",icons:[{src:png,sizes:"512x512",type:"image/png",purpose:"any"}]};
+    const m=document.createElement("link"); m.rel="manifest";
+    m.href=URL.createObjectURL(new Blob([JSON.stringify(manifest)],{type:"application/manifest+json"}));
+    document.head.appendChild(m);
+  }catch(e){}
+})();
+
+$("switch").onclick = showPicker;
+$("q").addEventListener("input", render);
+buildPicker();
+const saved = store("hub-role");
+if(saved && ROLES[saved]) choose(saved); else $("pick").hidden=false;
+</script>
+</body>
+</html>
