@@ -68,9 +68,9 @@ h1,h2,h3{margin:0;letter-spacing:-.02em}
 .chip[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 
 /* Tiles */
-.list{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:16px}
-@media (min-width:640px){.list{grid-template-columns:repeat(3,1fr)}}
-@media (min-width:900px){.list{grid-template-columns:repeat(4,1fr)}}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:12px}
+@media (min-width:640px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:900px){.grid{grid-template-columns:repeat(4,1fr)}}
 .grp{grid-column:1/-1;display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:800;margin:20px 0 0}
 .grp:first-child{margin-top:4px}
 .grp span{font-size:.8rem;font-weight:600;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:1px 10px;color:var(--muted)}
@@ -106,6 +106,37 @@ li{margin-bottom:8px}
 .btn{border:0;background:var(--accent);color:#fff;padding:13px 22px;border-radius:16px;font-weight:700;cursor:pointer;margin-right:8px;margin-bottom:8px}
 .note{font-size:.9rem;color:var(--muted);margin:8px 0 0}
 .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:999px;font-weight:600}
+
+html{-webkit-text-size-adjust:100%}
+button,a{touch-action:manipulation}
+body::before{content:"";position:fixed;left:0;right:0;top:0;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+.sub{margin-bottom:4px}
+.ghost{min-height:44px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;margin:0 -20px;padding:12px 20px 4px;
+  background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}
+.bar .row{display:flex;gap:10px;align-items:center}
+.search{flex:1;min-width:0;height:48px;padding:0 16px;font-size:16px;border-radius:16px;border:1px solid var(--line);background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.search::placeholder{color:var(--muted)}
+.seg{display:flex;flex:none;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:3px;height:48px;box-shadow:var(--shadow)}
+.seg button{border:0;background:transparent;border-radius:13px;padding:0 14px;font-weight:700;font-size:.9rem;cursor:pointer;color:var(--muted);min-width:52px}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.bar .chips{margin:0 -20px;padding:10px 20px 8px}
+.chips:empty{display:none}
+.chip{min-height:40px}
+.favs{display:grid;gap:12px;margin-top:14px}
+.rows{background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);overflow:hidden;margin-top:12px}
+.rows .tile{flex-direction:row;align-items:center;gap:12px;min-height:68px;padding:10px 14px;border:0;border-radius:0;box-shadow:none;background:transparent;border-bottom:1px solid var(--line)}
+.rows .tile:last-child{border-bottom:0}
+.rows .tile:hover{transform:none;box-shadow:none;background:color-mix(in srgb,var(--c) 6%,var(--surface))}
+.rows .tile:active{transform:none;background:color-mix(in srgb,var(--c) 14%,var(--surface))}
+.rows .ic{width:44px;height:44px;border-radius:14px;font-size:1.35rem;flex:none}
+.rows .tx{order:2;flex:1;margin:0}
+.rows .st{order:3;position:static;flex:none}
+.rows .tile::after{content:"\203A";order:4;font-size:1.7rem;line-height:1;color:var(--muted)}
+.rows .tile h3{font-size:1.02rem}
+.grp{width:100%;min-height:48px;padding:0 4px;margin:12px 0 0;background:none;border:0;cursor:pointer;text-align:left;color:var(--ink)}
+.grp .cv{display:inline-block;transition:transform .2s;color:var(--muted);font-size:1.3rem;width:16px}
+.grp[aria-expanded="true"] .cv{transform:rotate(90deg)}
 </style>
 </head>
 <body>
@@ -126,9 +157,9 @@ li{margin-bottom:8px}
     </div>
     <div class="hello" id="hello"></div>
     <p class="sub" id="sub"></p>
-    <input class="search" id="q" type="search" placeholder="Search projects" aria-label="Search projects">
+    
     </div>
-    <div class="chips" id="chips"></div>
+    <div class="bar"><div class="row"><input class="search" id="q" type="search" placeholder="Search projects" aria-label="Search projects" enterkeyhint="search" autocomplete="off"><div class="seg" role="group" aria-label="View"><button id="vList">List</button><button id="vGrid">Grid</button></div></div><div class="chips" id="chips"></div></div>
     <div class="list" id="list"></div>
 
     <div class="install" id="install">
@@ -176,6 +207,7 @@ const ROLES = {
 };
 
 const RAW = `
+Gran|Religious|Live|Still Waters|https://jackrose2029.github.io/stillwaters/
 All|Games|Live|Play Something!|https://jackrose2028.github.io/play
 Admin|Music|Live|Theory Decks|https://jackrose2028.github.io/theorydecks
 All|Other|Live|Recipes|https://jackrose2028.github.io/recipes
@@ -185,12 +217,14 @@ Admin|Music|Live Test|Music Training Center|https://jackrose2028.github.io/chord
 All|Video|Live|LocalTube|https://jackrose2028.github.io/watch
 Admin|Music|Live|Manic Rules|https://jackrose2028.github.io/guitar
 Admin|Music|Live Test|Fretboard|https://jackrose2028.github.io/fretboard
+Admin|Music|Live Test|Guitar Drill|https://jackrose2028.github.io/guitardrill
+Admin|Other|Live Test|Reference|https://jackrose2030.github.io/pocketreferene/
 Admin|Music|Live Test|Guitar Various|https://jackrose2028.github.io/guitarmisc
 Admin|Music|Live Test|Manic Rules - Single HTML|https://jackrose2028.github.io/guitartest
 All|Games|Live|Nobody's Purrfect|https://jackrosejr2027.github.io/nobodyspurrfect
-Admin|Self Help|Live|personalreset|https://jackrose2029.github.io/personalreset
-Admin|Self Help|Live|quietnotebook|https://jackrose2029.github.io/quietnotebook
-Admin|Self Help|Live|quietpages|https://jackrose2029.github.io/quietpages
+Gran|Self Help|Live|personalreset|https://jackrose2029.github.io/personalreset
+Gran|Self Help|Live|quietnotebook|https://jackrose2029.github.io/quietnotebook
+Gran|Self Help|Live|quietpages|https://jackrose2029.github.io/quietpages
 Gran|Study|Live|Gran's Study Time|https://jackrose2029.github.io/granstudy
 Admin|Games|Testing|solitaire|https://dnowlpdgu.github.io/solitaire
 Admin|Other|Work Testing|qms|https://dnowlpdgu.github.io/qms
@@ -228,7 +262,7 @@ Admin|Music|Testing|music|https://jackrosejr2027.github.io/music
 const ALL = ["admin","gran","faith","harmony"];
 const STATUS_ORDER = ["Live","Live Test","Testing","Work Testing"];
 // Titles listed here show first, in this order, for that person. Everything else follows.
-const PRIORITY = { gran:["Play Something!","LocalTube","Gran\u2019s Study Time"] };
+const PRIORITY = { gran:["Still Waters","Play Something!","LocalTube","Gran\u2019s Study Time"] };
 const PROJECTS = RAW.trim().split("\n").map(l=>{
   const [u,c,st,t,url] = l.split("|").map(x=>x.trim());
   return { name:t.replace("'", "\u2019"), url, cat:c, status:st, tags:[c,st], desc:url.replace("https://",""),
@@ -254,8 +288,8 @@ function buildPicker(){
   });
 }
 
-const ICONS={Games:"\u{1F3AE}",Music:"\u{1F3B5}",Video:"\u{1F4FA}",Other:"\u2728",Study:"\u{1F4DA}","Self Help":"\u{1F33F}"};
-const CATC={Games:"#E8590C",Music:"#7048E8",Video:"#D6336C",Other:"#1C7ED6",Study:"#2F9E44","Self Help":"#0CA678"};
+const ICONS={Games:"\u{1F3AE}",Music:"\u{1F3B5}",Video:"\u{1F4FA}",Other:"\u2728",Study:"\u{1F4DA}","Self Help":"\u{1F33F}",Religious:"\u{1F54A}"};
+const CATC={Games:"#E8590C",Music:"#7048E8",Video:"#D6336C",Other:"#1C7ED6",Study:"#2F9E44","Self Help":"#0CA678",Religious:"#3A6EA5"};
 function card(p,feat){
   const a=document.createElement("a");
   a.className="tile"+(feat?" feat":""); a.href=repoUrl(p); a.target="_blank"; a.rel="noopener";
@@ -264,14 +298,21 @@ function card(p,feat){
   const slug = p.status.toLowerCase().replace(/\s+/g,"-");
   a.innerHTML = `<div class="ic" aria-hidden="true"></div><span class="st st-${slug}"></span><div class="tx"><h3></h3><p></p></div>`;
   a.querySelector(".ic").textContent=icon;
-  a.querySelector(".st").textContent=p.status;
+  const stEl=a.querySelector(".st"); if(role==="admin") stEl.textContent=p.status; else stEl.remove();
   a.querySelector("h3").textContent=p.name;
   a.querySelector("p").textContent = role==="admin" ? p.desc : p.cat;
   return a;
 }
 
 let cat = "";
+let view = store("hub-view")==="grid" ? "grid" : "list";
+let collapsed = {"Testing":1,"Work Testing":1};
+try{ const c=JSON.parse(store("hub-collapsed")||"null"); if(c) collapsed=c; }catch(e){}
+function setView(v){ view=v; store("hub-view",v); render(); }
+
 function render(){
+  $("vList").setAttribute("aria-pressed", String(view==="list"));
+  $("vGrid").setAttribute("aria-pressed", String(view==="grid"));
   const term = $("q").value.trim().toLowerCase();
   const mine = PROJECTS.filter(p => role==="admin" || p.for.includes(role));
   const cats = [...new Set(mine.map(p=>p.cat))].sort();
@@ -283,21 +324,28 @@ function render(){
       b.onclick=()=>{cat=c;render();}; chips.appendChild(b);
     });
   }
+  const pr = PRIORITY[role] || [];
+  const rank = p => { const i = pr.indexOf(p.name); return i<0 ? pr.length : i; };
   const shown = mine
     .filter(p => (!cat||p.cat===cat) && (!term || (p.name+" "+p.desc+" "+p.tags.join(" ")).toLowerCase().includes(term)))
-    .sort((x,y)=>{
-      const pr = PRIORITY[role] || [];
-      const rank = p => { const i = pr.indexOf(p.name); return i<0 ? pr.length : i; };
-      return rank(x)-rank(y) || STATUS_ORDER.indexOf(x.status)-STATUS_ORDER.indexOf(y.status);
-    });
+    .sort((x,y)=> rank(x)-rank(y) || STATUS_ORDER.indexOf(x.status)-STATUS_ORDER.indexOf(y.status));
   const list=$("list"); list.innerHTML="";
-  if(!shown.length){ list.innerHTML = `<div class="empty">${term||cat?"No projects match.":"No projects have been shared with you yet. Ask Admin to add some."}</div>`; }
-  const counts={}; shown.forEach(p=>counts[p.status]=(counts[p.status]||0)+1);
-  let last="";
-  shown.forEach(p=>{
-    if(role==="admin" && p.status!==last){ const h=document.createElement("h2"); h.className="grp"; h.innerHTML=p.status+" <span>"+counts[p.status]+"</span>"; list.appendChild(h); last=p.status; }
-    list.appendChild(card(p,(PRIORITY[role]||[]).includes(p.name)));
-  });
+  if(!shown.length){ list.innerHTML = `<div class="empty">${term||cat?"No projects match.":"No projects have been shared with you yet. Ask Admin to add some."}</div>`; return; }
+  const favs = shown.filter(p=>pr.includes(p.name)), rest = shown.filter(p=>!pr.includes(p.name));
+  if(favs.length){ const f=document.createElement("div"); f.className="favs"; favs.forEach(p=>f.appendChild(card(p,true))); list.appendChild(f); }
+  const block = items => { const d=document.createElement("div"); d.className = view==="grid" ? "grid" : "rows"; items.forEach(p=>d.appendChild(card(p))); return d; };
+  if(role==="admin"){
+    const filtering = !!(term||cat);
+    STATUS_ORDER.forEach(st=>{
+      const items = rest.filter(p=>p.status===st); if(!items.length) return;
+      const open = filtering || !collapsed[st];
+      const sec=document.createElement("section");
+      const h=document.createElement("button"); h.className="grp"; h.setAttribute("aria-expanded", String(open));
+      h.innerHTML = `<span class="cv">\u203A</span>${st} <span>${items.length}</span>`;
+      h.onclick=()=>{ collapsed[st]=open?1:0; store("hub-collapsed",JSON.stringify(collapsed)); render(); };
+      sec.appendChild(h); if(open) sec.appendChild(block(items)); list.appendChild(sec);
+    });
+  } else if(rest.length){ list.appendChild(block(rest)); }
 }
 
 function choose(key){
@@ -359,6 +407,7 @@ $("copy").onclick = async()=>{
 
 $("switch").onclick = showPicker;
 $("q").addEventListener("input", render);
+$("vList").onclick=()=>setView("list"); $("vGrid").onclick=()=>setView("grid");
 buildPicker();
 const saved = store("hub-role");
 if(saved && ROLES[saved]) choose(saved); else $("pick").hidden=false;
