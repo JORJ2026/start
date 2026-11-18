@@ -216,7 +216,7 @@ const ROLES = {
 };
 
 const RAW = `
-Gran|Religious|Live|Still Waters|https://jackrose2029.github.io/stillwaters/
+Gran|Religious|Live|Bible|https://jackrosejr2027.github.io/bible/
 All|Games|Live|Play Something!|https://jackrose2028.github.io/play
 Admin|Music|Live|Theory Decks|https://jackrose2028.github.io/theorydecks
 Admin|Other|Live|Recipes|https://jackrose2028.github.io/recipes
@@ -272,7 +272,7 @@ Admin|Music|Testing|music|https://jackrosejr2027.github.io/music
 const ALL = ["admin","gran","faith","harmony"];
 const STATUS_ORDER = ["Live","Live Test","Testing","Work Testing"];
 // Titles listed here show first, in this order, for that person. Everything else follows.
-const PRIORITY = { gran:["Still Waters","Play Something!","LocalTube","Gran\u2019s Study Time"] };
+const PRIORITY = { gran:["Bible","Play Something!","LocalTube","Gran\u2019s Study Time"] };
 const PROJECTS = RAW.trim().split("\n").map(l=>{
   const [u,c,st,t,url] = l.split("|").map(x=>x.trim());
   return { name:t.replace("'", "\u2019"), url, cat:c, status:st, tags:[c,st], desc:url.replace("https://",""),
@@ -364,7 +364,7 @@ const DOCK = [
   { label:"Play",      icon:"🎮", url:"https://jackrose2028.github.io/play",   c:"#E8590C" },
   { label:"Guitar",    icon:"🎸", url:"https://jackrose2028.github.io/guitar", c:"#7048E8" },
   { label:"Study",     icon:"📚", url:"https://jackrose2029.github.io/granstudy", c:"#2F9E44" },
-  { label:"Bible",     icon:"✝️📖", url:"https://jackrose2029.github.io/stillwaters/", c:"#3A6EA5" }
+  { label:"Bible",     icon:"✝️📖", url:"https://jackrosejr2027.github.io/bible/", c:"#3A6EA5" }
 ];
 function buildDock(){
   const dock=$("dock"); dock.innerHTML="";
