@@ -167,7 +167,7 @@ body::before{content:"";position:fixed;left:0;right:0;top:0;height:env(safe-area
     
     </div>
     <div class="bar"><div class="row"><input class="search" id="q" type="search" placeholder="Search projects" aria-label="Search projects" enterkeyhint="search" autocomplete="off"><div class="seg" role="group" aria-label="View"><button id="vList">List</button><button id="vGrid">Grid</button></div></div><div class="chips" id="chips"></div></div>
-    <div id="adminBar" hidden style="margin-top:14px"><button class="btn" id="dlCsv">Download all links (CSV)</button></div>
+    <div id="adminBar" hidden style="margin-top:14px"><div class="seg" role="group" aria-label="Group by" style="display:inline-flex;vertical-align:top;margin:0 8px 8px 0"><button id="gStatus">By status</button><button id="gAcct">By account</button></div><button class="btn" id="dlCsv">Download all links (CSV)</button></div>
     <div id="guestBar" hidden style="margin-top:14px"><button class="btn" id="morePick">Choose more projects</button></div>
     <div class="install" id="pickPanel" hidden style="margin-top:14px">
       <h2>Choose more projects</h2>
@@ -352,11 +352,16 @@ let cat = "";
 let view = store("hub-view")==="grid" ? "grid" : "list";
 let collapsed = {"Testing":1,"Work Testing":1};
 try{ const c=JSON.parse(store("hub-collapsed")||"null"); if(c) collapsed=c; }catch(e){}
+let group = store("hub-group")==="account" ? "account" : "status";
+const acct = p => p.url.replace(/^https?:\/\//,"").split(".")[0];
+function setGroup(g){ group=g; store("hub-group",g); render(); }
 function setView(v){ view=v; store("hub-view",v); render(); }
 
 function render(){
   $("vList").setAttribute("aria-pressed", String(view==="list"));
   $("vGrid").setAttribute("aria-pressed", String(view==="grid"));
+  $("gStatus").setAttribute("aria-pressed", String(group==="status"));
+  $("gAcct").setAttribute("aria-pressed", String(group==="account"));
   const term = $("q").value.trim().toLowerCase();
   const mine = PROJECTS.filter(canSee);
   const cats = [...new Set(mine.map(p=>p.cat))].sort();
@@ -380,13 +385,16 @@ function render(){
   const block = items => { const d=document.createElement("div"); d.className = view==="grid" ? "grid" : "rows"; items.forEach(p=>d.appendChild(card(p))); return d; };
   if(role==="admin"||role==="jack"){
     const filtering = !!(term||cat);
-    STATUS_ORDER.forEach(st=>{
-      const items = rest.filter(p=>p.status===st); if(!items.length) return;
-      const open = filtering || !collapsed[st];
+    const groups = (role==="admin" && group==="account")
+      ? [...new Set(rest.map(acct))].sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase())).map(a=>({k:"@"+a,label:a,items:rest.filter(p=>acct(p)===a)}))
+      : STATUS_ORDER.map(st=>({k:st,label:st,items:rest.filter(p=>p.status===st)}));
+    groups.forEach(g=>{
+      const items = g.items; if(!items.length) return;
+      const open = filtering || !collapsed[g.k];
       const sec=document.createElement("section");
       const h=document.createElement("button"); h.className="grp"; h.setAttribute("aria-expanded", String(open));
-      h.innerHTML = `<span class="cv">\u203A</span>${st} <span>${items.length}</span>`;
-      h.onclick=()=>{ collapsed[st]=open?1:0; store("hub-collapsed",JSON.stringify(collapsed)); render(); };
+      h.innerHTML = `<span class="cv">\u203A</span>${g.label} <span>${items.length}</span>`;
+      h.onclick=()=>{ collapsed[g.k]=open?1:0; store("hub-collapsed",JSON.stringify(collapsed)); render(); };
       sec.appendChild(h); if(open) sec.appendChild(block(items)); list.appendChild(sec);
     });
   } else if(rest.length){ list.appendChild(block(rest)); }
@@ -452,7 +460,7 @@ function exportCsv(){
       r==="admin" || (r==="jack" && (p.status==="Live"||p.status==="Live Test")) || (r==="guest" && GUEST_BASE.includes(p.url)) || p.for.includes(r)
     ).map(r=>ROLES[r].name).concat(opt.has(p.url) && !GUEST_BASE.includes(p.url) ? ["Guest (optional)"] : []).join("; ");
   const q = v => '"'+String(v).replace(/"/g,'""')+'"';
-  const rows = [["Name","Category","Status","URL","Shows up for"], ...PROJECTS.map(p=>[p.name,p.cat,p.status,p.url,who(p)])];
+  const rows = [["Name","Category","Status","GitHub account","URL","Shows up for"], ...PROJECTS.map(p=>[p.name,p.cat,p.status,acct(p),p.url,who(p)])];
   const csv = "\uFEFF" + rows.map(r=>r.map(q).join(",")).join("\r\n");
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
@@ -504,6 +512,7 @@ $("copy").onclick = async()=>{
 
 $("switch").onclick = showPicker;
 $("dlCsv").onclick=exportCsv;
+$("gStatus").onclick=()=>setGroup("status"); $("gAcct").onclick=()=>setGroup("account");
 $("morePick").onclick=()=>{ $("pickPanel").hidden=!$("pickPanel").hidden; };
 $("pickDone").onclick=()=>{ $("pickPanel").hidden=true; window.scrollTo(0,0); };
 $("q").addEventListener("input", render);
