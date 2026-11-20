@@ -167,6 +167,14 @@ body::before{content:"";position:fixed;left:0;right:0;top:0;height:env(safe-area
     
     </div>
     <div class="bar"><div class="row"><input class="search" id="q" type="search" placeholder="Search projects" aria-label="Search projects" enterkeyhint="search" autocomplete="off"><div class="seg" role="group" aria-label="View"><button id="vList">List</button><button id="vGrid">Grid</button></div></div><div class="chips" id="chips"></div></div>
+    <div id="adminBar" hidden style="margin-top:14px"><button class="btn" id="dlCsv">Download all links (CSV)</button></div>
+    <div id="guestBar" hidden style="margin-top:14px"><button class="btn" id="morePick">Choose more projects</button></div>
+    <div class="install" id="pickPanel" hidden style="margin-top:14px">
+      <h2>Choose more projects</h2>
+      <p>Tick any you’d like to see. Your choices are remembered on this device.</p>
+      <div id="pickList"></div>
+      <button class="btn" id="pickDone" style="margin-top:14px">Done</button>
+    </div>
     <div class="list" id="list"></div>
 
     <div class="install" id="install">
@@ -212,6 +220,7 @@ const ROLES = {
   faith:   { name:"Faith",   color:"#18788A", blurb:"Your projects",           greeting:"Hi, Faith" },
   gran:    { name:"Gran",    color:"#A6406B", blurb:"Your family projects",    greeting:"Hello, Gran" },
   harmony: { name:"Harmony", color:"#5E8A2F", blurb:"Your projects",           greeting:"Hi, Harmony" },
+  guest:   { name:"Guest",   color:"#9A6A12", blurb:"A few favorites",         greeting:"Welcome, Guest" },
   jack:    { name:"Jack Jr.", color:"#C2410C", blurb:"Everything that’s live", greeting:"Hi, Jack Jr." }
 };
 
@@ -224,10 +233,17 @@ Admin|Music|Live Test|Music Training Center|https://jackrose2028.github.io/music
 Admin|Music|Live Test|Music Training Center|https://jackrose2028.github.io/chordprogressionpro
 Admin|Music|Live Test|Music Training Center|https://jackrose2028.github.io/chordprogressionpractice
 All|Video|Live|LocalTube|https://jackrose2028.github.io/watch
+Admin|Games|Live|Card Arcade|https://jackrose2027.github.io/cardarcade
+Admin|Music|Live|Guitar OG V1|https://jackrose2031.github.io/GuitarOGV1
+Admin|Music|Live|Guitar OG V2|https://jackrose2031.github.io/GuitarOGV2
+Admin|Games|Live|gemumod|https://jackrose2028.github.io/gemumod/
+Admin|Games|Live|Emu Mod|https://jackrose2028.github.io/gemustudio/
+Admin|Other|Live|Quality|https://rossjeck89.github.io/quality/
+Admin|Music|Live|SNESStudio|https://rossjeck89.github.io/studio/
 Admin|Music|Live|Manic Rules|https://jackrose2028.github.io/guitar
 Admin|Music|Live Test|Fretboard|https://jackrose2028.github.io/fretboard
 Admin|Music|Live Test|Guitar Drill|https://jackrose2028.github.io/guitardrill
-Admin|Other|Live Test|Reference|https://jackrose2030.github.io/pocketreferene/
+Admin|Other|Live Test|Reference|https://jackrose2030.github.io/pocketreference/
 Admin|Self Help|Live Test|Calm|https://jackrosejr2027.github.io/calm/
 All|Games|Live Test|Emu|https://jackrose2028.github.io/gemu/
 Admin|Music|Live Test|Guitar Various|https://jackrose2028.github.io/guitarmisc
@@ -271,9 +287,21 @@ Admin|Self Help|Testing|meditationgame|https://jackrosejr2027.github.io/meditati
 Admin|Music|Testing|music|https://jackrosejr2027.github.io/music
 `;
 const ALL = ["admin","gran","faith","harmony"];
+// Guest always sees these (by URL). They can tick more with "Choose more projects".
+const GUEST_BASE = [
+  "https://jackrose2030.github.io/pocketreference/",
+  "https://jackrose2028.github.io/watch",
+  "https://jackrose2028.github.io/play",
+  "https://jackrose2028.github.io/guitar"
+];
 const STATUS_ORDER = ["Live","Live Test","Testing","Work Testing"];
 // Titles listed here show first, in this order, for that person. Everything else follows.
 const PRIORITY = { gran:["Bible","Play Something!","LocalTube","Gran\u2019s Study Time"] };
+// "Live!" chip (Admin only): a filter over these URLs. Doesn't change any project's own category.
+const LIVE_BANG = ["https://jackrose2028.github.io/play/", "http://jackrose2028.github.io/gemu", "https://rossjeck89.github.io/studio/", "https://jackrose2029.github.io/granstudy/", "https://rossjeck89.github.io/quality/", "https://jackrose2027.github.io/cardarcade/", "https://jackrose2028.github.io/watch/", "https://jackrose2030.github.io/pocketreference/", "https://jackrosejr2027.github.io/bible/", "https://jackrose2028.github.io/gemumod/", "https://jackrose2028.github.io/guitar/", "https://jackrose2028.github.io/gemustudio/"];
+const normUrl = u => u.replace(/^https?:\/\//,"").replace(/\/$/,"").toLowerCase();
+const LIVE_SET = new Set(LIVE_BANG.map(normUrl));
+const inLiveBang = p => LIVE_SET.has(normUrl(p.url));
 const PROJECTS = RAW.trim().split("\n").map(l=>{
   const [u,c,st,t,url] = l.split("|").map(x=>x.trim());
   return { name:t.replace("'", "\u2019"), url, cat:c, status:st, tags:[c,st], desc:url.replace("https://",""),
@@ -283,6 +311,11 @@ const PROJECTS = RAW.trim().split("\n").map(l=>{
 
 const $ = id => document.getElementById(id);
 let role = null, deferredPrompt = null;
+let guestPicks = []; try{ guestPicks = JSON.parse(store("hub-guest-picks")||"[]")||[]; }catch(e){}
+const canSee = p => role==="admin"
+  || (role==="jack" && (p.status==="Live"||p.status==="Live Test"))
+  || (role==="guest" && (GUEST_BASE.includes(p.url) || guestPicks.includes(p.url)))
+  || p.for.includes(role);
 
 function store(k,v){ try{ if(v===undefined) return localStorage.getItem(k); v===null?localStorage.removeItem(k):localStorage.setItem(k,v);}catch(e){return null;} }
 function toast(t){ const el=$("toast"); el.textContent=t; el.hidden=false; setTimeout(()=>el.hidden=true,2200); }
@@ -325,11 +358,11 @@ function render(){
   $("vList").setAttribute("aria-pressed", String(view==="list"));
   $("vGrid").setAttribute("aria-pressed", String(view==="grid"));
   const term = $("q").value.trim().toLowerCase();
-  const mine = PROJECTS.filter(p => role==="admin" || (role==="jack" && (p.status==="Live"||p.status==="Live Test")) || p.for.includes(role));
+  const mine = PROJECTS.filter(canSee);
   const cats = [...new Set(mine.map(p=>p.cat))].sort();
   const chips=$("chips"); chips.innerHTML="";
   if(cats.length>1){
-    ["", ...cats].forEach(c=>{
+    ["", ...(role==="admin"?["Live!"]:[]), ...cats].forEach(c=>{
       const b=document.createElement("button"); b.className="chip"; b.textContent=c||"All";
       b.setAttribute("aria-selected", String(cat===c));
       b.onclick=()=>{cat=c;render();}; chips.appendChild(b);
@@ -338,7 +371,7 @@ function render(){
   const pr = PRIORITY[role] || [];
   const rank = p => { const i = pr.indexOf(p.name); return i<0 ? pr.length : i; };
   const shown = mine
-    .filter(p => (!cat||p.cat===cat) && (!term || (p.name+" "+p.desc+" "+p.tags.join(" ")).toLowerCase().includes(term)))
+    .filter(p => (!cat || (cat==="Live!" ? inLiveBang(p) : p.cat===cat)) && (!term || (p.name+" "+p.desc+" "+p.tags.join(" ")).toLowerCase().includes(term)))
     .sort((x,y)=> rank(x)-rank(y) || STATUS_ORDER.indexOf(x.status)-STATUS_ORDER.indexOf(y.status));
   const list=$("list"); list.innerHTML="";
   if(!shown.length){ list.innerHTML = `<div class="empty">${term||cat?"No projects match.":"No projects have been shared with you yet. Ask Admin to add some."}</div>`; return; }
@@ -360,7 +393,7 @@ function render(){
 }
 
 const DOCK = [
-  { label:"Pocket Ref", icon:"📒", url:"https://jackrose2030.github.io/pocketreferene/", c:"#1C7ED6" },
+  { label:"Pocket Ref", icon:"📒", url:"https://jackrose2030.github.io/pocketreference/", c:"#1C7ED6" },
   { label:"LocalTube", icon:"📺", url:"https://jackrose2028.github.io/watch",  c:"#D6336C" },
   { label:"Play",      icon:"🎮", url:"https://jackrose2028.github.io/play",   c:"#E8590C" },
   { label:"Guitar",    icon:"🎸", url:"https://jackrose2028.github.io/guitar", c:"#7048E8" },
@@ -369,7 +402,6 @@ const DOCK = [
 ];
 function buildDock(){
   const dock=$("dock"); dock.innerHTML="";
-  const canSee = p => role==="admin" || (role==="jack" && (p.status==="Live"||p.status==="Live Test")) || p.for.includes(role);
   DOCK.filter(d=>!role || PROJECTS.some(p=>p.url===d.url && canSee(p))).forEach(d=>{
     const a=document.createElement("a"); a.href=d.url; a.target="_blank"; a.rel="noopener"; a.style.setProperty("--c",d.c);
     a.innerHTML='<span class="di" aria-hidden="true"></span><span></span>';
@@ -387,15 +419,50 @@ function choose(key){
   $("hello").textContent = r.greeting;
   $("sub").textContent = (key==="admin"||key==="jack")
     ? "Every project, grouped by status."
+    : key==="guest" ? "A few favorites. Add more any time."
     : "Here are the projects set up for you.";
   $("q").value=""; cat="";
+  $("adminBar").hidden = key!=="admin";
+  $("guestBar").hidden = key!=="guest"; $("pickPanel").hidden = true; if(key==="guest") buildPick();
   $("pick").hidden=true; $("home").hidden=false; buildDock();
   render(); window.scrollTo(0,0);
 }
 
+function pickable(){
+  return PROJECTS.filter(p => (p.status==="Live"||p.status==="Live Test") && !GUEST_BASE.includes(p.url) && !(p.for.length===1 && p.for[0]==="gran"));
+}
+function buildPick(){
+  const box=$("pickList"); box.innerHTML="";
+  pickable().forEach(p=>{
+    const l=document.createElement("label");
+    l.style.cssText="display:flex;align-items:center;gap:12px;min-height:48px;border-bottom:1px solid var(--line);cursor:pointer";
+    const cb=document.createElement("input"); cb.type="checkbox"; cb.style.cssText="width:22px;height:22px;flex:none"; cb.checked=guestPicks.includes(p.url);
+    cb.onchange=()=>{
+      guestPicks = cb.checked ? [...new Set([...guestPicks,p.url])] : guestPicks.filter(u=>u!==p.url);
+      store("hub-guest-picks",JSON.stringify(guestPicks)); render(); buildDock();
+    };
+    const sp=document.createElement("span");
+    sp.textContent = p.name+" ("+p.cat+") \u00B7 "+p.url.replace(/\/$/,"").split("/").pop();
+    l.append(cb,sp); box.appendChild(l);
+  });
+}
+function exportCsv(){
+  const opt = new Set(pickable().map(p=>p.url));
+  const who = p => Object.keys(ROLES).filter(r =>
+      r==="admin" || (r==="jack" && (p.status==="Live"||p.status==="Live Test")) || (r==="guest" && GUEST_BASE.includes(p.url)) || p.for.includes(r)
+    ).map(r=>ROLES[r].name).concat(opt.has(p.url) && !GUEST_BASE.includes(p.url) ? ["Guest (optional)"] : []).join("; ");
+  const q = v => '"'+String(v).replace(/"/g,'""')+'"';
+  const rows = [["Name","Category","Status","URL","Shows up for"], ...PROJECTS.map(p=>[p.name,p.cat,p.status,p.url,who(p)])];
+  const csv = "\uFEFF" + rows.map(r=>r.map(q).join(",")).join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
+  a.download = "project-hub-links.csv"; document.body.appendChild(a); a.click(); a.remove();
+  toast("CSV downloaded");
+}
 function showPicker(){
   store("hub-role", null); role=null;
   document.documentElement.style.removeProperty("--accent");
+  $("adminBar").hidden=true; $("guestBar").hidden=true; $("pickPanel").hidden=true;
   $("home").hidden=true; $("pick").hidden=false; buildDock();
 }
 
@@ -436,6 +503,9 @@ $("copy").onclick = async()=>{
 })();
 
 $("switch").onclick = showPicker;
+$("dlCsv").onclick=exportCsv;
+$("morePick").onclick=()=>{ $("pickPanel").hidden=!$("pickPanel").hidden; };
+$("pickDone").onclick=()=>{ $("pickPanel").hidden=true; window.scrollTo(0,0); };
 $("q").addEventListener("input", render);
 $("vList").onclick=()=>setView("list"); $("vGrid").onclick=()=>setView("grid");
 buildPicker();
