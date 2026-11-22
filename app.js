@@ -12,7 +12,7 @@ const ROLES = {
 
 const RAW = `
 Gran|Religious|Live|Bible|https://jackrosejr2027.github.io/bible/
-All|Games|Live|Play Something!|https://jackrose2028.github.io/play
+All|Games|Live|Play Something!|https://jorj2026.github.io/play
 Admin|Music|Live|Theory Decks|https://jackrose2028.github.io/theorydecks
 Admin|Other|Live|Recipes|https://jackrose2028.github.io/recipes
 Admin|Music|Live Test|Music Training Center|https://jackrose2028.github.io/musictrainingcenter
@@ -39,7 +39,7 @@ All|Games|Live|Nobody's Purrfect|https://jackrosejr2027.github.io/nobodyspurrfec
 Gran|Self Help|Live|personalreset|https://jackrose2029.github.io/personalreset
 Gran|Self Help|Live|quietnotebook|https://jackrose2029.github.io/quietnotebook
 Gran|Self Help|Live|quietpages|https://jackrose2029.github.io/quietpages
-Gran|Study|Live|Gran's Study Time|https://jackrose2029.github.io/granstudy
+Gran|Study|Live|Gran's Study Time|https://jorj2026.github.io/granstudy
 Admin|Games|Testing|solitaire|https://dnowlpdgu.github.io/solitaire
 Admin|Other|Work Testing|qms|https://dnowlpdgu.github.io/qms
 Admin|Other|Work Testing|review|https://dnowlpdgu.github.io/review
@@ -78,38 +78,38 @@ const ALL = ["admin","gran","faith","harmony"];
 const GUEST_BASE = [
   "https://jackrose2030.github.io/pocketreference/",
   "https://jackrose2028.github.io/watch",
-  "https://jackrose2028.github.io/play",
+  "https://jorj2026.github.io/play",
   "https://jackrose2028.github.io/guitar"
 ];
 const STATUS_ORDER = ["Live","Live Test","Testing","Work Testing"];
 // Titles listed here show first, in this order, for that person. Everything else follows.
 const PRIORITY = { gran:["Bible","Play Something!","LocalTube","Gran\u2019s Study Time"] };
 // "Live!" chip (Admin only): a filter over these URLs. Doesn't change any project's own category.
-const LIVE_BANG = ["https://jackrose2028.github.io/play/", "http://jackrose2028.github.io/gemu", "https://rossjeck89.github.io/studio/", "https://jackrose2029.github.io/granstudy/", "https://rossjeck89.github.io/quality/", "https://jackrose2027.github.io/cardarcade/", "https://jackrose2028.github.io/watch/", "https://jackrose2030.github.io/pocketreference/", "https://jackrosejr2027.github.io/bible/", "https://jackrose2028.github.io/gemumod/", "https://jackrose2028.github.io/guitar/", "https://jackrose2028.github.io/gemustudio/"];
+const LIVE_BANG = ["https://jorj2026.github.io/play/", "http://jackrose2028.github.io/gemu", "https://rossjeck89.github.io/studio/", "https://jorj2026.github.io/granstudy/", "https://rossjeck89.github.io/quality/", "https://jackrose2027.github.io/cardarcade/", "https://jackrose2028.github.io/watch/", "https://jackrose2030.github.io/pocketreference/", "https://jackrosejr2027.github.io/bible/", "https://jackrose2028.github.io/gemumod/", "https://jackrose2028.github.io/guitar/", "https://jackrose2028.github.io/gemustudio/"];
 const normUrl = u => u.replace(/^https?:\/\//,"").replace(/\/$/,"").toLowerCase();
 const LIVE_SET = new Set(LIVE_BANG.map(normUrl));
 const inLiveBang = p => LIVE_SET.has(normUrl(p.url));
 const PROJECTS = RAW.trim().split("\n").map(l=>{
   const [u,c,st,t,url] = l.split("|").map(x=>x.trim());
   return { name:t.replace("'", "\u2019"), url, cat:c, status:st, tags:[c,st], desc:url.replace("https://",""),
-          for: u==="All" ? ALL : [u.toLowerCase()] };
+          for: u==="All" ? ALL : [u.toLowerCase()], owner:url.startsWith("https://jorj2026.github.io/") ? "JORJ2026" : null };
 });
 // Public repositories supplied for JORJ26. Ages are fallback estimates from the list;
 // exact GitHub timestamps replace them whenever the API is available.
 const JORJ_REPOS = [
   ["emu","Games",360], ["emulatorjsmod","Games",240], ["emubasic","Games",2],
-  ["chopin","Music",15], ["guitar","Music",420], ["rpg-hm","Games",11],
-  ["gtaII","Games",7], ["gta","Games",12], ["elkriverbandit","Games",16],
-  ["hb","Other",180], ["nobodyspurrfect","Games",240], ["paint3d","Other",240],
+  ["chopin","Music",15], ["guitar","Music",420], ["rpg-hm","Games",11,true],
+  ["gtaII","Games",7], ["gta","Games",12], ["elkriverbandit","Games",16,true],
+  ["hb","Other",180], ["nobodyspurrfect","Games",240], ["paint3d","Other",240,true],
   ["quietpages","Self Help",300], ["start","Other",1440], ["play","Games",1440],
-  ["granstudy","Study",1020], ["logo","Other",1020], ["bible","Religious",420],
+  ["granstudy","Study",1020], ["logo","Other",1020,true], ["bible","Religious",420],
   ["quietnotebook","Self Help",300], ["personalreset","Self Help",300],
   ["quality","Other",240], ["cardarcade","Games",240], ["calm","Self Help",300],
-  ["localtube","Video",420], ["pocketreference","Other",480]
-].map(([name, cat, ageMinutes]) => ({
+  ["localtube","Video",420], ["pocketreference","Other",480,true]
+].map(([name, cat, ageMinutes, shared]) => ({
   name, url:"https://jorj2026.github.io/"+name+"/", cat, status:"Live",
   tags:[cat,"Live","Repository"], desc:"jorj2026.github.io/"+name+"/",
-  for:["jack"], owner:"JORJ2026", fallbackUpdatedAt:Date.now()-ageMinutes*60_000
+  for:shared ? ["jack","faith","harmony","gran","guest"] : ["jack"], owner:"JORJ2026", fallbackUpdatedAt:Date.now()-ageMinutes*60_000
 }));
 PROJECTS.push(...JORJ_REPOS);
 /* ============ END EDIT ============ */
@@ -231,9 +231,9 @@ function render(){
 const DOCK = [
   { label:"Pocket Ref", icon:"notebook", url:"https://jackrose2030.github.io/pocketreference/", c:"#1C7ED6" },
   { label:"LocalTube", icon:"tv", url:"https://jackrose2028.github.io/watch",  c:"#D6336C" },
-  { label:"Play",      icon:"gamepad", url:"https://jackrose2028.github.io/play",   c:"#E8590C" },
+  { label:"Play",      icon:"gamepad", url:"https://jorj2026.github.io/play",   c:"#E8590C" },
   { label:"Guitar",    icon:"music", url:"https://jackrose2028.github.io/guitar", c:"#7048E8" },
-  { label:"Study",     icon:"book", url:"https://jackrose2029.github.io/granstudy", c:"#2F9E44" },
+  { label:"Study",     icon:"book", url:"https://jorj2026.github.io/granstudy", c:"#2F9E44" },
   { label:"Bible",     icon:"cross", url:"https://jackrosejr2027.github.io/bible/", c:"#3A6EA5" }
 ];
 function buildDock(){
