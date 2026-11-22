@@ -7,8 +7,7 @@ const ROLES = {
   gran:    { name:"Gran",    color:"#A6406B", blurb:"Your family projects",    greeting:"Hello, Gran" },
   harmony: { name:"Harmony", color:"#5E8A2F", blurb:"Your projects",           greeting:"Hi, Harmony" },
   guest:   { name:"Guest",   color:"#9A6A12", blurb:"A few favorites",         greeting:"Welcome, Guest" },
-  jack:    { name:"Jack Jr.", color:"#C2410C", blurb:"Everything that’s live", greeting:"Hi, Jack Jr." },
-  jorj26:  { name:"JORJ26", color:"#0B7285", blurb:"Your projects", greeting:"Hi, JORJ26" }
+  jack:    { name:"JORJ26", color:"#C2410C", blurb:"All project links", greeting:"Hi, JORJ26" }
 };
 
 const RAW = `
@@ -73,28 +72,6 @@ Admin|Games|Testing|play|https://jackrosejr2027.github.io/play
 Admin|Games|Testing|gamesog|https://jackrosejr2027.github.io/gamesog
 Admin|Self Help|Testing|meditationgame|https://jackrosejr2027.github.io/meditationgame
 Admin|Music|Testing|music|https://jackrosejr2027.github.io/music
-JORJ26|Games|Live|emubasic|https://jorj2026.github.io/emubasic/
-JORJ26|Games|Live|rpg-hm|https://jorj2026.github.io/rpg-hm/
-JORJ26|Other|Live|logo|https://jorj2026.github.io/logo/
-JORJ26|Study|Live|granstudy|https://jorj2026.github.io/granstudy/
-JORJ26|Self Help|Live|quietpages|https://jorj2026.github.io/quietpages/
-JORJ26|Games|Live|play|https://jorj2026.github.io/play/
-JORJ26|Other|Live|start|https://jorj2026.github.io/start/
-JORJ26|Games|Live|emulatorjsmod|https://jorj2026.github.io/emulatorjsmod/
-JORJ26|Games|Live|homebrewroms|https://jorj2026.github.io/homebrewroms/
-JORJ26|Games|Live|nobodyspurrfect|https://jorj2026.github.io/nobodyspurrfect/
-JORJ26|Other|Live|paint3d|https://jorj2026.github.io/paint3d/
-JORJ26|Other|Live|quality|https://jorj2026.github.io/quality/
-JORJ26|Games|Live|cardarcade|https://jorj2026.github.io/cardarcade/
-JORJ26|Music|Live|chopin|https://jorj2026.github.io/chopin/
-JORJ26|Self Help|Live|calm|https://jorj2026.github.io/calm/
-JORJ26|Self Help|Live|personalreset|https://jorj2026.github.io/personalreset/
-JORJ26|Self Help|Live|quietnotebook|https://jorj2026.github.io/quietnotebook/
-JORJ26|Games|Live|emu|https://jorj2026.github.io/emu/
-JORJ26|Religious|Live|bible|https://jorj2026.github.io/bible/
-JORJ26|Music|Live|guitar|https://jorj2026.github.io/guitar/
-JORJ26|Video|Live|localtube|https://jorj2026.github.io/localtube/
-JORJ26|Other|Live|pocketreference|https://jorj2026.github.io/pocketreference/
 `;
 const ALL = ["admin","gran","faith","harmony"];
 // Guest always sees these (by URL). They can tick more with "Choose more projects".
@@ -117,13 +94,33 @@ const PROJECTS = RAW.trim().split("\n").map(l=>{
   return { name:t.replace("'", "\u2019"), url, cat:c, status:st, tags:[c,st], desc:url.replace("https://",""),
           for: u==="All" ? ALL : [u.toLowerCase()] };
 });
+// Public repositories supplied for JORJ26. Ages are fallback estimates from the list;
+// exact GitHub timestamps replace them whenever the API is available.
+const JORJ_REPOS = [
+  ["emu","Games",360], ["emulatorjsmod","Games",240], ["emubasic","Games",2],
+  ["chopin","Music",15], ["guitar","Music",420], ["rpg-hm","Games",11],
+  ["gtaII","Games",7], ["gta","Games",12], ["elkriverbandit","Games",16],
+  ["hb","Other",180], ["nobodyspurrfect","Games",240], ["paint3d","Other",240],
+  ["quietpages","Self Help",300], ["start","Other",1440], ["play","Games",1440],
+  ["granstudy","Study",1020], ["logo","Other",1020], ["bible","Religious",420],
+  ["quietnotebook","Self Help",300], ["personalreset","Self Help",300],
+  ["quality","Other",240], ["cardarcade","Games",240], ["calm","Self Help",300],
+  ["localtube","Video",420], ["pocketreference","Other",480]
+].map(([name, cat, ageMinutes]) => ({
+  name, url:"https://jorj2026.github.io/"+name+"/", cat, status:"Live",
+  tags:[cat,"Live","Repository"], desc:"jorj2026.github.io/"+name+"/",
+  for:["jack"], owner:"JORJ2026", fallbackUpdatedAt:Date.now()-ageMinutes*60_000
+}));
+PROJECTS.push(...JORJ_REPOS);
 /* ============ END EDIT ============ */
+
+import { svgIcon } from "./icons.js";
 
 const $ = id => document.getElementById(id);
 let role = null, deferredPrompt = null;
 let guestPicks = []; try{ guestPicks = JSON.parse(store("hub-guest-picks")||"[]")||[]; }catch(e){}
 const canSee = p => role==="admin"
-  || (role==="jack" && (p.status==="Live"||p.status==="Live Test"))
+  || (role==="jack" && p.owner==="JORJ2026")
   || (role==="guest" && (GUEST_BASE.includes(p.url) || guestPicks.includes(p.url)))
   || p.for.includes(role);
 
@@ -143,7 +140,7 @@ function buildPicker(){
 }
 
 const CAT_ICON={Games:"gamepad",Music:"music",Video:"tv",Other:"sparkle",Study:"book","Self Help":"leaf",Religious:"cross"};
-const ROLE_ICON={admin:"crown",faith:"sun",gran:"heart",harmony:"leaf",guest:"user",jack:"star",jorj26:"sparkle"};
+const ROLE_ICON={admin:"crown",faith:"sun",gran:"heart",harmony:"leaf",guest:"user",jack:"star"};
 const CATC={Games:"#E8590C",Music:"#7048E8",Video:"#D6336C",Other:"#1C7ED6",Study:"#2F9E44","Self Help":"#0CA678",Religious:"#3A6EA5"};
 function card(p,feat){
   const a=document.createElement("a");
@@ -151,18 +148,37 @@ function card(p,feat){
   a.style.setProperty("--c", CATC[p.cat]||"#1C7ED6");
   const icon = /recipe/i.test(p.name) ? "chef" : (CAT_ICON[p.cat]||"sparkle");
   const slug = p.status.toLowerCase().replace(/\s+/g,"-");
-  a.innerHTML = `<div class="ic" aria-hidden="true"></div><span class="st st-${slug}"></span><div class="tx"><h3></h3><p></p></div><span class="go" aria-hidden="true"></span>`;
+  a.innerHTML = `<div class="ic" aria-hidden="true"></div><span class="st st-${slug}"></span><div class="tx"><h3></h3><p></p><small class="updated" hidden></small></div><span class="go" aria-hidden="true"></span>`;
   a.querySelector(".ic").innerHTML=svgIcon(icon);
   a.querySelector(".go").innerHTML=svgIcon("arrow");
   const stEl=a.querySelector(".st"); if(role==="admin"||role==="jack") stEl.textContent=p.status; else stEl.remove();
   a.querySelector("h3").textContent=p.name;
   a.querySelector("p").textContent = role==="admin"||role==="jack" ? p.desc : p.cat;
+  const modified = p.updatedAt || p.fallbackUpdatedAt;
+  if(modified){
+    const time = new Date(modified);
+    const label = a.querySelector(".updated");
+    label.dateTime = time.toISOString();
+    label.textContent = (p.updatedAt ? "Last modified " : "Approx. last modified ") + new Intl.DateTimeFormat(undefined,{year:"numeric",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}).format(time);
+    label.hidden = false;
+  }
   return a;
+}
+
+async function loadGitHubRepoDates(){
+  try{
+    const response = await fetch("https://api.github.com/users/JORJ2026/repos?per_page=100&sort=updated",{headers:{Accept:"application/vnd.github+json"}});
+    if(!response.ok) return;
+    const repos = await response.json();
+    const byName = new Map(repos.map(repo=>[repo.name.toLowerCase(),repo.updated_at]));
+    JORJ_REPOS.forEach(project=>{ const date=byName.get(project.name.toLowerCase()); if(date) project.updatedAt=date; });
+    render();
+  }catch(error){ /* Approximate times from the supplied list remain visible. */ }
 }
 
 let cat = "";
 let view = store("hub-view")==="grid" ? "grid" : "list";
-let collapsed = {"Testing":1,"Work Testing":1};
+let collapsed = {};
 try{ const c=JSON.parse(store("hub-collapsed")||"null"); if(c) collapsed=c; }catch(e){}
 let group = store("hub-group")==="account" ? "account" : "status";
 const acct = p => p.url.replace(/^https?:\/\//,"").split(".")[0];
@@ -269,7 +285,7 @@ function buildPick(){
 function exportCsv(){
   const opt = new Set(pickable().map(p=>p.url));
   const who = p => Object.keys(ROLES).filter(r =>
-      r==="admin" || (r==="jack" && (p.status==="Live"||p.status==="Live Test")) || (r==="guest" && GUEST_BASE.includes(p.url)) || p.for.includes(r)
+      r==="admin" || (r==="jack" && p.owner==="JORJ2026") || (r==="guest" && GUEST_BASE.includes(p.url)) || p.for.includes(r)
     ).map(r=>ROLES[r].name).concat(opt.has(p.url) && !GUEST_BASE.includes(p.url) ? ["Guest (optional)"] : []).join("; ");
   const q = v => '"'+String(v).replace(/"/g,'""')+'"';
   const rows = [["Name","Category","Status","GitHub account","URL","Shows up for"], ...PROJECTS.map(p=>[p.name,p.cat,p.status,acct(p),p.url,who(p)])];
@@ -332,4 +348,5 @@ $("vList").onclick=()=>setView("list"); $("vGrid").onclick=()=>setView("grid");
 document.querySelectorAll("[data-ic]").forEach(el=>el.innerHTML=svgIcon(el.dataset.ic));
 buildPicker();
 const saved = store("hub-role");
-if(saved && ROLES[saved]) choose(saved); else { $("pick").hidden=false; buildDock(); }
+if(saved && ROLES[saved]) choose(saved); else choose("jack");
+loadGitHubRepoDates();
