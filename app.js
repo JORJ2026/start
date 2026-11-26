@@ -2,125 +2,115 @@
 // Format per line: Users | Category | Status | Title | URL
 // Users = All, Admin, Gran, Faith or Harmony. Admin always sees everything.
 const ROLES = {
-  admin:   { name:"Admin",   color:"#2F3E9E", blurb:"Everything, everywhere",  greeting:"Hello, Admin" },
-  faith:   { name:"Faith",   color:"#18788A", blurb:"Your projects",           greeting:"Hi, Faith" },
-  gran:    { name:"Gran",    color:"#A6406B", blurb:"Your family projects",    greeting:"Hello, Gran" },
-  harmony: { name:"Harmony", color:"#5E8A2F", blurb:"Your projects",           greeting:"Hi, Harmony" },
-  guest:   { name:"Guest",   color:"#9A6A12", blurb:"A few favorites",         greeting:"Welcome, Guest" },
-  jack:    { name:"JORJ26", color:"#C2410C", blurb:"All project links", greeting:"Hi, JORJ26" }
+  faith:      { name:"Faith",       color:"#7048E8", blurb:"Your projects",          greeting:"Hi, Faith" },
+  gran:       { name:"Gran",        color:"#355E3B", blurb:"Your family projects",   greeting:"Hello, Gran" },
+  harmony:    { name:"Harmony",     color:"#E64980", blurb:"Your projects",          greeting:"Hi, Harmony" },
+  jack:       { name:"Jack Jr.",    color:"#1A1A1A", blurb:"Everything that’s live", greeting:"Hi, Jack Jr." },
+  jorjdev2027:{ name:"JORJDEV2027", color:"#E8590C", blurb:"Your projects",          greeting:"Hi, JORJDEV2027" }
 };
 
 const RAW = `
-Gran|Religious|Live|Bible|https://jackrosejr2027.github.io/bible/
-All|Games|Live|Play Something!|https://jorj2026.github.io/play
-Admin|Music|Live|Theory Decks|https://jackrose2028.github.io/theorydecks
-Admin|Other|Live|Recipes|https://jackrose2028.github.io/recipes
-Admin|Music|Live Test|Music Training Center|https://jackrose2028.github.io/musictrainingcenter
-Admin|Music|Live Test|Music Training Center|https://jackrose2028.github.io/chordprogressionpro
-Admin|Music|Live Test|Music Training Center|https://jackrose2028.github.io/chordprogressionpractice
-All|Video|Live|LocalTube|https://jackrose2028.github.io/watch
-Admin|Games|Live|Card Arcade|https://jackrose2027.github.io/cardarcade
-Admin|Music|Live|Guitar OG V1|https://jackrose2031.github.io/GuitarOGV1
-Admin|Music|Live|Guitar OG V2|https://jackrose2031.github.io/GuitarOGV2
-Admin|Games|Live|gemumod|https://jackrose2028.github.io/gemumod/
-Admin|Games|Live|Emu Mod|https://jackrose2028.github.io/gemustudio/
-Admin|Games|Live|EmuModLatest-112026|https://jackrose2028.github.io/emumodlatest/
-Admin|Other|Live|Quality|https://rossjeck89.github.io/quality/
-Admin|Music|Live|SNESStudio|https://rossjeck89.github.io/studio/
-Admin|Music|Live|Manic Rules|https://jackrose2028.github.io/guitar
-Admin|Music|Live Test|Fretboard|https://jackrose2028.github.io/fretboard
-Admin|Music|Live Test|Guitar Drill|https://jackrose2028.github.io/guitardrill
-Admin|Other|Live Test|Reference|https://jackrose2030.github.io/pocketreference/
-Admin|Self Help|Live Test|Calm|https://jackrosejr2027.github.io/calm/
-All|Games|Live Test|Emu|https://jackrose2028.github.io/gemu/
-Admin|Music|Live Test|Guitar Various|https://jackrose2028.github.io/guitarmisc
-Admin|Music|Live Test|Manic Rules - Single HTML|https://jackrose2028.github.io/guitartest
-All|Games|Live|Nobody's Purrfect|https://jackrosejr2027.github.io/nobodyspurrfect
-Gran|Self Help|Live|personalreset|https://jackrose2029.github.io/personalreset
-Gran|Self Help|Live|quietnotebook|https://jackrose2029.github.io/quietnotebook
-Gran|Self Help|Live|quietpages|https://jackrose2029.github.io/quietpages
-Gran|Study|Live|Gran's Study Time|https://jorj2026.github.io/granstudy
-Admin|Games|Testing|solitaire|https://dnowlpdgu.github.io/solitaire
-Admin|Other|Work Testing|qms|https://dnowlpdgu.github.io/qms
-Admin|Other|Work Testing|review|https://dnowlpdgu.github.io/review
-Admin|Other|Work Testing|audit|https://dnowlpdgu.github.io/audit
-Admin|Other|Work Testing|qms|https://rossjeck89.github.io/qms
-Admin|Music|Testing|testing|https://jackrose2031.github.io/testing
-Admin|Music|Testing|manicrules|https://jackrose2031.github.io/manicrules
-Admin|Music|Testing|m2|https://jackrose2030.github.io/m2
-Admin|Music|Testing|ManicRules|https://jackrose2030.github.io/ManicRules
-Admin|Music|Testing|test3|https://jackrose2030.github.io/test3
-Admin|Music|Testing|app042426|https://jackrose2030.github.io/app042426
-Admin|Music|Testing|t3|https://jackrose2030.github.io/t3
-Admin|Music|Testing|manicrulesscalestest1|https://jackrose2030.github.io/manicrulesscalestest1
-Admin|Games|Testing|games|https://jackrose2027.github.io/games
-Admin|Video|Testing|localtube|https://jackrose2027.github.io/localtube
-Admin|Games|Testing|games|https://jackrosejr2027.github.io/games
-Admin|Video|Testing|localtube|https://jackrosejr2027.github.io/localtube
-Admin|Music|Testing|ManicRulesGuitar|https://jackrosejr2027.github.io/ManicRulesGuitar
-Admin|Music|Testing|ManicRules|https://jackrosejr2027.github.io/ManicRules
-Admin|Other|Testing|prj|https://jackrosejr2027.github.io/prj
-Admin|Games|Testing|Play|https://jackrose2029.github.io/Play
-Admin|Other|Testing|home|https://jackrose2029.github.io/home
-Admin|Games|Testing|retrobeta|https://jackrose2029.github.io/retrobeta
-Admin|Games|Testing|rpg|https://jackrose2029.github.io/rpg
-Admin|Music|Testing|Practice|https://jackrose2029.github.io/Practice
-Admin|Music|Testing|ManicRulesV1-0-0|https://jackrose2029.github.io/ManicRulesV1-0-0
-Admin|Music|Testing|ManicRules|https://jackrose2029.github.io/ManicRules
-Admin|Music|Testing|MANICRULES|https://jackrose2028.github.io/MANICRULES0.01
-Admin|Games|Testing|play|https://jackrosejr2027.github.io/play
-Admin|Games|Testing|gamesog|https://jackrosejr2027.github.io/gamesog
-Admin|Self Help|Testing|meditationgame|https://jackrosejr2027.github.io/meditationgame
-Admin|Music|Testing|music|https://jackrosejr2027.github.io/music
+jorjdev2027|Games|Live|Play Something!|https://jorj2026.github.io/play
+jorjdev2027|Games|Live|Elk River Bandit|https://jorj2026.github.io/elkriverbandit
+jorjdev2027|Study|Live|Gran's Study Corner|https://jorj2026.github.io/granstudy
+jorjdev2027|Games|Live|Wildroot|https://jorj2026.github.io/wildroot
+jorjdev2027|Games|Live|Lantern Woods|https://jorj2026.github.io/lanternwoods
+jorjdev2027|Games|Live|Emulator|https://jorj2026.github.io/emu
+jorjdev2027|Music|Live|Fretlab|https://jorj2026.github.io/fretlab
+jorjdev2027|Music|Live|Guitar Scales & Practice|https://jorj2026.github.io/guitar
+jorjdev2027|Other|Live|Clear Mind|https://jorj2026.github.io/clearmind
+jorjdev2027|Music|Live|MIDI|https://jorj2026.github.io/chopin
+jorjdev2027|Bible|Live|Bible Verses|https://jorj2026.github.io/bible
+jorjdev2027|GitHub|Live|jackrose2028|accounts/jackrose2028.html
+jorjdev2027|GitHub|Live|dnowlpdgu|accounts/dnowlpdgu.html
+jorjdev2027|GitHub|Live|jackrose2027|accounts/jackrose2027.html
+jorjdev2027|GitHub|Live|jackrose2030|accounts/jackrose2030.html
+jorjdev2027|GitHub|Live|JORJ2026A|accounts/JORJ2026A.html
+jorjdev2027|GitHub|Live|JORJ2026|accounts/JORJ2026.html
+jorjdev2027|GitHub|Live|jackrosejr2027|accounts/jackrosejr2027.html
+jorjdev2027|GitHub|Live|jackrose2029|accounts/jackrose2029.html
+jorjdev2027|Other|Live|HB|https://jorj2026.github.io/hb
+jorjdev2027|Games|Live|EmulatorJS Mod Fix|https://jorj2026.github.io/emulatorjsmodfix
+jorjdev2027|Games|Live|EmulatorJS Mod|https://jorj2026.github.io/emulatorjsmod
+jorjdev2027|Games|Live|Emu Basic|https://jorj2026.github.io/emubasic
+jorjdev2027|Games|Live|RPG HM|https://jorj2026.github.io/rpg-hm
+jorjdev2027|Other|Live|Start|https://jorj2026.github.io/start
+jorjdev2027|Games|Live|GTA II|https://jorj2026.github.io/gtaII
+jorjdev2027|Other|Live|Quiet Pages|https://jorj2026.github.io/quietpages
+jorjdev2027|Games|Live|Cat Games|https://jorj2026.github.io/meow
+jorjdev2027|Games|Live|Wildwood GBA|https://jorj2026.github.io/wildwoodgba
+jorjdev2027|Games|Live|GTA|https://jorj2026.github.io/gta
+jorjdev2027|Games|Live|Nobody Spurrfect|https://jorj2026.github.io/nobodyspurrfect
+jorjdev2027|Other|Live|Paint 3d|https://jorj2026.github.io/paint3d
+jorjdev2027|Self Help|Live|Personal Reset|https://jorj2026.github.io/personalreset
+jorjdev2027|Other|Live|Quiet Notebook|https://jorj2026.github.io/quietnotebook
+jorjdev2027|Other|Live|Text Editor|https://jorj2026.github.io/logo
+jorjdev2027|Other|Live|Shelf|https://jorj2026.github.io/shelf
+jorjdev2027|Games|Live|RPG|https://jorj2026.github.io/rpg
+jorjdev2027|Other|Live|Quality|https://jorj2026.github.io/quality
+jorjdev2027|Games|Live|Card Arcade|https://jorj2026.github.io/cardarcade
+jorjdev2027|Self Help|Live|Calm|https://jorj2026.github.io/calm
+jorjdev2027|Video|Live|LocalTube|https://jorj2026.github.io/localtube
+jorjdev2027|Study|Live|Pocket Reference|https://jorj2026.github.io/pocketreference
+gran|Bible|Live|Bible Verses|https://jorj2026.github.io/bible
+gran|Games|Live|Play Something!|https://jorj2026.github.io/play
+gran|Games|Live|Cat Games|https://jorj2026.github.io/meow
+gran|Study|Live|Gran's Study Corner|https://jorj2026.github.io/granstudy
+gran|Music|Live|MIDI|https://jorj2026.github.io/chopin
+gran|Other|Live|Clear Mind|https://jorj2026.github.io/clearmind
+faith|Games|Live|Play Something!|https://jorj2026.github.io/play
+faith|Games|Live|Cat Games|https://jorj2026.github.io/meow
+harmony|Games|Live|Play Something!|https://jorj2026.github.io/play
+harmony|Games|Live|Cat Games|https://jorj2026.github.io/meow
+gran|Other|Live|Journaling|https://jorj2026.github.io/clearmind
+jack|Other|Live|Journaling|https://jorj2026.github.io/clearmind
+gran|Other|Live|Paint 3d|https://jorj2026.github.io/paint3d
+jack|Other|Live|Paint 3d|https://jorj2026.github.io/paint3d
+gran|Other|Live|Text Editor|https://jorj2026.github.io/logo
+jack|Other|Live|Text Editor|https://jorj2026.github.io/logo
+gran|Video|Live|LocalTube|https://jorj2026.github.io/localtube
+jack|Video|Live|LocalTube|https://jorj2026.github.io/localtube
+gran|Study|Live|Pocket Reference|https://jorj2026.github.io/pocketreference
+jack|Study|Live|Pocket Reference|https://jorj2026.github.io/pocketreference
+gran|Games|Live|Card Arcade (old)|https://jorj2026.github.io/cardarcade
+jack|Games|Live|Card Arcade (old)|https://jorj2026.github.io/cardarcade
+gran|Music|Live|FretLab|https://jorj2026.github.io/fretlab
+jack|Music|Live|FretLab|https://jorj2026.github.io/fretlab
+gran|Music|Live|FretLab (old)|https://jorj2026.github.io/guitar
+jack|Music|Live|FretLab (old)|https://jorj2026.github.io/guitar
+jack|Other|Live|Quality|https://jorj2026.github.io/quality
+jack|Other|Live|Calm|https://jorj2026.github.io/calm
+faith|Games|Live|Cat Card Games (old)|https://jorj2026.github.io/nobodyspurrfect
+gran|Games|Live|Cat Card Games (old)|https://jorj2026.github.io/nobodyspurrfect
+harmony|Games|Live|Cat Card Games (old)|https://jorj2026.github.io/nobodyspurrfect
+jack|Games|Live|Cat Card Games (old)|https://jorj2026.github.io/nobodyspurrfect
+jorjdev2027|Games|Live|Cat Card Games (old)|https://jorj2026.github.io/nobodyspurrfect
 `;
-const ALL = ["admin","gran","faith","harmony"];
+const ALL = [];
 // Guest always sees these (by URL). They can tick more with "Choose more projects".
-const GUEST_BASE = [
-  "https://jackrose2030.github.io/pocketreference/",
-  "https://jackrose2028.github.io/watch",
-  "https://jorj2026.github.io/play",
-  "https://jackrose2028.github.io/guitar"
-];
+const GUEST_BASE = [];
 const STATUS_ORDER = ["Live","Live Test","Testing","Work Testing"];
 // Titles listed here show first, in this order, for that person. Everything else follows.
-const PRIORITY = { gran:["Bible","Play Something!","LocalTube","Gran\u2019s Study Time"] };
+const PRIORITY = { jorjdev2027:["Play Something!","Elk River Bandit","Gran’s Study Corner","Wildroot","Lantern Woods","Fretlab","Clear Mind","MIDI","Guitar Scales & Practice"] };
+// Heading above the PRIORITY titles, for that person only.
+const MAIN_LABEL = { jorjdev2027:"Main apps" };
 // "Live!" chip (Admin only): a filter over these URLs. Doesn't change any project's own category.
-const LIVE_BANG = ["https://jorj2026.github.io/play/", "http://jackrose2028.github.io/gemu", "https://rossjeck89.github.io/studio/", "https://jorj2026.github.io/granstudy/", "https://rossjeck89.github.io/quality/", "https://jackrose2027.github.io/cardarcade/", "https://jackrose2028.github.io/watch/", "https://jackrose2030.github.io/pocketreference/", "https://jackrosejr2027.github.io/bible/", "https://jackrose2028.github.io/gemumod/", "https://jackrose2028.github.io/guitar/", "https://jackrose2028.github.io/gemustudio/"];
+const LIVE_BANG = [];
 const normUrl = u => u.replace(/^https?:\/\//,"").replace(/\/$/,"").toLowerCase();
 const LIVE_SET = new Set(LIVE_BANG.map(normUrl));
 const inLiveBang = p => LIVE_SET.has(normUrl(p.url));
-const PROJECTS = RAW.trim().split("\n").map(l=>{
+const PROJECTS = RAW.trim().split("\n").filter(Boolean).map(l=>{
   const [u,c,st,t,url] = l.split("|").map(x=>x.trim());
   return { name:t.replace("'", "\u2019"), url, cat:c, status:st, tags:[c,st], desc:url.replace("https://",""),
-          for: u==="All" ? ALL : [u.toLowerCase()], owner:url.startsWith("https://jorj2026.github.io/") ? "JORJ2026" : null };
+          for: u==="All" ? ALL : [u.toLowerCase()] };
 });
-// Public repositories supplied for JORJ26. Ages are fallback estimates from the list;
-// exact GitHub timestamps replace them whenever the API is available.
-const JORJ_REPOS = [
-  ["emu","Games",360], ["emulatorjsmod","Games",240], ["emubasic","Games",2],
-  ["chopin","Music",15], ["guitar","Music",420], ["rpg-hm","Games",11,true],
-  ["gtaII","Games",7], ["gta","Games",12], ["elkriverbandit","Games",16,true],
-  ["hb","Other",180], ["nobodyspurrfect","Games",240], ["paint3d","Other",240,true],
-  ["quietpages","Self Help",300], ["start","Other",1440], ["play","Games",1440],
-  ["granstudy","Study",1020], ["logo","Other",1020,true], ["bible","Religious",420],
-  ["quietnotebook","Self Help",300], ["personalreset","Self Help",300],
-  ["quality","Other",240], ["cardarcade","Games",240], ["calm","Self Help",300],
-  ["localtube","Video",420], ["pocketreference","Other",480,true]
-].map(([name, cat, ageMinutes, shared]) => ({
-  name, url:"https://jorj2026.github.io/"+name+"/", cat, status:"Live",
-  tags:[cat,"Live","Repository"], desc:"jorj2026.github.io/"+name+"/",
-  for:shared ? ["jack","faith","harmony","gran","guest"] : ["jack"], owner:"JORJ2026", fallbackUpdatedAt:Date.now()-ageMinutes*60_000
-}));
-PROJECTS.push(...JORJ_REPOS);
 /* ============ END EDIT ============ */
-
-import { svgIcon } from "./icons.js";
 
 const $ = id => document.getElementById(id);
 let role = null, deferredPrompt = null;
 let guestPicks = []; try{ guestPicks = JSON.parse(store("hub-guest-picks")||"[]")||[]; }catch(e){}
 const canSee = p => role==="admin"
-  || (role==="jack" && p.owner==="JORJ2026")
+  || (role==="jack" && (p.status==="Live"||p.status==="Live Test"))
   || (role==="guest" && (GUEST_BASE.includes(p.url) || guestPicks.includes(p.url)))
   || p.for.includes(role);
 
@@ -128,19 +118,8 @@ function store(k,v){ try{ if(v===undefined) return localStorage.getItem(k); v===
 function toast(t){ const el=$("toast"); el.textContent=t; el.hidden=false; setTimeout(()=>el.hidden=true,2200); }
 const repoUrl = p => p.url || `https://github.com/${GITHUB_USER}/${p.repo}`;
 
-function buildPicker(){
-  $("roles").innerHTML = "";
-  Object.entries(ROLES).forEach(([key,r])=>{
-    const b = document.createElement("button");
-    b.className="role"; b.style.setProperty("--c", r.color);
-    b.innerHTML = `<span class="ri">${svgIcon(ROLE_ICON[key])}</span><b>${r.name}</b><div class="big" aria-hidden="true">${r.name[0]}</div>`;
-    b.onclick = () => choose(key);
-    $("roles").appendChild(b);
-  });
-}
-
 const CAT_ICON={Games:"gamepad",Music:"music",Video:"tv",Other:"sparkle",Study:"book","Self Help":"leaf",Religious:"cross"};
-const ROLE_ICON={admin:"crown",faith:"sun",gran:"heart",harmony:"leaf",guest:"user",jack:"star"};
+const ROLE_ICON={admin:"crown",faith:"sun",gran:"heart",harmony:"leaf",guest:"user",jack:"star",jorjdev2027:"sparkle"};
 const CATC={Games:"#E8590C",Music:"#7048E8",Video:"#D6336C",Other:"#1C7ED6",Study:"#2F9E44","Self Help":"#0CA678",Religious:"#3A6EA5"};
 function card(p,feat){
   const a=document.createElement("a");
@@ -148,37 +127,18 @@ function card(p,feat){
   a.style.setProperty("--c", CATC[p.cat]||"#1C7ED6");
   const icon = /recipe/i.test(p.name) ? "chef" : (CAT_ICON[p.cat]||"sparkle");
   const slug = p.status.toLowerCase().replace(/\s+/g,"-");
-  a.innerHTML = `<div class="ic" aria-hidden="true"></div><span class="st st-${slug}"></span><div class="tx"><h3></h3><p></p><small class="updated" hidden></small></div><span class="go" aria-hidden="true"></span>`;
+  a.innerHTML = `<div class="ic" aria-hidden="true"></div><span class="st st-${slug}"></span><div class="tx"><h3></h3><p></p></div><span class="go" aria-hidden="true"></span>`;
   a.querySelector(".ic").innerHTML=svgIcon(icon);
   a.querySelector(".go").innerHTML=svgIcon("arrow");
   const stEl=a.querySelector(".st"); if(role==="admin"||role==="jack") stEl.textContent=p.status; else stEl.remove();
   a.querySelector("h3").textContent=p.name;
   a.querySelector("p").textContent = role==="admin"||role==="jack" ? p.desc : p.cat;
-  const modified = p.updatedAt || p.fallbackUpdatedAt;
-  if(modified){
-    const time = new Date(modified);
-    const label = a.querySelector(".updated");
-    label.dateTime = time.toISOString();
-    label.textContent = (p.updatedAt ? "Last modified " : "Approx. last modified ") + new Intl.DateTimeFormat(undefined,{year:"numeric",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}).format(time);
-    label.hidden = false;
-  }
   return a;
-}
-
-async function loadGitHubRepoDates(){
-  try{
-    const response = await fetch("https://api.github.com/users/JORJ2026/repos?per_page=100&sort=updated",{headers:{Accept:"application/vnd.github+json"}});
-    if(!response.ok) return;
-    const repos = await response.json();
-    const byName = new Map(repos.map(repo=>[repo.name.toLowerCase(),repo.updated_at]));
-    JORJ_REPOS.forEach(project=>{ const date=byName.get(project.name.toLowerCase()); if(date) project.updatedAt=date; });
-    render();
-  }catch(error){ /* Approximate times from the supplied list remain visible. */ }
 }
 
 let cat = "";
 let view = store("hub-view")==="grid" ? "grid" : "list";
-let collapsed = {};
+let collapsed = {"Testing":1,"Work Testing":1};
 try{ const c=JSON.parse(store("hub-collapsed")||"null"); if(c) collapsed=c; }catch(e){}
 let group = store("hub-group")==="account" ? "account" : "status";
 const acct = p => p.url.replace(/^https?:\/\//,"").split(".")[0];
@@ -192,7 +152,7 @@ function render(){
   $("gAcct").setAttribute("aria-pressed", String(group==="account"));
   const term = $("q").value.trim().toLowerCase();
   const mine = PROJECTS.filter(canSee);
-  const cats = [...new Set(mine.map(p=>p.cat))].sort();
+  const cats = [...new Set(mine.map(p=>p.cat))].sort((a,b)=> (a==='GitHub')-(b==='GitHub') || a.localeCompare(b));
   const chips=$("chips"); chips.innerHTML="";
   if(cats.length>1){
     ["", ...(role==="admin"?["Live!"]:[]), ...cats].forEach(c=>{
@@ -209,7 +169,7 @@ function render(){
   const list=$("list"); list.innerHTML="";
   if(!shown.length){ list.innerHTML = `<div class="empty"><span class="eic">${svgIcon("inbox")}</span>${term||cat?"No projects match.":"No projects have been shared with you yet. Ask Admin to add some."}</div>`; return; }
   const favs = shown.filter(p=>pr.includes(p.name)), rest = shown.filter(p=>!pr.includes(p.name));
-  if(favs.length){ const f=document.createElement("div"); f.className="favs"; favs.forEach(p=>f.appendChild(card(p,true))); list.appendChild(f); }
+  if(favs.length){ if(MAIN_LABEL[role]){ const h=document.createElement("h2"); h.className="main-h"; h.textContent=MAIN_LABEL[role]; list.appendChild(h); } const f=document.createElement("div"); f.className="favs"; favs.forEach(p=>f.appendChild(card(p,true))); list.appendChild(f); }
   const block = items => { const d=document.createElement("div"); d.className = view==="grid" ? "grid" : "rows"; items.forEach(p=>d.appendChild(card(p))); return d; };
   if(role==="admin"||role==="jack"){
     const filtering = !!(term||cat);
@@ -229,12 +189,15 @@ function render(){
 }
 
 const DOCK = [
-  { label:"Pocket Ref", icon:"notebook", url:"https://jackrose2030.github.io/pocketreference/", c:"#1C7ED6" },
-  { label:"LocalTube", icon:"tv", url:"https://jackrose2028.github.io/watch",  c:"#D6336C" },
-  { label:"Play",      icon:"gamepad", url:"https://jorj2026.github.io/play",   c:"#E8590C" },
-  { label:"Guitar",    icon:"music", url:"https://jackrose2028.github.io/guitar", c:"#7048E8" },
-  { label:"Study",     icon:"book", url:"https://jorj2026.github.io/granstudy", c:"#2F9E44" },
-  { label:"Bible",     icon:"cross", url:"https://jackrosejr2027.github.io/bible/", c:"#3A6EA5" }
+  { url:"https://jorj2026.github.io/play", label:"Play Something!", icon:"gamepad", c:"#E8590C" },
+  { url:"https://jorj2026.github.io/meow", label:"Cat Games", icon:"gamepad", c:"#E8590C" },
+  { url:"https://jorj2026.github.io/granstudy", label:"Study", icon:"book", c:"#2F9E44" },
+  { url:"https://jorj2026.github.io/chopin", label:"MIDI", icon:"music", c:"#7048E8" },
+  { url:"https://jorj2026.github.io/localtube", label:"LocalTube", icon:"tv", c:"#D6336C" },
+  { url:"https://jorj2026.github.io/logo", label:"Text Editor", icon:"notebook", c:"#1C7ED6" },
+  { url:"https://jorj2026.github.io/fretlab", label:"FretLab", icon:"music", c:"#7048E8" },
+  { url:"https://jorj2026.github.io/pocketreference", label:"Pocket Reference", icon:"book", c:"#2F9E44" },
+  { url:"https://jorj2026.github.io/paint3d", label:"Paint 3d", icon:"sparkle", c:"#0CA678" },
 ];
 function buildDock(){
   const dock=$("dock"); dock.innerHTML="";
@@ -285,7 +248,7 @@ function buildPick(){
 function exportCsv(){
   const opt = new Set(pickable().map(p=>p.url));
   const who = p => Object.keys(ROLES).filter(r =>
-      r==="admin" || (r==="jack" && p.owner==="JORJ2026") || (r==="guest" && GUEST_BASE.includes(p.url)) || p.for.includes(r)
+      r==="admin" || (r==="jack" && (p.status==="Live"||p.status==="Live Test")) || (r==="guest" && GUEST_BASE.includes(p.url)) || p.for.includes(r)
     ).map(r=>ROLES[r].name).concat(opt.has(p.url) && !GUEST_BASE.includes(p.url) ? ["Guest (optional)"] : []).join("; ");
   const q = v => '"'+String(v).replace(/"/g,'""')+'"';
   const rows = [["Name","Category","Status","GitHub account","URL","Shows up for"], ...PROJECTS.map(p=>[p.name,p.cat,p.status,acct(p),p.url,who(p)])];
@@ -294,12 +257,6 @@ function exportCsv(){
   a.href = URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));
   a.download = "project-hub-links.csv"; document.body.appendChild(a); a.click(); a.remove();
   toast("CSV downloaded");
-}
-function showPicker(){
-  store("hub-role", null); role=null;
-  document.documentElement.style.removeProperty("--accent");
-  $("adminBar").hidden=true; $("guestBar").hidden=true; $("pickPanel").hidden=true;
-  $("home").hidden=true; $("pick").hidden=false; buildDock();
 }
 
 /* Install help */
@@ -338,15 +295,28 @@ $("copy").onclick = async()=>{
   }catch(e){}
 })();
 
-$("switch").onclick = showPicker;
 $("dlCsv").onclick=exportCsv;
+$("back").onclick=showPick;
+function showPick(){
+  role = null; $("home").hidden = true; $("dock").hidden = true; $("pick").hidden = false;
+  document.documentElement.style.removeProperty("--accent");
+  document.querySelector('meta[name="theme-color"]').content = "#E6EDEF";
+  window.scrollTo(0,0);
+}
 $("gStatus").onclick=()=>setGroup("status"); $("gAcct").onclick=()=>setGroup("account");
 $("morePick").onclick=()=>{ $("pickPanel").hidden=!$("pickPanel").hidden; };
 $("pickDone").onclick=()=>{ $("pickPanel").hidden=true; window.scrollTo(0,0); };
 $("q").addEventListener("input", render);
 $("vList").onclick=()=>setView("list"); $("vGrid").onclick=()=>setView("grid");
 document.querySelectorAll("[data-ic]").forEach(el=>el.innerHTML=svgIcon(el.dataset.ic));
-buildPicker();
-const saved = store("hub-role");
-if(saved && ROLES[saved]) choose(saved); else choose("jack");
-loadGitHubRepoDates();
+// One button per user, alphabetical by name
+const userList = $("userList");
+Object.entries(ROLES).sort((a,b)=>a[1].name.localeCompare(b[1].name, undefined, {sensitivity:"base"})).forEach(([key,r])=>{
+  const b=document.createElement("button"); b.className="tile"; b.style.setProperty("--c", r.color);
+  b.innerHTML='<div class="ic" aria-hidden="true"></div><div class="tx"><h3></h3><p></p></div><span class="go" aria-hidden="true"></span>';
+  b.querySelector(".ic").innerHTML=svgIcon(ROLE_ICON[key]||"user");
+  b.querySelector(".go").innerHTML=svgIcon("arrow");
+  b.querySelector("h3").textContent=r.name; b.querySelector("p").textContent=r.blurb;
+  b.onclick=()=>choose(key); userList.appendChild(b);
+});
+$("pick").hidden=false; buildDock();

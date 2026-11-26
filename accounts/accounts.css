@@ -1,0 +1,5 @@
+.ghost{text-decoration:none}
+.bk svg{transform:rotate(180deg)}
+.bk{display:inline-grid}
+.bk svg{width:18px;height:18px}
+.sub{min-height:1em}

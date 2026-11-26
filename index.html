@@ -17,17 +17,16 @@
 <div class="wrap">
 
   <!-- Step 1: who are you -->
-  <section id="pick" class="pick" hidden>
-    <h1>Who’s here?</h1>
-    <div class="roles" id="roles"></div>
+  <section id="pick" hidden>
+    <div class="hero"><div class="hello">Who’s here?</div></div>
+    <div class="grid" id="userList"></div>
   </section>
 
   <!-- Step 2: home -->
   <section id="home" hidden>
     <div class="hero">
       <div class="top">
-        <div class="who"><div class="dot" id="dot"></div><span id="whoName"></span></div>
-        <button class="ghost" id="switch"><span data-ic="swap"></span>Switch person</button>
+        <div class="who"><div class="dot" id="dot"></div><span id="whoName"></span></div><button class="ghost" id="back"><span class="bk" data-ic="chev"></span>Back</button>
       </div>
       <div class="hello" id="hello"></div>
       <p class="sub" id="sub"></p>
@@ -92,8 +91,9 @@
 </div>
 <nav class="dock" id="dock" aria-label="Quick links" hidden></nav>
 <div class="toast" id="toast" hidden></div>
-<div class="stamp" aria-hidden="true">JORJ26</div>
+<div class="stamp" aria-hidden="true">JORJ2026</div>
 
-<script type="module" src="app.js"></script>
+<script src="icons.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

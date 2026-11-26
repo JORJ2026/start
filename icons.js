@@ -28,6 +28,6 @@ const ICON_PATHS = {
   arrow:'<path d="M7 17 17 7M8 7h9v9"/>',
   notebook:'<rect x="4.5" y="3" width="15" height="18" rx="2.5"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/>'
 };
-export function svgIcon(name){
+function svgIcon(name){
   return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICON_PATHS[name]||ICON_PATHS.sparkle) + '</svg>';
 }
