@@ -47,3 +47,9 @@ td a{border-bottom:1px solid #333}td a:hover{border-color:#aaa}
 .meta i{white-space:nowrap}
 #app{padding-top:34px}.grid{gap:26px}.card{border-radius:16px}.shot .ph{transform:scale(1.04);transition:opacity .8s,transform 6s ease-out}.card:hover .shot .ph{transform:scale(1.1)}
 .meta b{font-size:16px}
+h2.sec{margin:80px 0 0;font:600 11px/1 system-ui;letter-spacing:.32em;text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:16px}
+h2.sec:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line,#2a2c31),transparent)}
+#app .sub{margin:34px 0 14px;font:italic 400 20px/1 "Iowan Old Style",Georgia,serif;color:#a9a59b}
+.card time{display:block;margin:-8px 16px 14px;font:500 11.5px/1.2 system-ui;letter-spacing:.04em;color:var(--mute)}
+.card.ext .shot iframe{background:#0d0e11}
+td a.repo{margin-left:8px;font-weight:400;font-size:12px;color:var(--mute)}
