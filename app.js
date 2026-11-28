@@ -93,6 +93,9 @@ jack|Other|Live|Tools|https://jorj2026.github.io/gsd
 jack|Games|Live|HTML Games|https://jorj2026.github.io/htmlgames
 jorjdev2027|Games|Live|HTML Games|https://jorj2026.github.io/htmlgames
 faith|Games|Live|HTML Games|https://jorj2026.github.io/htmlgames
+gran|Other|Live|Polyglot|https://jorj2026.github.io/polyglot
+jack|Other|Live|Polyglot|https://jorj2026.github.io/polyglot
+jorjdev2027|Other|Live|Polyglot|https://jorj2026.github.io/polyglot
 gran|Games|Live|HTML Games|https://jorj2026.github.io/htmlgames
 harmony|Games|Live|HTML Games|https://jorj2026.github.io/htmlgames
 `;
@@ -205,8 +208,8 @@ const DOCK = [
   { url:"https://jorj2026.github.io/localtube", label:"LocalTube", icon:"tv", c:"#D6336C" },
   { url:"https://jorj2026.github.io/fretlab", label:"FretLab", icon:"music", c:"#7048E8" },
   { url:"https://jorj2026.github.io/granstudy", label:"Study", icon:"book", c:"#2F9E44" },
+  { url:"https://jorj2026.github.io/polyglot", label:"Polyglot", icon:"book", c:"#0B7285" },
   { url:"https://jorj2026.github.io/chopin", label:"MIDI", icon:"music", c:"#7048E8" },
-  { url:"https://jorj2026.github.io/logo", label:"Text Editor", icon:"notebook", c:"#1C7ED6" },
   { url:"https://jorj2026.github.io/pocketreference", label:"Pocket Reference", icon:"book", c:"#2F9E44" },
   { url:"https://jorj2026.github.io/htmlgames", label:"HTML", icon:"gamepad", c:"#E8590C" },
 ];

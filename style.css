@@ -118,6 +118,18 @@ button.tile{width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit
 .tile.feat .ic{width:72px;height:72px;background:rgba(255,255,255,.2);box-shadow:none}
 .tile.feat .ic svg{width:36px;height:36px}
 .tile.feat .tx{margin:0;padding-right:32px}
+#pick .tile p{display:none}
+.wrap:has(#pick:not([hidden])){padding-bottom:24px}
+#pick .hero{padding:12px 20px 16px}
+#pick .hello{font-size:clamp(2.2rem,5vw,3.2rem)}
+#pick .sortRow{margin-top:8px}
+#pick .grid{gap:12px;margin-top:8px}
+#pick .tile{flex-direction:row;align-items:center;gap:12px;min-height:0;padding:12px 36px 12px 12px}
+#pick .ic{width:44px;height:44px;flex:none}
+#pick .ic svg{width:24px;height:24px}
+#pick .tx{margin-top:0;padding-right:0;min-width:0}
+#pick .tile h3{font-size:.95rem;margin-bottom:0}
+#pick .go{bottom:auto;top:50%;transform:translateY(-50%);right:12px}
 .tile.feat h3{font-size:1.5rem}
 .tile.feat p{color:rgba(255,255,255,.86);font-size:.9rem}
 .tile.feat .go{color:#fff;background:rgba(255,255,255,.2);top:50%;bottom:auto;margin-top:-14px;right:18px;opacity:.9}
