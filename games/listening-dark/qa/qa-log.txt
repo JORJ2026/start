@@ -1,0 +1,111 @@
+PASS load screen finished and audio started on the first key
+PASS boots to title with no errors
+PASS procedural levels valid (308 generated)  — avg build 21.6 ms
+PASS Descent from the title opens difficulty
+PASS Standard starts the intro
+PASS Begin enters depth 1
+PASS keyboard moves the bat  — moved 63.5 px
+PASS bat never ends a tick inside rock (900 ticks)  — 0 violations
+PASS tap chirp fires once
+PASS held call reaches farther (>= 20 tiles)  — range 26.0 tiles
+PASS calls create echo points and wall memory  — 1507 points, 93 cells remembered
+PASS stalker hunts what it hears
+PASS collecting every shard opens the way down  — 2/2
+PASS entering the way leads to the roost and depth 2
+PASS choosing a boon (key 1) starts depth 2 and saves the run
+PASS achievement First Light unlocked
+PASS Continue offered after reload
+PASS Continue resumes at depth 2
+PASS Escape pauses and time stops
+PASS Escape resumes
+PASS hits cost one wing and grant brief invulnerability
+PASS twelfth moth mends a wing
+PASS last wing lost -> death -> game-over screen, run cleared
+PASS Descend again restarts at depth 1
+PASS descent of 8 depths completes with the Return ending  — {"state":"ending","screen":"ending","songs":4,"ending":{"return":true},"depth":8}
+PASS all four lost songs found on depths 2/4/5/7  — songs before final: 4
+PASS singing all four verses to the Mute calms it and opens the way
+PASS Chorus ending reached and recorded (Cruel achievement too)  — first_light,whisper,swift,untouched,verse,halfway,all_verses,return,chorus,cruel
+PASS endless deep unlocks after an ending
+PASS Chorus echo palette unlocked
+PASS endless depth 13 builds and plays (no mute, no songs)  — 17 hunters
+PASS daily cave uses one seed per day at Standard
+PASS no page errors during functional pass
+PASS AI soak (48 one-minute trials): no NaN positions; every stalker keeps moving  — {"careless":{"trialsHit":7,"meanSecondsToFirstHit":52,"nan":0,"stuck":0,"huntTicks":2550},"informed":{"trialsHit":2,"meanSecondsToFirstHit":58.3,"nan":0,"stuck":0,"huntTicks":298}}
+PASS stealth matters: informed play is hit in far fewer trials than careless play  — hit within 60 s: careless 7/24 (mean 52 s), informed 2/24 (mean 58.3 s)
+PASS careless play draws far more hunting  — 2550 vs 298 hunt-ticks
+PASS lurker ignores a silent glide but springs at loud flight  — {"quiet":"idle","loud":"wind"}
+PASS a ringing bellflower lures hunters to it  — {"state":"hunt","tx":0,"ty":0,"decoy":true}
+PASS Far Call extends range 25%  — 26 -> 32.5
+PASS Thick Hide adds a full wing (and boons are refused outside the roost)
+PASS text size setting rescales the interface  — 18px -> 20.7px
+PASS quality setting switches renderer to low
+PASS settings persist across reload (mute, captions, music volume)
+PASS arrow keys move menu focus  — focused: Descent eigh
+PASS corrupt save file is recovered from
+PASS no page errors during experience pass
+PASS pad: load-screen prompt shows the controller button
+PASS pad: any button passes the load screen and starts audio
+PASS pad: device detected, prompts switch to Xbox glyphs
+PASS pad: D-pad moves menu focus down and up  — story -> new -> story
+PASS pad: holding the stick repeats menu movement  — focus index 4 after a 0.7 s hold
+PASS pad: A selects (difficulty screen)
+PASS pad: B goes back
+PASS pad: A through difficulty to intro
+PASS pad: A on Begin enters play
+PASS pad: left stick flies the bat; small drift is inside the dead zone  — moved 38.0 px, drift input 0
+PASS pad: LB glides silently
+PASS pad: A chirps, held A calls far, RT also calls  — 3 calls, longest 26.0 tiles
+PASS pad: B darts
+PASS pad: vibration fires on calls, darts and hits  — 2 effects before the hit, 4 after
+PASS pad: vibration setting off stops rumble
+PASS pad: Menu button pauses
+PASS pad: open Settings from pause
+PASS pad: RB / LB switch settings sections  — tab 1 then 0
+PASS pad: D-pad right/left adjusts a slider, holding repeats  — music 0.6 -> 0.65 -> 0.45
+PASS pad: B returns from settings to pause
+PASS pad: B on pause resumes play (audio unmuffled)
+PASS pad: hint chips render the pad glyph
+PASS pad: pick a boon at the roost and descend
+PASS pad: PlayStation controller recognised, glyphs switch
+PASS pad: connection toast shown
+PASS pad: disconnecting mid-play pauses the game
+PASS pad: no page errors
+PASS story: escaping the Hollow Heart without the song gives The Return  — Ending · The Return
+PASS story: Begin the story opens the prologue
+PASS story: chapter I title card
+PASS story: every chapter speaks on arrival and the roost talks back  — [[2,2,3],[3,1,3],[4,1,4],[5,1,3],[6,1,4],[7,1,3],[8,1,3]]
+PASS story: a lost voice hides in chapters II to VII, verses in II, IV, V, VII
+PASS story: all six kin found, four verses known, eight chapters open  — {"kin":6,"verses":4,"chapters":8,"screen":"chapter"}
+PASS story: singing to the Mute with everyone home gives Homecoming  — Ending · Homecoming
+PASS story: a finished story frees its save slot
+PASS story: epilogue follows the ending
+PASS story: chapter select lists all eight chapters open
+PASS slots: a chapter replay, a descent and the story keep separate saves  — {"replay":5,"story":null,"descent":"descent","last":"replay","mode":"story","d":5}
+PASS story: dying keeps the chapter saved and offers a retry  — {"screen":"over","kept":5,"retry":true}
+PASS story: retry restarts the same chapter
+PASS robust: a double-pressed boon is taken once and descends once  — {"depth":2,"lvl":1,"id":"moth_lure"}
+PASS robust: a double-pressed difficulty starts one run
+PASS robust: a bat inside rock is moved to open air; a NaN hunter resets  — {"was":true,"now":false,"enemyOk":true}
+PASS robust: endless depth 40 builds fast with hunters capped  — {"st":"play","stalkers":16,"lurkers":10,"ms":34,"speed":1.48}
+PASS robust: with nothing left to learn the roost offers Rest and goes on  — {"v":"__rest","st":"play","d":2}
+PASS robust: a version 1 save migrates into the descent slot; bad settings fall back  — {"d":3,"last":"descent","master":0.4,"music":0.6,"pal":"bone","ui":1,"cont":"Continue Descent · depth 3 · Standard"}
+PASS robust: the migrated run continues at depth 3 with its boon
+PASS robust: hostile save values are clamped, unknown runs refused  — {"r":{"v":2,"mode":"descent","diff":"standard","seed":0,"replay":false,"depth":8,"maxHearts":3,"hearts":1,"boons":{"far_call":2},"moths":0,"mothMeter":12,"songs":[1],"kin":[2],"sang":false,"date":"2026-11-27","stats":{"pings":0,"time":0,"stuns":0,"hurt":0}},"bad":[null,null,null,null]}
+PASS robust: a corrupt save is restored from the backup copy and the title says so  — {"runs":77,"rec":true,"note":"Best with headphones\n      v1.2.0 · save restored from backup"}
+PASS robust: yesterday's daily is labelled, and Daily cave starts today's  — {"label":"Continue Daily cave · depth 4 · from 2020-01-01","depth":1,"date":"2026-11-27"}
+PASS robust: a save written by another tab is picked up on the title
+PASS no page errors during story and robustness checks
+PASS performance at 1920x1080 without glow: render CPU p95 < 3 ms, 60 fps  — render median 0.50 ms, p95 1.70 ms; frame interval median 16.7 ms over 599 frames; 1662 live echo points
+PASS performance at 1920x1080 with glow: render CPU p95 < 6 ms (headless software rendering; real GPUs blit this)  — render median 2.10 ms, p95 5.10 ms; frame interval median 33.3 ms over 599 frames; 1248 live echo points
+PASS slow-device guard turns glow off and tells the player  — {"bloom":false,"toast":"Glow turned offto keep play smooth. Turn it back on in Settings, Display."}
+PASS no runaway memory across repeated level builds  — heap 21 MB -> 21 MB after 6 rebuilds
+PASS mobile: touch controls shown in play, no horizontal overflow  — {"st":"play","touch":"block","pb":"block","w":390}
+PASS mobile: virtual stick flies the bat  — moved 79.7 px
+PASS mobile: CALL button calls
+PASS mobile: pause button pauses
+PASS no page errors on mobile
+PASS runs with storage unavailable (and says so)  — {"st":"play","persistent":false}
+PASS fully playable offline (only optional font requests attempted)  — https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,500&display=swap
+
+109/109 checks passed

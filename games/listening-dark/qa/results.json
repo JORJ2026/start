@@ -1,0 +1,547 @@
+[
+  {
+    "name": "load screen finished and audio started on the first key",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "boots to title with no errors",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "procedural levels valid (308 generated)",
+    "pass": true,
+    "info": "avg build 21.6 ms"
+  },
+  {
+    "name": "Descent from the title opens difficulty",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "Standard starts the intro",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "Begin enters depth 1",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "keyboard moves the bat",
+    "pass": true,
+    "info": "moved 63.5 px"
+  },
+  {
+    "name": "bat never ends a tick inside rock (900 ticks)",
+    "pass": true,
+    "info": "0 violations"
+  },
+  {
+    "name": "tap chirp fires once",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "held call reaches farther (>= 20 tiles)",
+    "pass": true,
+    "info": "range 26.0 tiles"
+  },
+  {
+    "name": "calls create echo points and wall memory",
+    "pass": true,
+    "info": "1507 points, 93 cells remembered"
+  },
+  {
+    "name": "stalker hunts what it hears",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "collecting every shard opens the way down",
+    "pass": true,
+    "info": "2/2"
+  },
+  {
+    "name": "entering the way leads to the roost and depth 2",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "choosing a boon (key 1) starts depth 2 and saves the run",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "achievement First Light unlocked",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "Continue offered after reload",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "Continue resumes at depth 2",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "Escape pauses and time stops",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "Escape resumes",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "hits cost one wing and grant brief invulnerability",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "twelfth moth mends a wing",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "last wing lost -> death -> game-over screen, run cleared",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "Descend again restarts at depth 1",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "descent of 8 depths completes with the Return ending",
+    "pass": true,
+    "info": "{\"state\":\"ending\",\"screen\":\"ending\",\"songs\":4,\"ending\":{\"return\":true},\"depth\":8}"
+  },
+  {
+    "name": "all four lost songs found on depths 2/4/5/7",
+    "pass": true,
+    "info": "songs before final: 4"
+  },
+  {
+    "name": "singing all four verses to the Mute calms it and opens the way",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "Chorus ending reached and recorded (Cruel achievement too)",
+    "pass": true,
+    "info": "first_light,whisper,swift,untouched,verse,halfway,all_verses,return,chorus,cruel"
+  },
+  {
+    "name": "endless deep unlocks after an ending",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "Chorus echo palette unlocked",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "endless depth 13 builds and plays (no mute, no songs)",
+    "pass": true,
+    "info": "17 hunters"
+  },
+  {
+    "name": "daily cave uses one seed per day at Standard",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "no page errors during functional pass",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "AI soak (48 one-minute trials): no NaN positions; every stalker keeps moving",
+    "pass": true,
+    "info": "{\"careless\":{\"trialsHit\":7,\"meanSecondsToFirstHit\":52,\"nan\":0,\"stuck\":0,\"huntTicks\":2550},\"informed\":{\"trialsHit\":2,\"meanSecondsToFirstHit\":58.3,\"nan\":0,\"stuck\":0,\"huntTicks\":298}}"
+  },
+  {
+    "name": "stealth matters: informed play is hit in far fewer trials than careless play",
+    "pass": true,
+    "info": "hit within 60 s: careless 7/24 (mean 52 s), informed 2/24 (mean 58.3 s)"
+  },
+  {
+    "name": "careless play draws far more hunting",
+    "pass": true,
+    "info": "2550 vs 298 hunt-ticks"
+  },
+  {
+    "name": "lurker ignores a silent glide but springs at loud flight",
+    "pass": true,
+    "info": "{\"quiet\":\"idle\",\"loud\":\"wind\"}"
+  },
+  {
+    "name": "a ringing bellflower lures hunters to it",
+    "pass": true,
+    "info": "{\"state\":\"hunt\",\"tx\":0,\"ty\":0,\"decoy\":true}"
+  },
+  {
+    "name": "Far Call extends range 25%",
+    "pass": true,
+    "info": "26 -> 32.5"
+  },
+  {
+    "name": "Thick Hide adds a full wing (and boons are refused outside the roost)",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "text size setting rescales the interface",
+    "pass": true,
+    "info": "18px -> 20.7px"
+  },
+  {
+    "name": "quality setting switches renderer to low",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "settings persist across reload (mute, captions, music volume)",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "arrow keys move menu focus",
+    "pass": true,
+    "info": "focused: Descent eigh"
+  },
+  {
+    "name": "corrupt save file is recovered from",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "no page errors during experience pass",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: load-screen prompt shows the controller button",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: any button passes the load screen and starts audio",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: device detected, prompts switch to Xbox glyphs",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: D-pad moves menu focus down and up",
+    "pass": true,
+    "info": "story -> new -> story"
+  },
+  {
+    "name": "pad: holding the stick repeats menu movement",
+    "pass": true,
+    "info": "focus index 4 after a 0.7 s hold"
+  },
+  {
+    "name": "pad: A selects (difficulty screen)",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: B goes back",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: A through difficulty to intro",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: A on Begin enters play",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: left stick flies the bat; small drift is inside the dead zone",
+    "pass": true,
+    "info": "moved 38.0 px, drift input 0"
+  },
+  {
+    "name": "pad: LB glides silently",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: A chirps, held A calls far, RT also calls",
+    "pass": true,
+    "info": "3 calls, longest 26.0 tiles"
+  },
+  {
+    "name": "pad: B darts",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: vibration fires on calls, darts and hits",
+    "pass": true,
+    "info": "2 effects before the hit, 4 after"
+  },
+  {
+    "name": "pad: vibration setting off stops rumble",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: Menu button pauses",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: open Settings from pause",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: RB / LB switch settings sections",
+    "pass": true,
+    "info": "tab 1 then 0"
+  },
+  {
+    "name": "pad: D-pad right/left adjusts a slider, holding repeats",
+    "pass": true,
+    "info": "music 0.6 -> 0.65 -> 0.45"
+  },
+  {
+    "name": "pad: B returns from settings to pause",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: B on pause resumes play (audio unmuffled)",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: hint chips render the pad glyph",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: pick a boon at the roost and descend",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: PlayStation controller recognised, glyphs switch",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: connection toast shown",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: disconnecting mid-play pauses the game",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "pad: no page errors",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "story: escaping the Hollow Heart without the song gives The Return",
+    "pass": true,
+    "info": "Ending · The Return"
+  },
+  {
+    "name": "story: Begin the story opens the prologue",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "story: chapter I title card",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "story: every chapter speaks on arrival and the roost talks back",
+    "pass": true,
+    "info": "[[2,2,3],[3,1,3],[4,1,4],[5,1,3],[6,1,4],[7,1,3],[8,1,3]]"
+  },
+  {
+    "name": "story: a lost voice hides in chapters II to VII, verses in II, IV, V, VII",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "story: all six kin found, four verses known, eight chapters open",
+    "pass": true,
+    "info": "{\"kin\":6,\"verses\":4,\"chapters\":8,\"screen\":\"chapter\"}"
+  },
+  {
+    "name": "story: singing to the Mute with everyone home gives Homecoming",
+    "pass": true,
+    "info": "Ending · Homecoming"
+  },
+  {
+    "name": "story: a finished story frees its save slot",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "story: epilogue follows the ending",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "story: chapter select lists all eight chapters open",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "slots: a chapter replay, a descent and the story keep separate saves",
+    "pass": true,
+    "info": "{\"replay\":5,\"story\":null,\"descent\":\"descent\",\"last\":\"replay\",\"mode\":\"story\",\"d\":5}"
+  },
+  {
+    "name": "story: dying keeps the chapter saved and offers a retry",
+    "pass": true,
+    "info": "{\"screen\":\"over\",\"kept\":5,\"retry\":true}"
+  },
+  {
+    "name": "story: retry restarts the same chapter",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "robust: a double-pressed boon is taken once and descends once",
+    "pass": true,
+    "info": "{\"depth\":2,\"lvl\":1,\"id\":\"moth_lure\"}"
+  },
+  {
+    "name": "robust: a double-pressed difficulty starts one run",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "robust: a bat inside rock is moved to open air; a NaN hunter resets",
+    "pass": true,
+    "info": "{\"was\":true,\"now\":false,\"enemyOk\":true}"
+  },
+  {
+    "name": "robust: endless depth 40 builds fast with hunters capped",
+    "pass": true,
+    "info": "{\"st\":\"play\",\"stalkers\":16,\"lurkers\":10,\"ms\":34,\"speed\":1.48}"
+  },
+  {
+    "name": "robust: with nothing left to learn the roost offers Rest and goes on",
+    "pass": true,
+    "info": "{\"v\":\"__rest\",\"st\":\"play\",\"d\":2}"
+  },
+  {
+    "name": "robust: a version 1 save migrates into the descent slot; bad settings fall back",
+    "pass": true,
+    "info": "{\"d\":3,\"last\":\"descent\",\"master\":0.4,\"music\":0.6,\"pal\":\"bone\",\"ui\":1,\"cont\":\"Continue Descent · depth 3 · Standard\"}"
+  },
+  {
+    "name": "robust: the migrated run continues at depth 3 with its boon",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "robust: hostile save values are clamped, unknown runs refused",
+    "pass": true,
+    "info": "{\"r\":{\"v\":2,\"mode\":\"descent\",\"diff\":\"standard\",\"seed\":0,\"replay\":false,\"depth\":8,\"maxHearts\":3,\"hearts\":1,\"boons\":{\"far_call\":2},\"moths\":0,\"mothMeter\":12,\"songs\":[1],\"kin\":[2],\"sang\":false,\"date\":\"2026-11-27\",\"stats\":{\"pings\":0,\"time\":0,\"stuns\":0,\"hurt\":0}},\"bad\":[null,null,null,null]}"
+  },
+  {
+    "name": "robust: a corrupt save is restored from the backup copy and the title says so",
+    "pass": true,
+    "info": "{\"runs\":77,\"rec\":true,\"note\":\"Best with headphones\\n      v1.2.0 · save restored from backup\"}"
+  },
+  {
+    "name": "robust: yesterday's daily is labelled, and Daily cave starts today's",
+    "pass": true,
+    "info": "{\"label\":\"Continue Daily cave · depth 4 · from 2020-01-01\",\"depth\":1,\"date\":\"2026-11-27\"}"
+  },
+  {
+    "name": "robust: a save written by another tab is picked up on the title",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "no page errors during story and robustness checks",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "performance at 1920x1080 without glow: render CPU p95 < 3 ms, 60 fps",
+    "pass": true,
+    "info": "render median 0.50 ms, p95 1.70 ms; frame interval median 16.7 ms over 599 frames; 1662 live echo points"
+  },
+  {
+    "name": "performance at 1920x1080 with glow: render CPU p95 < 6 ms (headless software rendering; real GPUs blit this)",
+    "pass": true,
+    "info": "render median 2.10 ms, p95 5.10 ms; frame interval median 33.3 ms over 599 frames; 1248 live echo points"
+  },
+  {
+    "name": "slow-device guard turns glow off and tells the player",
+    "pass": true,
+    "info": "{\"bloom\":false,\"toast\":\"Glow turned offto keep play smooth. Turn it back on in Settings, Display.\"}"
+  },
+  {
+    "name": "no runaway memory across repeated level builds",
+    "pass": true,
+    "info": "heap 21 MB -> 21 MB after 6 rebuilds"
+  },
+  {
+    "name": "mobile: touch controls shown in play, no horizontal overflow",
+    "pass": true,
+    "info": "{\"st\":\"play\",\"touch\":\"block\",\"pb\":\"block\",\"w\":390}"
+  },
+  {
+    "name": "mobile: virtual stick flies the bat",
+    "pass": true,
+    "info": "moved 79.7 px"
+  },
+  {
+    "name": "mobile: CALL button calls",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "mobile: pause button pauses",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "no page errors on mobile",
+    "pass": true,
+    "info": ""
+  },
+  {
+    "name": "runs with storage unavailable (and says so)",
+    "pass": true,
+    "info": "{\"st\":\"play\",\"persistent\":false}"
+  },
+  {
+    "name": "fully playable offline (only optional font requests attempted)",
+    "pass": true,
+    "info": "https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,500&display=swap"
+  }
+]
