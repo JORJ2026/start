@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script>(function(){try{var NS='lantern-woods:',R=window.localStorage,ks=function(){var a=[];for(var i=0;i<R.length;i++){var k=R.key(i);if(k&&k.indexOf(NS)===0)a.push(k.slice(NS.length))}return a},
+api={getItem:function(k){return R.getItem(NS+k)},setItem:function(k,v){R.setItem(NS+k,v)},removeItem:function(k){R.removeItem(NS+k)},clear:function(){ks().forEach(function(k){R.removeItem(NS+k)})},key:function(i){var a=ks();return i<a.length?a[i]:null}},
+p=new Proxy(api,{get:function(t,k){if(k==='length')return ks().length;if(k in t)return t[k];if(typeof k==='string'){var v=R.getItem(NS+k);return v===null?undefined:v}},set:function(t,k,v){R.setItem(NS+k,String(v));return true},deleteProperty:function(t,k){R.removeItem(NS+k);return true},has:function(t,k){return k in t||R.getItem(NS+k)!==null},ownKeys:function(){return ks()},getOwnPropertyDescriptor:function(t,k){if(typeof k==='string'){var v=R.getItem(NS+k);if(v!==null)return{value:v,writable:true,enumerable:true,configurable:true}}}});
+Object.defineProperty(window,'localStorage',{get:function(){return p},configurable:true})}catch(e){}})();</script>
+<meta charset="utf-8">
+<title>Lantern Woods</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#000000">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="jorj">JORJ2026</div>
+<canvas id="c" width="1280" height="896"></canvas>
+<div id="h">WASD move · E use · Q seed · I bag · B build · , tools · X eat · Esc menu</div>
+<script src="app.js"></script>
+</body>
+</html>

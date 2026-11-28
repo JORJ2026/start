@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hollow Woods II</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
+  canvas { display: block; outline: none; image-rendering: auto; }
+  #modal { position: fixed; inset: 0; background: rgba(0,0,0,.72); display: flex; align-items: center; justify-content: center; z-index: 10; }
+  #modal[hidden] { display: none; }
+  .m-box { width: min(560px, 92vw); background: #141414; color: #ddd; border: 1px solid #333; border-radius: 10px; padding: 22px 22px 18px; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+  .m-title { margin: 0 0 6px; font: 22px Georgia, "Times New Roman", serif; color: #f0f0ea; }
+  .m-desc { margin: 0 0 14px; font-size: 13.5px; line-height: 1.5; color: #9a9a96; }
+  textarea { width: 100%; box-sizing: border-box; height: 170px; resize: vertical; background: #0b0b0b; color: #bcbcb6; border: 1px solid #2c2c2c; border-radius: 6px; padding: 10px; font: 11.5px ui-monospace, Menlo, Consolas, monospace; }
+  .m-row { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .m-row .spacer { flex: 1; }
+  button { background: #262626; color: #eee; border: 1px solid #3a3a3a; border-radius: 6px; padding: 8px 14px; font: inherit; font-size: 13.5px; cursor: pointer; }
+  button:hover, button:focus-visible { background: #333; border-color: #555; outline: none; }
+  button.primary { background: #e8e8e2; color: #111; border-color: #e8e8e2; }
+  button.primary:hover { background: #fff; }
+  button[hidden] { display: none; }
+  .m-msg { min-height: 18px; margin-top: 10px; font-size: 13px; color: #9a9a96; }
+  .m-msg.good { color: #9fd49a; }
+  .m-msg.bad { color: #f0a0a0; }
+</style>
+</head>
+<body>
+<canvas id="game" tabindex="0" aria-label="Hollow game"></canvas>
+
+<div id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="m-box">
+    <h2 class="m-title" id="m-title">Saves</h2>
+    <p class="m-desc"></p>
+    <textarea spellcheck="false" aria-label="Save data"></textarea>
+    <input type="file" accept=".json,application/json,text/plain" hidden>
+    <div class="m-row">
+      <button class="primary" data-act="download">Download .json</button>
+      <button data-act="copy">Copy text</button>
+      <button class="primary" data-act="choose">Choose file…</button>
+      <button data-act="import">Import pasted text</button>
+      <span class="spacer"></span>
+      <button data-act="close">Close</button>
+    </div>
+    <div class="m-msg" aria-live="polite"></div>
+  </div>
+</div>
+
+<script src="src/input.js"></script>
+<script src="src/physics.js"></script>
+<script src="src/hazards.js"></script>
+<script src="src/monsters.js"></script>
+<script src="src/pickups.js"></script>
+<script src="src/player.js"></script>
+<script src="src/world.js"></script>
+<script src="src/save.js"></script>
+<script src="src/render.js"></script>
+<script src="src/levels.js"></script>
+<script src="levels/forest1.js"></script>
+<script src="levels/forest2.js"></script>
+<script src="levels/forest3.js"></script>
+<script src="levels/forest4.js"></script>
+<script src="levels/forest5.js"></script>
+<script src="levels/forest6.js"></script>
+<script src="levels/forest7.js"></script>
+<script src="levels/forest8.js"></script>
+<script src="levels/forest9.js"></script>
+<script src="levels/forest10.js"></script>
+<script src="levels/caves1.js"></script>
+<script src="levels/caves2.js"></script>
+<script src="levels/caves3.js"></script>
+<script src="levels/caves4.js"></script>
+<script src="levels/caves5.js"></script>
+<script src="levels/caves6.js"></script>
+<script src="levels/caves7.js"></script>
+<script src="levels/caves8.js"></script>
+<script src="levels/caves9.js"></script>
+<script src="levels/caves10.js"></script>
+<script src="levels/ruins1.js"></script>
+<script src="levels/ruins2.js"></script>
+<script src="levels/ruins3.js"></script>
+<script src="levels/ruins4.js"></script>
+<script src="levels/ruins5.js"></script>
+<script src="levels/ruins6.js"></script>
+<script src="levels/ruins7.js"></script>
+<script src="levels/ruins8.js"></script>
+<script src="levels/ruins9.js"></script>
+<script src="levels/ruins10.js"></script>
+<script src="levels/factory1.js"></script>
+<script src="levels/factory2.js"></script>
+<script src="levels/factory3.js"></script>
+<script src="levels/factory4.js"></script>
+<script src="levels/factory5.js"></script>
+<script src="levels/factory6.js"></script>
+<script src="levels/factory7.js"></script>
+<script src="levels/factory8.js"></script>
+<script src="levels/factory9.js"></script>
+<script src="levels/factory10.js"></script>
+<script src="levels/peaks1.js"></script>
+<script src="levels/peaks2.js"></script>
+<script src="levels/peaks3.js"></script>
+<script src="levels/peaks4.js"></script>
+<script src="levels/peaks5.js"></script>
+<script src="levels/peaks6.js"></script>
+<script src="levels/peaks7.js"></script>
+<script src="levels/peaks8.js"></script>
+<script src="levels/peaks9.js"></script>
+<script src="levels/peaks10.js"></script>
+<script src="src/weather.js"></script>
+<script src="src/audio.js"></script>
+<script src="src/runner.js"></script>
+<script src="src/story.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>
