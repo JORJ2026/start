@@ -1,0 +1,11 @@
+const regions=['north','south','east','west','central'];
+const seeds=[
+['Frostline Dispatch','Auntie Mags'],['Snowglass Sprint','Rico Rumble'],['Lost Bell Cache','Pip Sprocket'],['Glacier Lookout','Trixie Quill'],['Beacon Parcel','Auntie Mags'],['Pinecone Dash','Rico Rumble'],['Blue Ice Stash','Pip Sprocket'],['Radio Tower View','Trixie Quill'],['Northbound Courier','Auntie Mags'],['Whiteout Run','Officer Latch'],
+['Sunward Post','Auntie Mags'],['Boardwalk Burnout','Rico Rumble'],['Tidepool Trinkets','Pip Sprocket'],['Palm Court','Trixie Quill'],['Saltwind Parcel','Auntie Mags'],['Lagoon Lap','Rico Rumble'],['Marigold Cache','Pip Sprocket'],['Seabird Steps','Trixie Quill'],['Coconut Courier','Auntie Mags'],['Sunset Sprint','Officer Latch'],
+['Jade Signal Run','Auntie Mags'],['Neon Needle Race','Rico Rumble'],['Glass Token Hunt','Pip Sprocket'],['Skybridge View','Trixie Quill'],['Holo-Parcel','Auntie Mags'],['Midnight Circuit','Rico Rumble'],['Pixel Cache','Pip Sprocket'],['Lantern Roofs','Trixie Quill'],['Circuit Courier','Auntie Mags'],['Afterglow Dash','Officer Latch'],
+['Redrock Dispatch','Auntie Mags'],['Coyote Cutoff','Rico Rumble'],['Canyon Penny Hunt','Pip Sprocket'],['Old Water Tower','Trixie Quill'],['Adobe Express','Auntie Mags'],['Dust Devil Derby','Rico Rumble'],['Rattler Cache','Pip Sprocket'],['Painted Arch','Trixie Quill'],['Westward Parcel','Auntie Mags'],['Last Light Run','Officer Latch'],
+['Market Morning','Auntie Mags'],['Clocktower Circuit','Rico Rumble'],['Pigeon Postbox','Pip Sprocket'],['Canal View','Trixie Quill'],['Marlowe’s Receipt','Auntie Mags'],['Old Tram Sprint','Rico Rumble'],['Wharfside Stash','Pip Sprocket'],['The Quiet Booth','Trixie Quill'],['Final Ledger Drop','Auntie Mags'],['Baybell Night Run','Officer Latch']
+];
+const kinds=['courier','race','cache','visit'];
+const briefs={courier:'Pick up a sealed parcel and take it to the marked drop.',race:'Reach the start pin, then beat the clock to the finish.',cache:'Search the marked block on foot and collect all three tokens.',visit:'Find the landmark and press E when you reach it.'};
+export const cityActivities=seeds.map(([title,contact],id)=>({id,title,contact,region:regions[Math.floor(id/10)],type:kinds[id%4],brief:briefs[kinds[id%4]],reward:125+id*15}));
