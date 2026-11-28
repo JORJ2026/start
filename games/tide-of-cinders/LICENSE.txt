@@ -1,0 +1,3 @@
+Tide of Cinders contains no third-party runtime code or bundled media.
+
+The code, generated cover/icon artwork, and procedural audio are original project materials created for this Websim project. Reuse and redistribution are subject to the project creator's rights and applicable Websim platform terms. No separate permissive open-source license is granted here.
