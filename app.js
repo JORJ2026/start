@@ -6,7 +6,9 @@ const ROLES = {
   gran:       { name:"Gran",        color:"#355E3B", blurb:"Your family projects",   greeting:"Hello, Gran" },
   harmony:    { name:"Harmony",     color:"#E64980", blurb:"Your projects",          greeting:"Hi, Harmony" },
   jack:       { name:"Jack Jr.",    color:"#1A1A1A", blurb:"Everything that’s live", greeting:"Hi, Jack Jr." },
-  jorjdev2027:{ name:"JORJDEV2027", color:"#E8590C", blurb:"Your projects",          greeting:"Hi, JORJDEV2027" }
+  jorjdev2027:{ name:"JORJDEV2027", color:"#E8590C", blurb:"Your projects",          greeting:"Hi, JORJDEV2027" },
+  tester:     { name:"Game Tester", color:"#0CA678", blurb:"Games to try",           greeting:"Hi, Game Tester" },
+  tools:      { name:"Tools Tester", color:"#1C7ED6", blurb:"Tools to try",           greeting:"Hi, Tools Tester" }
 };
 
 const RAW = `
@@ -35,19 +37,18 @@ jorjdev2027|Games|Live|EmulatorJS Mod|https://jorj2026.github.io/emulatorjsmod
 jorjdev2027|Games|Live|Emu Basic|https://jorj2026.github.io/emubasic
 jorjdev2027|Games|Live|RPG HM|https://jorj2026.github.io/rpg-hm
 jorjdev2027|Other|Live|Start|https://jorj2026.github.io/start
-jorjdev2027|Games|Live|GTA II|https://jorj2026.github.io/gtaII
+jorjdev2027|Games|Live|City Game|https://jorj2026.github.io/gtaII
 jorjdev2027|Other|Live|Quiet Pages|https://jorj2026.github.io/quietpages
 jorjdev2027|Games|Live|Cat Games|https://jorj2026.github.io/meow
 jorjdev2027|Games|Live|Wildwood GBA|https://jorj2026.github.io/wildwoodgba
-jorjdev2027|Games|Live|GTA|https://jorj2026.github.io/gta
-jorjdev2027|Games|Live|Nobody Spurrfect|https://jorj2026.github.io/nobodyspurrfect
+jorjdev2027|Games|Live|City Game II|https://jorj2026.github.io/gta
+jorjdev2027|Games|Live|Cat Arcade|https://jorj2026.github.io/nobodyspurrfect
 jorjdev2027|Other|Live|Paint 3d|https://jorj2026.github.io/paint3d
 jorjdev2027|Self Help|Live|Personal Reset|https://jorj2026.github.io/personalreset
 jorjdev2027|Other|Live|Quiet Notebook|https://jorj2026.github.io/quietnotebook
 jorjdev2027|Other|Live|Text Editor|https://jorj2026.github.io/logo
-jorjdev2027|Other|Live|Shelf|https://jorj2026.github.io/shelf
 jorjdev2027|Games|Live|RPG|https://jorj2026.github.io/rpg
-jorjdev2027|Other|Live|Quality|https://jorj2026.github.io/quality
+jorjdev2027|Other|Live|Quality Standard|https://jorj2026.github.io/quality
 jorjdev2027|Games|Live|Card Arcade|https://jorj2026.github.io/cardarcade
 jorjdev2027|Self Help|Live|Calm|https://jorj2026.github.io/calm
 jorjdev2027|Video|Live|LocalTube|https://jorj2026.github.io/localtube
@@ -62,7 +63,6 @@ faith|Games|Live|Play Something!|https://jorj2026.github.io/play
 faith|Games|Live|Cat Games|https://jorj2026.github.io/meow
 harmony|Games|Live|Play Something!|https://jorj2026.github.io/play
 harmony|Games|Live|Cat Games|https://jorj2026.github.io/meow
-gran|Other|Live|Journaling|https://jorj2026.github.io/clearmind
 jack|Other|Live|Journaling|https://jorj2026.github.io/clearmind
 gran|Other|Live|Paint 3d|https://jorj2026.github.io/paint3d
 jack|Other|Live|Paint 3d|https://jorj2026.github.io/paint3d
@@ -72,32 +72,47 @@ gran|Video|Live|LocalTube|https://jorj2026.github.io/localtube
 jack|Video|Live|LocalTube|https://jorj2026.github.io/localtube
 gran|Study|Live|Pocket Reference|https://jorj2026.github.io/pocketreference
 jack|Study|Live|Pocket Reference|https://jorj2026.github.io/pocketreference
-gran|Games|Live|Card Arcade (old)|https://jorj2026.github.io/cardarcade
-jack|Games|Live|Card Arcade (old)|https://jorj2026.github.io/cardarcade
+gran|Games|Live|Card Arcade|https://jorj2026.github.io/cardarcade
+jack|Games|Live|Card Arcade|https://jorj2026.github.io/cardarcade
 gran|Music|Live|FretLab|https://jorj2026.github.io/fretlab
 jack|Music|Live|FretLab|https://jorj2026.github.io/fretlab
 gran|Music|Live|FretLab (old)|https://jorj2026.github.io/guitar
 jack|Music|Live|FretLab (old)|https://jorj2026.github.io/guitar
-jack|Other|Live|Quality|https://jorj2026.github.io/quality
+jack|Other|Live|Quality Standard|https://jorj2026.github.io/quality
 jack|Other|Live|Calm|https://jorj2026.github.io/calm
-faith|Games|Live|Cat Card Games (old)|https://jorj2026.github.io/nobodyspurrfect
-gran|Games|Live|Cat Card Games (old)|https://jorj2026.github.io/nobodyspurrfect
-harmony|Games|Live|Cat Card Games (old)|https://jorj2026.github.io/nobodyspurrfect
-jack|Games|Live|Cat Card Games (old)|https://jorj2026.github.io/nobodyspurrfect
-jorjdev2027|Games|Live|Cat Card Games (old)|https://jorj2026.github.io/nobodyspurrfect
+faith|Games|Live|Cat Arcade|https://jorj2026.github.io/nobodyspurrfect
+gran|Games|Live|Cat Arcade|https://jorj2026.github.io/nobodyspurrfect
+harmony|Games|Live|Cat Arcade|https://jorj2026.github.io/nobodyspurrfect
+jack|Games|Live|Cat Arcade|https://jorj2026.github.io/nobodyspurrfect
 jorjdev2027|Other|Live|Tools|https://jorj2026.github.io/gsd
 gran|Other|Live|Tools|https://jorj2026.github.io/gsd
 faith|Other|Live|Tools|https://jorj2026.github.io/gsd
 harmony|Other|Live|Tools|https://jorj2026.github.io/gsd
 jack|Other|Live|Tools|https://jorj2026.github.io/gsd
-jack|Games|Live|HTML Games|https://jorj2026.github.io/htmlgames
-jorjdev2027|Games|Live|HTML Games|https://jorj2026.github.io/htmlgames
-faith|Games|Live|HTML Games|https://jorj2026.github.io/htmlgames
+jack|Games|Live|Misc Games|https://jorj2026.github.io/htmlgames
+jorjdev2027|Games|Live|Misc Games|https://jorj2026.github.io/htmlgames
+faith|Games|Live|Misc Games|https://jorj2026.github.io/htmlgames
 gran|Other|Live|Polyglot|https://jorj2026.github.io/polyglot
 jack|Other|Live|Polyglot|https://jorj2026.github.io/polyglot
 jorjdev2027|Other|Live|Polyglot|https://jorj2026.github.io/polyglot
-gran|Games|Live|HTML Games|https://jorj2026.github.io/htmlgames
-harmony|Games|Live|HTML Games|https://jorj2026.github.io/htmlgames
+gran|Games|Live|Misc Games|https://jorj2026.github.io/htmlgames
+harmony|Games|Live|Misc Games|https://jorj2026.github.io/htmlgames
+tester|Games|Testing|Lantern Woods|games/lanternwoods/index.html
+tester|Games|Testing|Plush Valley|games/plushvalley.html
+tester|Games|Testing|Stuffing Showdown|games/stuffingshowdown.html
+tester|Games|Testing|Ashen Windows|games/ashenwindows.html
+tester|Games|Testing|Arena Duel|games/arenaduel.html
+tester|Games|Testing|Elk River Bandit|games/elkriverbandit/index.html
+tester|Games|Testing|Wildroot|games/wildroot/index.html
+tools|Other|Live|FretLab|https://jorj2026.github.io/fretlab
+tools|Other|Live|Guitar|https://jorj2026.github.io/guitar
+tools|Other|Live|Polyglot|https://jorj2026.github.io/polyglot
+tools|Other|Live|Pocket Reference|https://jorj2026.github.io/pocketreference
+tools|Other|Live|Tools|https://jorj2026.github.io/gsd
+tools|Other|Live|MIDI|https://jorj2026.github.io/chopin
+tools|Other|Live|LocalTube|https://jorj2026.github.io/localtube
+tools|Other|Live|ERP|tools/erp/index.html
+tools|Other|Live|QMS|tools/qms/index.html
 `;
 const ALL = [];
 // Guest always sees these (by URL). They can tick more with "Choose more projects".
@@ -132,8 +147,52 @@ function toast(t){ const el=$("toast"); el.textContent=t; el.hidden=false; setTi
 const repoUrl = p => p.url || `https://github.com/${GITHUB_USER}/${p.repo}`;
 
 const CAT_ICON={Games:"gamepad",Music:"music",Video:"tv",Other:"sparkle",Study:"book","Self Help":"leaf",Religious:"cross"};
-const ROLE_ICON={admin:"crown",faith:"sun",gran:"heart",harmony:"leaf",guest:"user",jack:"star",jorjdev2027:"sparkle"};
+const ROLE_ICON={admin:"crown",faith:"sun",gran:"heart",harmony:"leaf",guest:"user",jack:"star",jorjdev2027:"sparkle",tester:"gamepad",tools:"sparkle"};
+// Previews never make sound. Local pages load as srcdoc with a sound guard placed before their own scripts run;
+// live sites are cross-origin, so the browser gives them no autoplay permission.
+const SOUND_GUARD = '<script>(function(){' +
+  'var A=window.AudioContext||window.webkitAudioContext;' +
+  'if(A){var Q=function(){var c=new A();try{c.suspend().catch(function(){});}catch(e){}c.resume=function(){return Promise.resolve();};return c;};Q.prototype=A.prototype;window.AudioContext=Q;window.webkitAudioContext=Q;}' +
+  'HTMLMediaElement.prototype.play=function(){this.muted=true;this.volume=0;this.pause();return Promise.resolve();};' +
+  'document.addEventListener("play",function(e){var m=e.target;m.muted=true;m.volume=0;m.pause();},true);' +
+  'if(window.speechSynthesis)speechSynthesis.speak=function(){};' +
+  '})();<\/script>';
+const DOCS = new Map();
+function localDoc(path){
+  if(!DOCS.has(path)) DOCS.set(path, fetch(path).then(r => r.text()).then(html => {
+    const base = '<base href="' + new URL(path, location.href).href + '">' + SOUND_GUARD;
+    return /<head[^>]*>/i.test(html) ? html.replace(/<head[^>]*>/i, m => m + base) : base + html;
+  }).catch(() => ""));
+  return DOCS.get(path);
+}
+// Live, animated previews: each frame runs only while its card is on screen.
+const thumbIO = new IntersectionObserver(es => es.forEach(async e => {
+  const f = e.target.querySelector("iframe");
+  if(e.isIntersecting){
+    const tok = f.dataset.tok = Math.random().toString(36);
+    if(f.dataset.local === "1"){
+      const doc = await localDoc(f.dataset.src);
+      if(f.dataset.tok === tok) f.srcdoc = doc;
+    } else if(!f.getAttribute("src")) f.src = f.dataset.src;
+  } else {
+    f.dataset.tok = ""; f.removeAttribute("srcdoc"); f.removeAttribute("src");
+  }
+}), { rootMargin: "120px" });
 const CATC={Games:"#E8590C",Music:"#7048E8",Video:"#D6336C",Other:"#1C7ED6",Study:"#2F9E44","Self Help":"#0CA678",Religious:"#3A6EA5"};
+// Animated previews for shortcuts that link to the live sites (preview comes from the local copy in games/).
+const PREVIEW = Object.fromEntries([
+  ["https://jorj2026.github.io/elkriverbandit","games/elkriverbandit/index.html"],
+  ["https://jorj2026.github.io/lanternwoods","games/lanternwoods/index.html"],
+  ["https://jorj2026.github.io/wildroot","games/wildroot/index.html"],
+  ["https://jorj2026.github.io/meow","games/meow/index.html"],
+  ["https://jorj2026.github.io/play","games/play/index.html"],
+  ["https://jorj2026.github.io/nobodyspurrfect","games/nobodyspurrfect/index.html"],
+  ["https://jorj2026.github.io/htmlgames","games/htmlgames/index.html"],
+  ["https://jorj2026.github.io/gtaII","games/gtaii/index.html"],
+  ["https://jorj2026.github.io/gta","games/gta/index.html"],
+  ["https://jorj2026.github.io/rpg","games/rpg/index.html"],
+  ["https://jorj2026.github.io/cardarcade","games/cardarcade/index.html"]
+].map(([u,p])=>[normUrl(u),p]));
 function card(p,feat){
   const a=document.createElement("a");
   a.className="tile"+(feat?" feat":""); a.href=repoUrl(p); a.target="_blank"; a.rel="noopener";
@@ -143,6 +202,12 @@ function card(p,feat){
   a.innerHTML = `<div class="ic" aria-hidden="true"></div><span class="st st-${slug}"></span><div class="tx"><h3></h3><p></p></div><span class="go" aria-hidden="true"></span>`;
   a.querySelector(".ic").innerHTML=svgIcon(icon);
   a.querySelector(".go").innerHTML=svgIcon("arrow");
+  const preview = /^(games|accounts|tools)\//.test(p.url) ? p.url : (PREVIEW[normUrl(p.url)] || (/^https?:\/\//.test(p.url) ? p.url : null));
+  if(preview){
+    const t=document.createElement("div"); t.className="thumb";
+    const f=document.createElement("iframe"); f.tabIndex=-1; f.setAttribute("aria-hidden","true"); f.dataset.src=preview; f.dataset.local = /^(games|accounts|tools)\//.test(preview) ? "1" : "0";
+    t.appendChild(f); a.querySelector(".ic").replaceWith(t); thumbIO.observe(t);
+  }
   const stEl=a.querySelector(".st"); if(role==="admin"||role==="jack") stEl.textContent=p.status; else stEl.remove();
   a.querySelector("h3").textContent=p.name;
   a.querySelector("p").textContent = role==="admin"||role==="jack" ? p.desc : p.cat;
@@ -159,6 +224,7 @@ function setGroup(g){ group=g; store("hub-group",g); render(); }
 function setView(v){ view=v; store("hub-view",v); render(); }
 
 function render(){
+  thumbIO.disconnect();
   $("vList").setAttribute("aria-pressed", String(view==="list"));
   $("vGrid").setAttribute("aria-pressed", String(view==="grid"));
   $("gStatus").setAttribute("aria-pressed", String(group==="status"));
