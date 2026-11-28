@@ -1,0 +1,62 @@
+{
+ "pass": true,
+ "silentSounds": [],
+ "ok": true,
+ "state": "running",
+ "sampleRate": 44100,
+ "sounds": {
+  "chirp": 0.092,
+  "call": 0.232,
+  "moth": 0.077,
+  "shard": 0.118,
+  "hurt": 0.399,
+  "dash": 0.042,
+  "heal": 0.079,
+  "death": 0.192,
+  "descend": 0.14,
+  "gateOpen": 0.213,
+  "flap": 0.048,
+  "uiMove": 0.02,
+  "uiConfirm": 0.024,
+  "uiBack": 0.02,
+  "uiToggle": 0.02,
+  "uiSlide": 0.019,
+  "uiTab": 0.019,
+  "uiError": 0.059,
+  "uiStart": 0.057,
+  "pauseIn": 0.019,
+  "achieve": 0.031,
+  "click": 0.027,
+  "growl": 0.088,
+  "bell": 0.111,
+  "lunge": 0.075,
+  "stun": 0.048,
+  "mutePulse": 0.288,
+  "breath": 0.028,
+  "drip": 0.036,
+  "rumble": 0.049,
+  "shardPing": 0.039,
+  "echoTick": 0.026,
+  "chargeHold": 0.045
+ },
+ "clickFarAway": 0.001,
+ "stereoLeftRight": [
+  0.009,
+  0.038
+ ],
+ "monoLeftRight": [
+  0.034,
+  0.034
+ ],
+ "muffleCutoffHz": 852,
+ "music": {
+  "title": 0.103,
+  "game": 0.107,
+  "final": 0.104,
+  "chorus": 0.114,
+  "silent": 0.001
+ },
+ "ambience": 0.203,
+ "muted": 0,
+ "pageErrors": []
+}
