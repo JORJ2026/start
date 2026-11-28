@@ -41,7 +41,7 @@ document.querySelectorAll('[data-ic]').forEach(el=>el.innerHTML=svgIcon(el.datas
 
 const PROFILES=[
  {name:'Jack',desc:'Every app, tool and game, with live previews.',c:'#2F3E9E',icon:'star',act:()=>show('home')},
- {name:'Catalog',desc:'The Quiet Collection: a gallery of bundled games.',c:'#E8590C',icon:'gamepad',href:'catalog/'}];
+ {name:'Catalog',desc:'The Quiet Collection: a gallery of bundled games.',c:'#E8590C',icon:'gamepad',href:'catalog/index.html'}];
 const pr=$('profiles');
 PROFILES.forEach(P=>{const a=document.createElement(P.href?'a':'button');a.className='tile';a.style.setProperty('--c',P.c);if(P.href)a.href=P.href;
  a.innerHTML='<div class="ic" aria-hidden="true"></div><div class="tx"><h3></h3><p></p></div><span class="go" aria-hidden="true"></span>';
