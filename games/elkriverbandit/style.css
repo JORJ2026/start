@@ -1,0 +1,9 @@
+:root{--bg:#0b0a1a}
+html,body{height:100%;margin:0;background:var(--bg);overflow:hidden}
+body{display:flex;align-items:center;justify-content:center;touch-action:none;user-select:none}
+canvas{width:100vw;max-height:100vh;aspect-ratio:16/9;max-width:calc(100vh*16/9);image-rendering:auto}
+#spellingWords{position:fixed;z-index:3;display:none;box-sizing:border-box;border:2px solid #5ce0c0;border-radius:9px;padding:7px 12px;background:rgba(8,16,30,.96);color:#fff;font:600 14px system-ui,sans-serif;outline:none;box-shadow:0 0 18px rgba(65,231,190,.2);touch-action:auto;user-select:text}
+#spellingWords::placeholder{color:#a7c8c8}
+#spellingWords:focus{border-color:#ffe279;box-shadow:0 0 0 3px rgba(255,226,121,.2)}
+#testWord{position:fixed;z-index:3;display:none;box-sizing:border-box;border:3px solid #ffe279;border-radius:12px;padding:4px 14px;background:rgba(255,253,242,.97);color:#1a2a22;font-family:'Comic Sans MS',system-ui,sans-serif;font-weight:700;text-align:center;text-transform:uppercase;letter-spacing:.18em;outline:none;box-shadow:0 0 20px rgba(255,226,121,.35);touch-action:auto;user-select:text}
+#testWord::placeholder{letter-spacing:0;text-transform:none;font-weight:500;color:#8a9a8a}

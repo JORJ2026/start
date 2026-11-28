@@ -1,0 +1,22 @@
+{
+  "name": "Elk River Bandit",
+  "short_name": "River Bandit",
+  "description": "Run, jump and spell your way down the river as a raccoon trash bandit.",
+  "id": "./",
+  "start_url": "./index.html?source=pwa",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "landscape",
+  "background_color": "#0b0a1a",
+  "theme_color": "#0b0a1a",
+  "categories": ["games", "education", "kids"],
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ],
+  "screenshots": [
+    {"src": "store/screenshots/01-title.png", "sizes": "1280x720", "type": "image/png", "form_factor": "wide", "label": "The river at night"}
+  ]
+}

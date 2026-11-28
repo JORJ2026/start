@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Elk River Bandit</title>
+<meta name="description" content="Elk River Bandit: run, jump and spell your way down the river as a raccoon trash bandit. Free to play in your browser, or download for Windows, Mac, Linux, Android and iPhone.">
+<meta name="theme-color" content="#0b0a1a">
+<meta name="color-scheme" content="dark">
+<meta name="referrer" content="no-referrer">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="River Bandit">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Elk River Bandit">
+<meta property="og:description" content="Run, jump and spell your way down the river. Free for web, Windows, Mac, Linux, Android and iPhone.">
+<meta property="og:image" content="icons/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Elk River Bandit">
+<meta name="twitter:description" content="Run, jump and spell your way down the river. Free on every device.">
+<meta name="twitter:image" content="icons/og-image.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="launch.css">
+</head>
+<body>
+<canvas id="c" width="960" height="540" aria-label="Elk River Bandit game" role="application"></canvas>
+<input id="spellingWords" type="text" aria-label="Comma-separated spelling words" placeholder="Paste words separated by commas: river, bandit, raccoon" autocomplete="off" spellcheck="false">
+<noscript><p style="color:#fff;font:18px system-ui;text-align:center;padding:40px">Elk River Bandit needs JavaScript. Please turn it on in your browser settings.</p></noscript>
+
+<button id="gear" aria-label="Settings" title="Settings">⚙️</button>
+<div id="offline" role="status" hidden>📡 Offline — the game still works</div>
+<div id="rotate" role="status" hidden><span>🔄</span> Turn your device sideways to play</div>
+<div id="storewarn" role="alert" hidden>⚠️ Your browser is blocking saved data, so scores can’t be kept.</div>
+<div id="toasts" aria-live="polite"></div>
+
+<dialog id="dlgSet" aria-labelledby="tSet"><form method="dialog" class="dlg">
+  <div class="dhead"><h2 id="tSet">⚙️ Settings</h2><button value="close" class="x" aria-label="Close">✕</button></div>
+  <nav class="tabs" role="tablist"><button type="button" role="tab" data-t="play" aria-selected="true">Game</button><button type="button" role="tab" data-t="stats" aria-selected="false">Stats</button><button type="button" role="tab" data-t="dl" aria-selected="false" id="tabDl">Download</button><button type="button" role="tab" data-t="more" aria-selected="false">More</button></nav>
+
+  <section data-p="play">
+    <label class="row">Sound<select id="sSound"><option value="on">On</option><option value="off">Off</option></select></label>
+    <label class="row">Music volume<input id="sMus" type="range" min="0" max="100" step="5"></label>
+    <label class="row">Effects volume<input id="sSfx" type="range" min="0" max="100" step="5"></label>
+    <label class="row">Song<select id="sSong"></select></label>
+    <p class="hint" id="nowp"></p>
+    <label class="row">Vibration<select id="sHap"><option value="on">On</option><option value="off">Off</option></select></label>
+    <label class="row">Pause when I switch away<select id="sPauseHid"><option value="on">On</option><option value="off">Off</option></select></label>
+    <label class="row">Keep screen awake<select id="sWake"><option value="on">While playing</option><option value="off">Off</option></select></label>
+    <div class="btnrow"><button type="button" class="b" id="bFs">⛶ Full screen</button><button type="button" class="b" id="bHow">❓ How to play</button></div>
+  </section>
+
+  <section data-p="stats" hidden>
+    <table id="statTbl"></table>
+    <h3>🏆 Achievements <small id="achCount"></small></h3>
+    <ul id="achList" class="ach"></ul>
+  </section>
+
+  <section data-p="dl" hidden>
+    <p class="hint">Play offline with the full app. Pick your device:</p>
+    <div id="dlList"></div>
+    <p class="hint" id="dlVer"></p>
+    <div class="btnrow"><button type="button" class="b" id="bInstall" hidden>⬇️ Install this page as an app</button><button type="button" class="b" id="bShare">🔗 Share game</button></div>
+  </section>
+
+  <section data-p="more" hidden>
+    <div class="btnrow"><button type="button" class="b" id="bBackup">⬇️ Save backup</button><button type="button" class="b" id="bRestore">⬆️ Restore backup</button><input type="file" id="fRestore" accept="application/json,.json" hidden></div>
+    <div class="btnrow"><button type="button" class="b danger" id="bErase">🗑️ Erase all progress</button></div>
+    <div class="btnrow"><button type="button" class="b" id="bUpdate">🔄 Check for updates</button><button type="button" class="b" id="bBug">🐞 Report a problem</button></div>
+    <p class="links"><a href="info/how-to-play.html" target="_blank" rel="noopener">How to play</a> · <a href="info/support.html" target="_blank" rel="noopener">Help</a> · <a href="info/privacy.html" target="_blank" rel="noopener">Privacy</a> · <a href="info/terms.html" target="_blank" rel="noopener">Terms</a> · <a href="info/credits.html" target="_blank" rel="noopener">Credits</a> · <a href="info/changelog.html" target="_blank" rel="noopener">What’s new</a></p>
+    <details><summary>About &amp; diagnostics</summary><pre id="diagTxt"></pre><div class="btnrow"><button type="button" class="b" id="bDiag">📋 Copy diagnostics</button></div></details>
+  </section>
+</form></dialog>
+
+<dialog id="dlgConfirm" aria-labelledby="tConf"><form method="dialog" class="dlg">
+  <h2 id="tConf">Are you sure?</h2><p id="confTxt"></p>
+  <div class="btnrow"><button class="b" value="no">Cancel</button><button class="b danger" value="yes">Yes</button></div>
+</form></dialog>
+
+<script src="version.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script src="launch.js"></script>
+</body>
+</html>
