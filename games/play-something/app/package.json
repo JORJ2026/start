@@ -1,0 +1,20 @@
+{
+  "name": "games-hub",
+  "productName": "Games Hub",
+  "version": "1.0.1",
+  "description": "260+ free card, casino, puzzle and arcade games. Works offline.",
+  "author": "Games Hub",
+  "main": "main.js",
+  "scripts": { "start": "electron .", "dist": "electron-builder" },
+  "devDependencies": { "electron": "^33.0.0", "electron-builder": "^25.1.8" },
+  "build": {
+    "appId": "com.gameshub.app",
+    "productName": "Games Hub",
+    "directories": { "output": "dist", "buildResources": "../build" },
+    "files": ["main.js", "www/**/*"],
+    "win": { "target": ["nsis"], "artifactName": "GamesHub-Windows.${ext}", "icon": "../build/icon.png" },
+    "nsis": { "oneClick": true, "perMachine": false },
+    "mac": { "target": ["dmg"], "category": "public.app-category.games", "artifactName": "GamesHub-Mac.${ext}", "icon": "../build/icon.png", "identity": null },
+    "linux": { "target": ["AppImage"], "category": "Game", "artifactName": "GamesHub-Linux.${ext}", "icon": "../build/icon.png" }
+  }
+}
