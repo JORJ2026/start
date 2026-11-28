@@ -85,6 +85,16 @@ gran|Games|Live|Cat Card Games (old)|https://jorj2026.github.io/nobodyspurrfect
 harmony|Games|Live|Cat Card Games (old)|https://jorj2026.github.io/nobodyspurrfect
 jack|Games|Live|Cat Card Games (old)|https://jorj2026.github.io/nobodyspurrfect
 jorjdev2027|Games|Live|Cat Card Games (old)|https://jorj2026.github.io/nobodyspurrfect
+jorjdev2027|Other|Live|Tools|https://jorj2026.github.io/gsd
+gran|Other|Live|Tools|https://jorj2026.github.io/gsd
+faith|Other|Live|Tools|https://jorj2026.github.io/gsd
+harmony|Other|Live|Tools|https://jorj2026.github.io/gsd
+jack|Other|Live|Tools|https://jorj2026.github.io/gsd
+jack|Games|Live|HTML Games|https://jorj2026.github.io/htmlgames
+jorjdev2027|Games|Live|HTML Games|https://jorj2026.github.io/htmlgames
+faith|Games|Live|HTML Games|https://jorj2026.github.io/htmlgames
+gran|Games|Live|HTML Games|https://jorj2026.github.io/htmlgames
+harmony|Games|Live|HTML Games|https://jorj2026.github.io/htmlgames
 `;
 const ALL = [];
 // Guest always sees these (by URL). They can tick more with "Choose more projects".
@@ -191,13 +201,14 @@ function render(){
 const DOCK = [
   { url:"https://jorj2026.github.io/play", label:"Play Something!", icon:"gamepad", c:"#E8590C" },
   { url:"https://jorj2026.github.io/meow", label:"Cat Games", icon:"gamepad", c:"#E8590C" },
+  { url:"https://jorj2026.github.io/gsd", label:"Tools", icon:"sparkle", c:"#2F3E9E" },
+  { url:"https://jorj2026.github.io/localtube", label:"LocalTube", icon:"tv", c:"#D6336C" },
+  { url:"https://jorj2026.github.io/fretlab", label:"FretLab", icon:"music", c:"#7048E8" },
   { url:"https://jorj2026.github.io/granstudy", label:"Study", icon:"book", c:"#2F9E44" },
   { url:"https://jorj2026.github.io/chopin", label:"MIDI", icon:"music", c:"#7048E8" },
-  { url:"https://jorj2026.github.io/localtube", label:"LocalTube", icon:"tv", c:"#D6336C" },
   { url:"https://jorj2026.github.io/logo", label:"Text Editor", icon:"notebook", c:"#1C7ED6" },
-  { url:"https://jorj2026.github.io/fretlab", label:"FretLab", icon:"music", c:"#7048E8" },
   { url:"https://jorj2026.github.io/pocketreference", label:"Pocket Reference", icon:"book", c:"#2F9E44" },
-  { url:"https://jorj2026.github.io/paint3d", label:"Paint 3d", icon:"sparkle", c:"#0CA678" },
+  { url:"https://jorj2026.github.io/htmlgames", label:"HTML", icon:"gamepad", c:"#E8590C" },
 ];
 function buildDock(){
   const dock=$("dock"); dock.innerHTML="";
@@ -311,7 +322,9 @@ $("vList").onclick=()=>setView("list"); $("vGrid").onclick=()=>setView("grid");
 document.querySelectorAll("[data-ic]").forEach(el=>el.innerHTML=svgIcon(el.dataset.ic));
 // One button per user, alphabetical by name
 const userList = $("userList");
-Object.entries(ROLES).sort((a,b)=>a[1].name.localeCompare(b[1].name, undefined, {sensitivity:"base"})).forEach(([key,r])=>{
+function renderUsers(){
+userList.innerHTML="";
+Object.entries(ROLES).sort((a,b)=>sortDir*a[1].name.localeCompare(b[1].name, undefined, {sensitivity:"base"})).forEach(([key,r])=>{
   const b=document.createElement("button"); b.className="tile"; b.style.setProperty("--c", r.color);
   b.innerHTML='<div class="ic" aria-hidden="true"></div><div class="tx"><h3></h3><p></p></div><span class="go" aria-hidden="true"></span>';
   b.querySelector(".ic").innerHTML=svgIcon(ROLE_ICON[key]||"user");
@@ -319,4 +332,9 @@ Object.entries(ROLES).sort((a,b)=>a[1].name.localeCompare(b[1].name, undefined, 
   b.querySelector("h3").textContent=r.name; b.querySelector("p").textContent=r.blurb;
   b.onclick=()=>choose(key); userList.appendChild(b);
 });
+$("sortBtn").textContent = sortDir>0 ? "A–Z" : "Z–A";
+}
+let sortDir=1;
+$("sortBtn").onclick=()=>{ sortDir=-sortDir; renderUsers(); };
+renderUsers();
 $("pick").hidden=false; buildDock();

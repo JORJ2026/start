@@ -55,6 +55,7 @@ h1,h2,h3{margin:0;letter-spacing:-.02em}
 .ghost svg{width:18px;height:18px}
 .ghost:hover{background:rgba(255,255,255,.28)}
 .ghost:active{transform:scale(.96)}
+.sortRow{display:flex;justify-content:flex-end;margin-top:12px}
 .hello{font-size:clamp(2.4rem,9vw,4.2rem);font-weight:800;line-height:1;letter-spacing:-.03em;margin-bottom:8px;position:relative;z-index:1}
 .sub{margin:0;opacity:.88;max-width:44ch;position:relative;z-index:1}
 
@@ -195,6 +196,28 @@ ol li:not(:last-child)::after{content:"";position:absolute;left:13px;top:30px;bo
 .dock .di svg{width:20px;height:20px}
 .dock a:hover .di{transform:translateY(-3px)}
 .dock a:active .di{transform:scale(.9)}
+@media (max-width:639px){
+  .dock{display:grid;grid-template-columns:repeat(5,1fr);gap:2px 4px;padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px));background:color-mix(in srgb,var(--bg) 92%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);overflow:visible}
+  .dock a{flex:none;min-width:0;min-height:0;padding:4px 0;font-size:.62rem;gap:3px}
+  .dock .di{width:34px;height:34px;border-radius:11px}
+  .dock .di svg{width:18px;height:18px}
+  .wrap{padding-bottom:170px}
+  .toast{bottom:calc(164px + env(safe-area-inset-bottom,0px))}
+  .stamp{display:none}
+  .wrap:has(#pick:not([hidden])){padding-bottom:24px}
+  #pick .hero{padding-bottom:20px}
+  #pick .hello{font-size:clamp(2rem,9vw,3rem)}
+  #pick .roles{gap:10px}
+  #pick .grid{gap:10px;margin-top:10px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  #pick .tile{flex-direction:row;align-items:center;gap:10px;min-width:0;min-height:0;padding:10px 32px 10px 10px}
+  #pick .ic{width:44px;height:44px;flex:none}
+  #pick .ic svg{width:24px;height:24px}
+  #pick .tx{margin-top:0;padding-right:0}
+  #pick .tile h3{font-size:.9rem;margin-bottom:1px}
+  #pick .tile p{display:none}
+  #pick .go{bottom:auto;top:50%;transform:translateY(-50%);right:10px}
+  #pick .tile:hover .go{transform:translate(2px,-50%)}
+}
 
 /* Corner stamp */
 .stamp{position:fixed;right:16px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:24;pointer-events:none;font-weight:800;font-size:.78rem;letter-spacing:.08em;color:var(--muted);opacity:.7}
