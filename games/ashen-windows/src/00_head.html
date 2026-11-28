@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Ashen Windows</title>
+<meta name="description" content="Ashen Windows: a quiet survival drama about neighbours sharing one landing through a long winter. Drawn and sounded entirely in code.">
+<meta name="theme-color" content="#0b0b0b">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="Ashen Windows">
+<meta property="og:description" content="A quiet winter in Greywater. Keep the candle lit, keep each other warm.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%230b0b0b'/%3E%3Crect x='14' y='10' width='36' height='48' fill='%23303030'/%3E%3Crect x='19' y='16' width='10' height='10' fill='%23171717'/%3E%3Crect x='35' y='16' width='10' height='10' fill='%23e8b04a'/%3E%3Crect x='19' y='32' width='10' height='10' fill='%23171717'/%3E%3Crect x='35' y='32' width='10' height='10' fill='%23171717'/%3E%3Crect x='28' y='46' width='8' height='12' fill='%23111'/%3E%3C/svg%3E">
+<style>
+  html, body { margin: 0; height: 100%; background: #0b0b0b; overflow: hidden; overscroll-behavior: none;
+    touch-action: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent; }
+  #wrap { position: fixed; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center;
+    box-sizing: border-box;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+  html, body { background: radial-gradient(ellipse at center, #161616 0%, #0b0b0b 70%, #050505 100%); }
+  canvas { display: block; touch-action: none; outline: none; background: #0b0b0b; box-shadow: 0 0 0 1px #1c1c1c, 0 18px 60px rgba(0,0,0,0.8); }
+  noscript { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; color: #dedede; font: 16px Georgia, serif; text-align: center; padding: 24px; }
+  #err { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #0b0b0b; color: #dedede;
+    font: bold 20px "Courier New", Courier, monospace; align-items: center; justify-content: center; text-align: center;
+    padding: 24px; box-sizing: border-box; flex-direction: column; }
+  #err small { display: block; margin-top: 14px; font-weight: normal; font-size: 12px; color: #7b7b7b; max-width: 640px; }
+</style>
+</head>
+<body>
+<noscript>Ashen Windows is drawn with JavaScript. Please enable it to play.</noscript>
+<div id="wrap"><canvas id="c" tabindex="0" aria-label="Ashen Windows game"></canvas></div>
+<div id="err"><div>The lights went out.<br>Press R (or tap) to restart.</div><small id="errmsg"></small></div>
+<script>

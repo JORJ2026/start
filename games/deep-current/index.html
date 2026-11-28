@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#07151d">
+<title>Deep Current</title><link rel="icon" href="data:,"><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="game-shell">
+  <canvas id="sea" aria-label="Deep Current underwater exploration game"></canvas>
+  <div id="hud" class="hud hidden">
+    <div class="hud-left"><div class="brand-mark">◉ <span>PELAGIC / 04</span></div><div class="depth-line"><span id="sector-name">THE SINKING GARDEN</span><i></i><span id="objective">0 / 3 SIGNALS</span></div></div>
+    <div class="air-wrap"><span>O₂</span><div class="air-track"><b id="air-fill"></b></div><strong id="air-value">100</strong></div>
+    <button id="pause-button" class="icon-button" aria-label="Pause">Ⅱ</button>
+    <div id="toast" class="toast"></div>
+    <div class="touch-controls" aria-label="Touch movement controls">
+      <div class="dpad"><button data-key="ArrowUp" aria-label="Move up">▲</button><div><button data-key="ArrowLeft" aria-label="Move left">◀</button><button data-key="ArrowDown" aria-label="Move down">▼</button><button data-key="ArrowRight" aria-label="Move right">▶</button></div></div>
+      <button class="pulse-touch" id="pulse-touch">PING</button>
+    </div>
+  </div>
+  <div id="screen" class="screen">
+    <div class="screen-content" id="screen-content"></div>
+  </div>
+  <div class="corner-note">A FIELD STUDY IN THE DARK</div>
+</main>
+<script type="module" src="game.js"></script>
+</body></html>
