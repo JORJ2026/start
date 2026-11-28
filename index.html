@@ -1,101 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
+<html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Project Hub</title>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Hub">
-<meta name="theme-color" content="#E6EDEF">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>Jack’s Projects</title>
+<meta name="theme-color" content="#2F3E9E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<style>.hero .top{margin-bottom:18px;justify-content:flex-end}.gear{width:44px;height:44px;padding:0;justify-content:center}.gear svg{transition:transform .4s}.gear:hover svg{transform:rotate(60deg)}
+.tile p{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.rows .tile p{-webkit-line-clamp:2}
+.tw{overflow-x:auto;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);margin-top:14px}
+table{border-collapse:collapse;width:100%;min-width:860px;font-size:.9rem}
+th{text-align:left;padding:14px 16px;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface)}
+td{padding:12px 16px;vertical-align:top;border-bottom:1px solid var(--line);color:var(--muted)}
+td:first-child{white-space:nowrap;font-weight:700;color:var(--ink)}td:first-child a{color:inherit}
+td.te{font:.78rem/1.5 ui-monospace,Menlo,monospace}
+tr.sec td{background:color-mix(in srgb,var(--accent) 8%,var(--surface));color:var(--ink);font-weight:800}
+.hero .hello{margin-bottom:0}</style>
+</head><body>
 <div class="wrap">
-
-  <!-- Step 1: who are you -->
-  <section id="pick" hidden>
-    <div class="hero"><div class="hello">Jack’s Projects</div></div>
-    <hr class="divider">
-    <div class="sortRow"><button class="ghost" id="sortBtn" type="button">A–Z</button></div>
-    <div class="grid" id="userList"></div>
-  </section>
-
-  <!-- Step 2: home -->
-  <section id="home" hidden>
-    <div class="hero">
-      <div class="top">
-        <div class="who"><div class="dot" id="dot"></div><span id="whoName"></span></div><button class="ghost" id="back"><span class="bk" data-ic="chev"></span>Back</button>
-      </div>
-      <div class="hello" id="hello"></div>
-      <p class="sub" id="sub"></p>
-    </div>
-
-    <div class="bar">
-      <div class="row">
-        <label class="sbox"><span class="sic" data-ic="search"></span><input class="search" id="q" type="search" placeholder="Search projects" aria-label="Search projects" enterkeyhint="search" autocomplete="off"></label>
-        <div class="seg" role="group" aria-label="View">
-          <button id="vList"><span data-ic="list"></span>List</button>
-          <button id="vGrid"><span data-ic="grid"></span>Grid</button>
-        </div>
-      </div>
-      <div class="chips" id="chips"></div>
-    </div>
-
-    <div id="adminBar" class="admin" hidden>
-      <div class="seg" role="group" aria-label="Group by"><button id="gStatus">By status</button><button id="gAcct">By account</button></div>
-      <button class="btn" id="dlCsv"><span data-ic="download"></span>Download all links (CSV)</button>
-    </div>
-    <div id="guestBar" class="guest" hidden><button class="btn" id="morePick"><span data-ic="plus"></span>Choose more projects</button></div>
-
-    <div class="install" id="pickPanel" hidden>
-      <h2><span class="h2i" data-ic="plus"></span>Choose more projects</h2>
-      <p>Tick any you’d like to see. Your choices are remembered on this device.</p>
-      <div id="pickList"></div>
-      <button class="btn" id="pickDone" style="margin-top:14px">Done</button>
-    </div>
-
-    <div class="list" id="list"></div>
-
-    <div class="install" id="install">
-      <h2><span class="h2i" data-ic="phone"></span>Put this on your home screen</h2>
-      <p>Opens like an app, with your name already picked.</p>
-      <div class="tabs" role="tablist">
-        <button class="tab" role="tab" id="tabIos" aria-selected="false">iPhone</button>
-        <button class="tab" role="tab" id="tabAnd" aria-selected="false">Android</button>
-      </div>
-      <div id="panIos" hidden>
-        <ol>
-          <li>Open this page in <b>Safari</b> (not inside another app).</li>
-          <li>Tap the <b>Share</b> button <span class="ti" data-ic="share"></span> at the bottom.</li>
-          <li>Scroll down and tap <b>Add to Home Screen</b> <span class="ti" data-ic="plus"></span>.</li>
-          <li>Tap <b>Add</b>. The icon appears on your home screen.</li>
-        </ol>
-        <p class="note">Apple doesn’t allow a button to do this for you, so these steps are the only way on iPhone.</p>
-      </div>
-      <div id="panAnd" hidden>
-        <button class="btn" id="installBtn" hidden><span data-ic="download"></span>Install app</button>
-        <ol>
-          <li>Open this page in <b>Chrome</b>.</li>
-          <li>Tap the <span class="ti" data-ic="dots"></span> menu in the top right.</li>
-          <li>Tap <b>Install app</b> or <b>Add to Home screen</b>.</li>
-          <li>Tap <b>Install</b> to confirm.</li>
-        </ol>
-        <p class="note" id="andNote">If the Install button above doesn’t appear, use the menu steps.</p>
-      </div>
-      <button class="btn" id="copy" style="margin-top:14px"><span data-ic="copy"></span>Copy this page’s link</button>
-      <p class="note">Send the link to yourself, then open it in Safari or Chrome to add it.</p>
-    </div>
-  </section>
+ <div class="hero">
+  <div class="top"><button class="ghost" id="back" type="button" hidden style="margin-right:auto"><span class="bk" data-ic="chev"></span>Back</button><button class="ghost gear" id="gear" type="button" aria-label="Details" aria-pressed="false"><span data-ic="gear"></span></button></div>
+  <div class="hello">Jack’s Projects</div>
+ </div>
+ <section id="pick"><div class="grid" id="profiles" style="margin-top:18px"></div></section>
+ <section id="home" hidden>
+  <div class="bar">
+   <div class="row">
+    <label class="sbox"><span class="sic" data-ic="search"></span><input class="search" id="q" type="search" placeholder="Search" aria-label="Search" autocomplete="off"></label>
+    <div class="seg" role="group" aria-label="View"><button id="vList"><span data-ic="list"></span>List</button><button id="vGrid"><span data-ic="grid"></span>Grid</button></div>
+   </div>
+   <div class="chips" id="chips"></div>
+  </div>
+  <div class="list" id="list"></div>
+ </section>
+ <section id="details" hidden>
+  <div class="tw"><table><thead><tr><th>App</th><th>Category</th><th>What it does</th><th>Technical reference</th></tr></thead><tbody id="rows"></tbody></table></div>
+ </section>
 </div>
-<nav class="dock" id="dock" aria-label="Quick links" hidden></nav>
-<div class="toast" id="toast" hidden></div>
-<div class="stamp" aria-hidden="true">JORJ2026</div>
-
-<script src="icons.js"></script>
-<script src="app.js"></script>
-</body>
-</html>
+<script src="icons.js"></script><script src="data.js"></script><script src="app.js"></script>
+</body></html>

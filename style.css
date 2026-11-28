@@ -244,3 +244,5 @@ ol li:not(:last-child)::after{content:"";position:absolute;left:13px;top:30px;bo
 .rows .thumb{width:112px;height:72px;aspect-ratio:auto}
 .thumb iframe{position:absolute;left:0;top:0;width:400%;height:400%;border:0;transform:scale(.25);transform-origin:0 0;pointer-events:none}
 .tile.feat .thumb{width:112px;height:72px;aspect-ratio:auto}
+.thumb iframe{background:#000}
+#pick .tile{min-height:0}
