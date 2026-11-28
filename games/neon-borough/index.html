@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10111b">
+  <title>Neon Borough</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="game.js"></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="topline">
+      <div class="brand"><span class="brand-mark">✦</span><span>NEON <b>BOROUGH</b></span></div>
+      <div class="status"><span id="chapter">PROLOGUE</span><span class="divider"></span><span id="cash">$0000</span></div>
+    </header>
+    <section class="game-frame" aria-label="Neon Borough game">
+      <canvas id="game" width="256" height="224" aria-label="Top-down city game"></canvas>
+      <aside id="map-hud" class="map-hud" aria-label="City map"><div class="map-head"><span id="map-region">WORLD MAP</span><b id="map-index">01 / 40</b></div><canvas id="map-canvas" width="80" height="80" aria-label="Player and destination map"></canvas><div id="map-location" class="map-location">MAGS WHARF</div><div id="map-goal" class="map-goal">GO · FIND YOUR WAY</div></aside>
+      <div class="screen-shade"></div>
+      <div id="title-screen" class="title-screen">
+        <div class="title-kicker">A BAYBELL CITY STORY</div>
+        <h1>NEON<br><span>BOROUGH</span></h1>
+        <div class="title-rule"><i></i></div>
+        <p>One pigeon. Twenty-five bad ideas.</p>
+        <div class="mode-select"><button id="start" class="start-button">GAME MODE <span>▶</span></button><button id="taxi-start" class="start-button taxi-button">TAXI MODE <span>▶</span></button></div>
+        <div class="title-foot">CHOOSE YOUR SHIFT · ENTER = GAME MODE</div>
+        <button id="new-run" class="new-run-button" hidden>NEW RUN</button>
+        <div id="reset-confirm" class="reset-confirm" hidden><span>ERASE THIS SAVE?</span><button id="confirm-reset">ERASE</button><button id="cancel-reset">CANCEL</button></div>
+        <div class="title-signature">JORJ2026</div>
+      </div>
+      <div id="intro-screen" class="intro-screen" aria-live="polite">
+        <div class="intro-head"><span class="intro-stamp">BAYBELL CITY · 1993</span><button id="skip-intro" class="skip-intro">SKIP INTRO <b>▶</b></button></div>
+        <div class="intro-copy"><div id="intro-chapter" class="intro-chapter">A CITY AFTER DARK</div><h2 id="intro-title">Baybell never sleeps.</h2><p id="intro-caption">Neon paints the harbor streets pink and blue. Somewhere in the night, a newcomer is looking for a way in.</p></div>
+        <div class="intro-foot"><div class="intro-track"><i id="intro-progress"></i></div><div class="intro-status" id="intro-status">PREPARING THE STORY…</div></div>
+      </div>
+      <div id="friend-call" class="friend-call" aria-live="assertive"><div class="phone-top"><span>INCOMING CALL</span><b>☎</b></div><div id="friend-caller" class="friend-caller">BAYBELL LOCAL</div><div id="friend-message" class="friend-message">A friend wants a word.</div><div class="phone-actions"><button id="answer-call">ANSWER · E</button><button id="ignore-call">IGNORE</button></div></div>
+      <div id="guidance-hud" class="guidance-hud"><div class="guidance-label">NEXT STEP <button id="tip-cycle" aria-label="Show another tip">H</button></div><div id="guidance-text">Find your way around Baybell.</div></div>
+      <section id="activity-board" class="activity-board" hidden aria-labelledby="activity-title"><div class="activity-board-head"><span>THE BAYBELL LEDGER · OPEN CITY WORK</span><button id="close-activity-board" aria-label="Close board">×</button></div><div id="activity-count" class="activity-count">01 / 50 · 0 DONE</div><h2 id="activity-title">Frostline Dispatch</h2><div id="activity-contact" class="activity-contact">AUNTIE MAGS · NORTH</div><p id="activity-brief" class="activity-brief">Pick up the parcel and take it to the marked drop.</p><div id="activity-status" class="activity-status">$125 · AVAILABLE</div><div class="activity-actions"><button id="activity-prev" aria-label="Previous activity">←</button><button id="activity-next" aria-label="Next activity">→</button><button id="activity-accept">TAKE JOB</button></div><p class="plot-note">Rook’s first parcel carried a page from Madam Marlowe’s Quiet Tide ledger—a plan to force Baybell’s harbor neighborhoods out. Follow the clues through the four regions, keep the crew close, and get the proof to the people before the final run.</p><div class="board-key">ARROWS · BROWSE &nbsp; J / ESC · CLOSE</div></section>
+      <div id="taxi-meter" class="taxi-meter"><div class="meter-head"><span>METER</span><b id="meter-fare">$10</b></div><div class="meter-track"><i id="meter-fill"></i></div><div class="meter-foot"><span id="meter-distance">READY FOR FARE</span><span>NEON CAB</span></div></div>
+      <div id="taxi-speech" class="taxi-speech" aria-live="polite"><span class="speech-name">PASSENGER</span><span id="taxi-speech-line"></span></div>
+      <button id="pause-button" class="pause-button" aria-label="Pause game">Ⅱ</button>
+      <div id="pause-overlay" class="pause-overlay" aria-hidden="true"><div class="pause-card"><div class="pause-kicker">BAYBELL IS WAITING</div><h2>PAUSED</h2><button id="resume-button" class="pause-action">RESUME <span>▶</span></button><div class="pause-note">ESC / P TO RESUME</div></div></div>
+      <div id="toast" class="toast" aria-live="polite"></div>
+      <div class="scanlines"></div>
+      <div class="frame-corner corner-a"></div><div class="frame-corner corner-b"></div>
+    </section>
+    <section class="mission-row">
+      <div class="mission-copy">
+        <div class="mission-meta"><span class="live-dot"></span><span id="mission-count">JOB 00 / 25</span><span class="mission-separator">·</span><span id="contact">WAITING ON A CALL</span></div>
+        <div id="mission-title" class="mission-title">The city is yours, probably.</div>
+        <div id="mission-line" class="mission-line">Find a set of wheels.</div>
+      </div>
+      <div class="wanted" aria-label="Wanted level"><span class="wanted-label">HEAT</span><div id="stars" class="stars">☆☆☆☆☆</div></div>
+    </section>
+    <footer class="controls">
+      <div class="control-keys"><span><kbd>WASD</kbd> / <kbd>↑↓←→</kbd> MOVE</span><span><kbd>E</kbd> ENTER / INTERACT</span><span><kbd>J</kbd> CITY BOARD</span></div>
+      <div class="control-keys control-right"><span><kbd>SHIFT</kbd> BRAKE / SPRINT</span><button id="city-board-button" class="sound-button city-board-button" aria-label="Open city activity board" disabled>J · CITY BOARD</button><button id="sound" class="sound-button" aria-label="Toggle sound">SOUND <span>ON</span></button></div>
+    </footer>
+    <div class="mobile-controls" aria-label="Touch controls">
+      <div class="dpad"><button data-key="ArrowUp">▲</button><div><button data-key="ArrowLeft">◀</button><button data-key="ArrowDown">▼</button><button data-key="ArrowRight">▶</button></div></div>
+      <button id="interact-touch" class="interact-touch">E<br><small>ACT</small></button>
+    </div>
+  </main>
+</body>
+</html>
